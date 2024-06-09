@@ -7,7 +7,7 @@ const methodOverride = require('method-override');
 const morgan = require('morgan');
 const session = require('express-session');
 
-const authController = require('./controllers/auth.js');
+const authRouter = require('./routers/auth-router.js');
 
 const port = process.env.PORT ? process.env.PORT : '3000';
 
@@ -19,7 +19,7 @@ mongoose.connection.on('connected', () => {
 
 app.use(express.urlencoded({ extended: false }));
 app.use(methodOverride('_method'));
-// app.use(morgan('dev'));
+app.use(morgan('dev'));
 app.use(
   session({
     secret: process.env.SESSION_SECRET,
@@ -42,7 +42,9 @@ app.get('/vip-lounge', (req, res) => {
   }
 });
 
-app.use('/auth', authController);
+app.use('/auth', authRouter);
+
+
 
 app.listen(port, () => {
   console.log(`The express app is ready on port ${port}!`);

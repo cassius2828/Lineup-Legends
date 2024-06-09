@@ -1,80 +1,101 @@
-const express = require('express');
-const router = express.Router();
-const bcrypt = require('bcrypt');
+const bcrypt = require("bcrypt");
+const User = require("../models/user.js");
 
-const User = require('../models/user.js');
+///////////////////////////
+// Get Sign Up Page
+///////////////////////////
+const getSignUp = (req, res) => {
+  res.render("auth/sign-up.ejs");
+};
 
-router.get('/sign-up', (req, res) => {
-  res.render('auth/sign-up.ejs');
-});
+///////////////////////////
+// Get Sign In Page
+///////////////////////////
+const getSignIn = (req, res) => {
+  res.render("auth/sign-in.ejs");
+};
 
-router.get('/sign-in', (req, res) => {
-  res.render('auth/sign-in.ejs');
-});
-
-router.get('/sign-out', (req, res) => {
+///////////////////////////
+// Get Sign Out
+///////////////////////////
+const getSignOut = (req, res) => {
   req.session.destroy();
-  res.redirect('/');
-});
+  res.redirect("/");
+};
 
-router.post('/sign-up', async (req, res) => {
+///////////////////////////
+// Post Sign Up
+///////////////////////////
+const postSignUp = async (req, res) => {
   try {
     // Check if the username is already taken
     const userInDatabase = await User.findOne({ username: req.body.username });
+    const emailInDatabase = await User.findOne({ username: req.body.email });
     if (userInDatabase) {
-      return res.send('Username already taken.');
+      return res.send("Username already taken.");
     }
-  
+    if (emailInDatabase) {
+      return res.send("This email is already associated with another account. Please enter a new email");
+    }
     // Username is not taken already!
     // Check if the password and confirm password match
     if (req.body.password !== req.body.confirmPassword) {
-      return res.send('Password and Confirm Password must match');
+      return res.send("Password and Confirm Password must match");
     }
-  
+
     // Must hash the password before sending to the database
     const hashedPassword = bcrypt.hashSync(req.body.password, 10);
     req.body.password = hashedPassword;
-  
+
     // All ready to create the new user!
     await User.create(req.body);
-  
-    res.redirect('/auth/sign-in');
+
+    res.redirect("/auth/sign-in");
   } catch (error) {
     console.log(error);
-    res.redirect('/');
+    res.redirect("/");
   }
-});
+};
 
-router.post('/sign-in', async (req, res) => {
+///////////////////////////
+// Post Sign In
+///////////////////////////
+const postSignIn = async (req, res) => {
   try {
     // First, get the user from the database
     const userInDatabase = await User.findOne({ username: req.body.username });
     if (!userInDatabase) {
-      return res.send('Login failed. Please try again.');
+      return res.send("Login failed. Please try again.");
     }
-  
+
     // There is a user! Time to test their password with bcrypt
     const validPassword = bcrypt.compareSync(
       req.body.password,
       userInDatabase.password
     );
     if (!validPassword) {
-      return res.send('Login failed. Please try again.');
+      return res.send("Login failed. Please try again.");
     }
-  
+
     // There is a user AND they had the correct password. Time to make a session!
     // Avoid storing the password, even in hashed format, in the session
     // If there is other data you want to save to `req.session.user`, do so here!
     req.session.user = {
       username: userInDatabase.username,
-      _id: userInDatabase._id
+      _id: userInDatabase._id,
     };
-  
-    res.redirect('/');
+
+    res.redirect("/");
   } catch (error) {
     console.log(error);
-    res.redirect('/');
+    res.redirect("/");
   }
-});
+};
 
-module.exports = router;
+module.exports = {
+  postSignIn,
+  postSignUp,
+  getSignIn,
+  getSignOut,
+  getSignUp,
+};
