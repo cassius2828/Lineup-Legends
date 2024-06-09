@@ -1,22 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Home Page</title>
-  </head>
+  <%- include('./partials/head.ejs') %>
   <body>
     <% if (user) { %>
     <h1>Welcome to the app, <%= user.username %>!</h1>
-  
-
+<a href="/lineups/new">create a lineup</a>
     <p>
       <a href="/auth/sign-out">Sign out</a>
     </p>
     <% } else { %>
-    <h1>Welcome to the app, guest.</h1>  <form action="/add-players" method="POST">
-      <button>add players to database</button>
-    </form>
+    <h1>Welcome to the app, guest.</h1>
     <p>
       <a href="/auth/sign-up">Sign up</a> or
       <a href="/auth/sign-in">Sign in</a>.

@@ -1,25 +1,39 @@
-const dotenv = require('dotenv');
+// env var setup
+const dotenv = require("dotenv");
 dotenv.config();
-const express = require('express');
+// server set up
+const express = require("express");
 const app = express();
-const mongoose = require('mongoose');
-const methodOverride = require('method-override');
-const morgan = require('morgan');
-const session = require('express-session');
+// db
+const mongoose = require("mongoose");
+// middleware modules
+const methodOverride = require("method-override");
+const morgan = require("morgan");
+const session = require("express-session");
+const path = require("path");
 
-const authRouter = require('./routers/auth-router.js');
+const pathname = path.join(__dirname, "public");
+app.use(express.static(pathname));
+///////////////////////////
+// Set Up Port
+///////////////////////////
+const port = process.env.PORT ? process.env.PORT : "3000";
 
-const port = process.env.PORT ? process.env.PORT : '3000';
-
+///////////////////////////
+// Connect to MongoDB
+///////////////////////////
 mongoose.connect(process.env.MONGODB_URI);
 
-mongoose.connection.on('connected', () => {
+mongoose.connection.on("connected", () => {
   console.log(`Connected to MongoDB ${mongoose.connection.name}.`);
 });
 
+///////////////////////////
+// Middleware
+///////////////////////////
 app.use(express.urlencoded({ extended: false }));
-app.use(methodOverride('_method'));
-app.use(morgan('dev'));
+app.use(methodOverride("_method"));
+app.use(morgan("dev"));
 app.use(
   session({
     secret: process.env.SESSION_SECRET,
@@ -28,24 +42,35 @@ app.use(
   })
 );
 
-app.get('/', (req, res) => {
-  res.render('index.ejs', {
+///////////////////////////
+// Routes
+///////////////////////////
+const authRouter = require("./routers/auth-router.js");
+const lineupsRouter = require("./routers/lineups-router.js");
+// Landing Page
+app.get("/", (req, res) => {
+  res.render("index.ejs", {
     user: req.session.user,
   });
 });
 
-app.get('/vip-lounge', (req, res) => {
+// VIP Lounge
+app.get("/vip-lounge", (req, res) => {
   if (req.session.user) {
     res.send(`Welcome to the party ${req.session.user.username}.`);
   } else {
-    res.send('Sorry, no guests allowed.');
+    res.send("Sorry, no guests allowed.");
   }
 });
 
-app.use('/auth', authRouter);
+// Auth Routes
 
+app.use("/auth", authRouter);
+app.use("/lineups", lineupsRouter);
 
-
+///////////////////////////
+// Start Server
+///////////////////////////
 app.listen(port, () => {
   console.log(`The express app is ready on port ${port}!`);
 });

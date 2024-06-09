@@ -1,0 +1,204 @@
+/* General Styles */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 62.5%; /* 1rem = 10px */
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: #222;
+  color: #fff;
+  text-align: center;
+  padding: 2rem;
+}
+
+/* Container */
+#create-lineup .left-container {
+  margin: 2rem auto;
+  width: 80%;
+  max-width: 80rem;
+}
+
+/* Headings */
+h1 {
+  font-size: 3rem;
+  margin-bottom: 2rem;
+}
+
+h2 {
+  font-size: 2.4rem;
+  margin: 1rem 0;
+}
+
+/* Links */
+a {
+  color: #28a745;
+  text-decoration: none;
+  font-size: 1.6rem;
+}
+
+a:hover {
+  color: #218838;
+}
+
+/* Forms */
+#create-lineup form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  background-color: #333;
+  padding: 1rem;
+  border-radius: 0.5rem;
+}
+
+label {
+  font-size: 1.4rem;
+}
+
+input {
+  font-size: 1.4rem;
+  padding: 0.5rem;
+  border: 0.1rem solid #555;
+  border-radius: 0.5rem;
+  /* width: 100%; */
+  max-width: 30rem;
+}
+
+button {
+  background-color: #28a745;
+  color: #fff;
+  border: none;
+  padding: 1rem 2rem;
+  font-size: 1.6rem;
+  cursor: pointer;
+  margin-top: 2rem;
+  border-radius: 0.5rem;
+}
+
+button:hover {
+  background-color: #218838;
+}
+
+/* Additional Styles */
+.welcome-message {
+  margin-bottom: 2rem;
+}
+
+#create-lineup {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#create-lineup .left-container {
+  width: 50%;
+}
+#create-lineup .right-container {
+  width: 30%;
+  margin-right: auto;
+}
+
+#create-lineup h2 {
+  margin-right: 3rem;
+}
+/* Grid for Lineup Creation */
+.grid {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem; /* Space between different value sections */
+}
+.row-container {
+  display: flex;
+  align-items: center;
+}
+#create-lineup .row {
+  display: flex;
+  align-items: center;
+  justify-content: center; /* Center align cells within each row */
+  flex-wrap: wrap; /* Wrap cells to next line if needed */
+  gap: 1rem; /* Space between cells */
+}
+
+.cell
+/* , .selected-cell  */ {
+  width: 8rem;
+  height: 8rem;
+  margin: 0 0.5rem;
+  text-align: center;
+  overflow: hidden; /* Hide overflow to ensure image stays within bounds */
+  position: relative;
+  background-color: #f2f2f2;
+}
+
+.cell img
+/* , .selected-cell img  */ {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Ensure image covers the entire div */
+  position: absolute;
+  top: 0;
+  left: 0;
+  cursor: pointer;
+}
+
+.player-name {
+  text-align: center;
+  margin-top: 0.5rem;
+}
+
+.player-name span {
+  display: block;
+  font-size: 1.2rem;
+}
+
+/* Selected Players Row */
+.selected-players {
+  display: flex;
+  justify-content: center;
+  margin: 2rem 0;
+  gap: 1rem;
+}
+
+.selected-cell {
+  position: relative;
+  width: 8rem;
+  height: 8rem;
+  /* border: 0.2rem solid #fff; */
+  border-radius: 0.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.remove-player-btn {
+  border-radius: 50%;
+  padding: 3px;
+  cursor: pointer;
+  background-color: rgb(216, 38, 38);
+  color: #f2f2f2;
+  position: absolute;
+  top: -30%;
+  left: -10%;
+  z-index: 10;
+  font-size: 2rem;
+  width: 2.5rem;
+  height: 2.5rem;
+}
+.remove-player-btn * {
+  position: absolute;
+  top: 47.5%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.dim-player {
+    filter:brightness(50%) grayscale(100%)
+}
