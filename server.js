@@ -41,12 +41,20 @@ app.use(
     saveUninitialized: true,
   })
 );
+// pass user to view
+const passUserToView = require("./middleware/pass-user-to-view.js");
+app.use(passUserToView);
 
 ///////////////////////////
 // Routes
 ///////////////////////////
+
 const authRouter = require("./routers/auth-router.js");
+// checks redirects to sign in if not signed in
+const isSignedIn = require("./middleware/is-signed-in.js");
+
 const lineupsRouter = require("./routers/lineups-router.js");
+
 // Landing Page
 app.get("/", (req, res) => {
   res.render("index.ejs", {
@@ -55,7 +63,7 @@ app.get("/", (req, res) => {
 });
 
 // VIP Lounge
-app.get("/vip-lounge", (req, res) => {
+app.get("/vip-lounge", isSignedIn, (req, res) => {
   if (req.session.user) {
     res.send(`Welcome to the party ${req.session.user.username}.`);
   } else {
@@ -66,7 +74,7 @@ app.get("/vip-lounge", (req, res) => {
 // Auth Routes
 
 app.use("/auth", authRouter);
-app.use("/lineups", lineupsRouter);
+app.use("/lineups", isSignedIn, lineupsRouter);
 
 ///////////////////////////
 // Start Server

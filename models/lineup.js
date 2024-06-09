@@ -14,16 +14,12 @@ const lineupSchema = new mongoose.Schema({
     ref: "Player",
   },
   pf: {
-    type: mongoose.Schema.Types > Object,
-    ref: "Player",
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Player", 
   },
   c: {
-    type: mongoose.Schema.Types > Object,
-    ref: "Player",
-  },
-  cashLeft: {
-    type: Number,
-    required: true,
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Player", 
   },
   featured: {
     type: Boolean,

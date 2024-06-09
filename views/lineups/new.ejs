@@ -12,7 +12,12 @@
               <% value5Players.forEach(player => { %>
               <div class="player-container">
                 <div class="cell">
-                  <img src="<%= player.imgUrl %>" alt="Player" data-value="5" />
+                  <img
+                    src="<%= player.imgUrl %>"
+                    alt="Player"
+                    data-player-id="<%= player._id %>"
+                    data-value="5"
+                  />
                 </div>
                 <div class="player-name">
                   <span><%= player.firstName %></span>
@@ -29,7 +34,12 @@
               <% value4Players.forEach(player => { %>
               <div class="player-container">
                 <div class="cell">
-                  <img src="<%= player.imgUrl %>" alt="Player" data-value="4" />
+                  <img
+                    src="<%= player.imgUrl %>"
+                    alt="Player"
+                    data-player-id="<%= player._id %>"
+                    data-value="4"
+                  />
                 </div>
                 <div class="player-name">
                   <span><%= player.firstName %></span>
@@ -46,7 +56,12 @@
               <% value3Players.forEach(player => { %>
               <div class="player-container">
                 <div class="cell">
-                  <img src="<%= player.imgUrl %>" alt="Player" data-value="3" />
+                  <img
+                    src="<%= player.imgUrl %>"
+                    alt="Player"
+                    data-player-id="<%= player._id %>"
+                    data-value="3"
+                  />
                 </div>
                 <div class="player-name">
                   <span><%= player.firstName %></span>
@@ -63,7 +78,12 @@
               <% value2Players.forEach(player => { %>
               <div class="player-container">
                 <div class="cell">
-                  <img src="<%= player.imgUrl %>" alt="Player" data-value="2" />
+                  <img
+                    src="<%= player.imgUrl %>"
+                    alt="Player"
+                    data-player-id="<%= player._id %>"
+                    data-value="2"
+                  />
                 </div>
                 <div class="player-name">
                   <span><%= player.firstName %></span>
@@ -80,7 +100,12 @@
               <% value1Players.forEach(player => { %>
               <div class="player-container">
                 <div class="cell">
-                  <img src="<%= player.imgUrl %>" alt="Player" data-value="1" />
+                  <img
+                    src="<%= player.imgUrl %>"
+                    alt="Player"
+                    data-player-id="<%= player._id %>"
+                    data-value="1"
+                  />
                 </div>
                 <div class="player-name">
                   <span><%= player.firstName %></span>
@@ -92,15 +117,14 @@
           </div>
         </div>
       </div>
+
       <div class="right-container">
         <div class="selected-players">
           <% for (let i = 0; i < 5; i++) { %>
           <div class="selected-cell"></div>
           <% } %>
         </div>
-
         <form id="lineupForm" action="/lineups/new" method="POST">
-          <input type="hidden" name="newLineup" id="newLineup" />
           <button type="submit" class="confirm-button">Confirm Lineup</button>
         </form>
       </div>
@@ -109,59 +133,67 @@
       const players = document.querySelectorAll(".player-container");
       const selectedCells = document.querySelectorAll(".selected-cell");
       const removePlayerBtns = document.querySelectorAll(".remove-player-btn");
+
       function confirmLineup() {
         document.getElementById("lineupForm").submit();
       }
 
       players.forEach((player) => {
         player.addEventListener("click", function (e) {
-          // const playerValue = this.getAttribute('data-value');
-
           addPlayerToLineupRow(this);
         });
       });
 
       function addPlayerToLineupRow(player) {
-        // get value of the player img src
-        const playerImg = player.querySelector(".cell > img").src;
-
-        // clone player to add to potential lineup
+        // Get value of the player img src
+        const imgEl = player.querySelector(".cell > img");
+        const playerImg = imgEl.src;
+        const playerId = imgEl.getAttribute("data-player-id");
+        console.log(playerId);
+        // Clone player to add to potential lineup
         const clonedPlayer = player.cloneNode(true);
 
         for (const cell of selectedCells) {
-          // find the value of the img in the lineup squares
+          // Find the value of the img in the lineup squares
           const selectedCellImg = cell.querySelector(
             ".player-container > .cell > img"
           )?.src;
-          //  early return if one of the image src is found in the lineup to submit
+          // Early return if one of the image src is found in the lineup to submit
           if (selectedCellImg === playerImg) return;
-          // if the space is empty then proceed
+          // If the space is empty then proceed
           if (cell.innerHTML === "") {
-            // creating the remove player button
+            // Creating the remove player button
             const removePlayer = document.createElement("div");
             removePlayer.innerHTML = "<span>x</span>";
             cell.appendChild(removePlayer);
             removePlayer.classList.add("remove-player-btn");
-
-            // add event listener to btn as it is created
+            // create the hidden input for form submission
+            const hiddenInput = document.createElement("input");
+            hiddenInput.value = playerId;
+            hiddenInput.type = "hidden";
+            hiddenInput.name = "playerIds[]";
+            // Add event listener to btn as it is created
             removePlayer.addEventListener("click", (e) => {
               e.stopPropagation();
-              removePlayerFromLineupRow(player, cell);
+              removePlayerFromLineupRow(player, cell, hiddenInput);
             });
             cell.style.border = "none";
-            // append a clone to preserve the player on the original grid
+            // Append a clone to preserve the player on the original grid
             cell.appendChild(clonedPlayer);
-            // set filters to indicate to user that the player has been selected
+            // Set filters to indicate to user that the player has been selected
             player.classList.add("dim-player");
+
+            document.getElementById("lineupForm").appendChild(hiddenInput);
             break;
           }
         }
       }
-      // remove player from potential lineup
-      function removePlayerFromLineupRow(originalPlayer, cell) {
-        //  cell.style.border = '';
+
+      // Remove player from potential lineup
+      function removePlayerFromLineupRow(originalPlayer, cell, hiddenInput) {
         cell.innerHTML = "";
         originalPlayer.classList.remove("dim-player");
+        hiddenInput.remove();
       }
 
       document
