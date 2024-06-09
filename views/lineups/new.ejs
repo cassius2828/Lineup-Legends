@@ -108,6 +108,7 @@
     <script>
       const players = document.querySelectorAll(".player-container");
       const selectedCells = document.querySelectorAll(".selected-cell");
+      const removePlayerBtns = document.querySelectorAll(".remove-player-btn");
       function confirmLineup() {
         document.getElementById("lineupForm").submit();
       }
@@ -115,27 +116,54 @@
       players.forEach((player) => {
         player.addEventListener("click", function (e) {
           // const playerValue = this.getAttribute('data-value');
-          movePlayerSqr(this);
+
+          addPlayerToLineupRow(this);
         });
       });
-      function movePlayerSqr(player) {
+
+      function addPlayerToLineupRow(player) {
+        // get value of the player img src
+        const playerImg = player.querySelector(".cell > img").src;
+
+        // clone player to add to potential lineup
         const clonedPlayer = player.cloneNode(true);
-   
+
         for (const cell of selectedCells) {
+          // find the value of the img in the lineup squares
+          const selectedCellImg = cell.querySelector(
+            ".player-container > .cell > img"
+          )?.src;
+          //  early return if one of the image src is found in the lineup to submit
+          if (selectedCellImg === playerImg) return;
+          // if the space is empty then proceed
           if (cell.innerHTML === "") {
-            const removePlayer = document.createElement('div');
-            removePlayer.innerHTML = '<span>x</span>';
+            // creating the remove player button
+            const removePlayer = document.createElement("div");
+            removePlayer.innerHTML = "<span>x</span>";
             cell.appendChild(removePlayer);
-            removePlayer.classList.add('remove-player-btn')
-            
+            removePlayer.classList.add("remove-player-btn");
+
+            // add event listener to btn as it is created
+            removePlayer.addEventListener("click", (e) => {
+              e.stopPropagation();
+              removePlayerFromLineupRow(player, cell);
+            });
             cell.style.border = "none";
+            // append a clone to preserve the player on the original grid
             cell.appendChild(clonedPlayer);
-            player.style.filter = "grayscale(100%) brightness(50%)";
-            console.log("added player");
+            // set filters to indicate to user that the player has been selected
+            player.classList.add("dim-player");
             break;
           }
         }
       }
+      // remove player from potential lineup
+      function removePlayerFromLineupRow(originalPlayer, cell) {
+        //  cell.style.border = '';
+        cell.innerHTML = "";
+        originalPlayer.classList.remove("dim-player");
+      }
+
       document
         .querySelector(".confirm-button")
         .addEventListener("click", confirmLineup);
