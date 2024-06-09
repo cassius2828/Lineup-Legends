@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('../partials/head.ejs') %>
+  <body>
+    <section id="create-lineup">
+      <div class="left-container">
+        <h1>Create a Lineup</h1>
+        <div class="grid">
+          <div class="row-container">
+            <h2>$5</h2>
+            <div class="row">
+              <% value5Players.forEach(player => { %>
+              <div class="player-container">
+                <div class="cell">
+                  <img src="<%= player.imgUrl %>" alt="Player" data-value="5" />
+                </div>
+                <div class="player-name">
+                  <span><%= player.firstName %></span>
+                  <span><%= player.lastName %></span>
+                </div>
+              </div>
+              <% }); %>
+            </div>
+          </div>
+
+          <div class="row-container">
+            <h2>$4</h2>
+            <div class="row">
+              <% value4Players.forEach(player => { %>
+              <div class="player-container">
+                <div class="cell">
+                  <img src="<%= player.imgUrl %>" alt="Player" data-value="4" />
+                </div>
+                <div class="player-name">
+                  <span><%= player.firstName %></span>
+                  <span><%= player.lastName %></span>
+                </div>
+              </div>
+              <% }); %>
+            </div>
+          </div>
+
+          <div class="row-container">
+            <h2>$3</h2>
+            <div class="row">
+              <% value3Players.forEach(player => { %>
+              <div class="player-container">
+                <div class="cell">
+                  <img src="<%= player.imgUrl %>" alt="Player" data-value="3" />
+                </div>
+                <div class="player-name">
+                  <span><%= player.firstName %></span>
+                  <span><%= player.lastName %></span>
+                </div>
+              </div>
+              <% }); %>
+            </div>
+          </div>
+
+          <div class="row-container">
+            <h2>$2</h2>
+            <div class="row">
+              <% value2Players.forEach(player => { %>
+              <div class="player-container">
+                <div class="cell">
+                  <img src="<%= player.imgUrl %>" alt="Player" data-value="2" />
+                </div>
+                <div class="player-name">
+                  <span><%= player.firstName %></span>
+                  <span><%= player.lastName %></span>
+                </div>
+              </div>
+              <% }); %>
+            </div>
+          </div>
+
+          <div class="row-container">
+            <h2>$1</h2>
+            <div class="row">
+              <% value1Players.forEach(player => { %>
+              <div class="player-container">
+                <div class="cell">
+                  <img src="<%= player.imgUrl %>" alt="Player" data-value="1" />
+                </div>
+                <div class="player-name">
+                  <span><%= player.firstName %></span>
+                  <span><%= player.lastName %></span>
+                </div>
+              </div>
+              <% }); %>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="right-container">
+        <div class="selected-players">
+          <% for (let i = 0; i < 5; i++) { %>
+          <div class="selected-cell"></div>
+          <% } %>
+        </div>
+
+        <form id="lineupForm" action="/lineups/new" method="POST">
+          <input type="hidden" name="newLineup" id="newLineup" />
+          <button type="submit" class="confirm-button">Confirm Lineup</button>
+        </form>
+      </div>
+    </section>
+    <script>
+      const players = document.querySelectorAll(".player-container");
+      const selectedCells = document.querySelectorAll(".selected-cell");
+      function confirmLineup() {
+        document.getElementById("lineupForm").submit();
+      }
+
+      players.forEach((player) => {
+        player.addEventListener("click", function (e) {
+          // const playerValue = this.getAttribute('data-value');
+          movePlayerSqr(this);
+        });
+      });
+      function movePlayerSqr(player) {
+        const clonedPlayer = player.cloneNode(true);
+   
+        for (const cell of selectedCells) {
+          if (cell.innerHTML === "") {
+            const removePlayer = document.createElement('div');
+            removePlayer.innerHTML = '<span>x</span>';
+            cell.appendChild(removePlayer);
+            removePlayer.classList.add('remove-player-btn')
+            
+            cell.style.border = "none";
+            cell.appendChild(clonedPlayer);
+            player.style.filter = "grayscale(100%) brightness(50%)";
+            console.log("added player");
+            break;
+          }
+        }
+      }
+      document
+        .querySelector(".confirm-button")
+        .addEventListener("click", confirmLineup);
+    </script>
+  </body>
+</html>
