@@ -47,12 +47,14 @@ players.forEach((player) =>
         selectedPlayerArr.push(player);
       }
       playerId = selectedPlayerArr?.[0]?.getAttribute("data-player-id");
+  
       
     }
-    const confirmPlayerToGambleBtn = document?.getElementById('confirm-player-to-gamble')
-    confirmPlayerToGambleBtn.setAttribute('disabled', false);
-    confirmPlayerToGambleBtn.classList.remove('disabled-btn');
-    console.log(confirmPlayerToGambleBtn)
+    // re-render with new form value for playerId
+   updateGambleForm()
+    // gold gamble btn
+initiateGambleBtn.setAttribute('disabled',true);
+initiateGambleBtn.classList.add('disabled-btn');
   })
 );
 
@@ -69,8 +71,8 @@ const deleteForm = `
 </form>
 `;
 
-const gambleForm = `
-<form action="/lineups/${lineupId}/gamble/${playerId}" method="GET">
+let gambleForm = `
+ <form action="/lineups/${lineupId}/gamble/${playerId}" method="GET">
   <h2>Select Player to Gamble</h2>
   <div>
     <a href="/lineups/${lineupId}/edit">Cancel</a>
@@ -79,7 +81,22 @@ const gambleForm = `
   </div>
 </form>
 `;
-
+//////////////////////////////
+// Update Gamble Form
+//////////////////////////////
+function updateGambleForm() {
+    gambleForm = `
+      <form id="gambleForm" action="/lineups/${lineupId}/gamble/${playerId}" method="GET">
+        <h2>Select Player to Gamble</h2>
+        <div>
+          <a href="/lineups/${lineupId}/edit">Cancel</a>
+          <button  id="confirm-player-to-gamble" type="submit">Confirm Player</button>
+          <input name="playerId" id="playerId" type="hidden" value="${playerId}"/>
+        </div>
+      </form>
+    `;
+    showModal(gambleModal, gambleForm, "gamble");
+  }
 //////////////////////////////
 // Event listener for gamble modal
 //////////////////////////////
@@ -98,8 +115,33 @@ firstDeleteBtn.addEventListener("click", (e) => {
 // Modal utility function
 //////////////////////////////
 function showModal(modal, form, selector) {
+    if(modal){
+        modal.innerHTML = ''
+    }
     console.log(playerId)
   modal.innerHTML = form;
   section.appendChild(modal);
   modal.classList.add("edit-modals", selector);
 }
+
+
+/**
+ // * anchor version of button
+  <h2>Select Player to Gamble</h2>
+  <div>
+    <a href="/lineups/${lineupId}/edit">Cancel</a>
+    <button disabled class="disabled-btn" id="confirm-player-to-gamble"><a href="/lineups/${lineupId}/gamble/${playerId}">Confirm Player</a></button>
+    <input type="hidden" value="${playerId}"/>
+  </div>
+
+// * form version
+  <form action="/lineups/${lineupId}/gamble/${playerId}" method="GET">
+  <h2>Select Player to Gamble</h2>
+  <div>
+    <a href="/lineups/${lineupId}/edit">Cancel</a>
+    <button disabled class="disabled-btn" id="confirm-player-to-gamble" type="submit">Confirm Player</button>
+    <input type="hidden" value="${playerId}"/>
+  </div>
+</form>
+
+ */

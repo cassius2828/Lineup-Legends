@@ -501,6 +501,9 @@ button:hover {
 .select-gamble {
   outline: solid 5px gold;
 }
+#confirm-player-to-gamble a {
+    color: #f2f2f2;
+}
 
 .disabled-btn ,.disabled-btn:hover{
     cursor: not-allowed;

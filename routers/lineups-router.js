@@ -107,15 +107,11 @@ router.get("/:lineupId/edit", async (req, res) => {
 //////////////////////////////
 // GET /:lineupId/gamble - gamble Lineup
 //////////////////////////////
-router.get("/:lineupId/gamble", async (req, res) => {
-    const selectedLineup = await LineupModel.findById(req.params.lineupId)
-      .populate("pg")
-      .populate("sg")
-      .populate("sf")
-      .populate("pf")
-      .populate("c");
-  
-    res.render("lineups/edit.ejs", { lineup: selectedLineup });
+router.get("/:lineupId/gamble/:playerId", async (req, res) => {
+    const playerToGamble = await LineupModel.findById(req.params.playerId)
+      .populate()
+  console.log(playerToGamble)
+    res.render("lineups/gamble.ejs", { player: playerToGamble, lineup: req.params.lineupId });
   });
 //////////////////////////////
 // DELETE /:lineupId/edit - delete Lineup
