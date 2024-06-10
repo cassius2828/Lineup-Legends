@@ -507,5 +507,6 @@ button:hover {
 
 .disabled-btn ,.disabled-btn:hover{
     cursor: not-allowed;
+    pointer-events: none;
     background-color: #627b68;
 }

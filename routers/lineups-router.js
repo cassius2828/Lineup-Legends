@@ -108,32 +108,36 @@ router.get("/:lineupId/edit", async (req, res) => {
 // GET /:lineupId/gamble - gamble Lineup
 //////////////////////////////
 router.get("/:lineupId/gamble/:playerId", async (req, res) => {
-    const playerToGamble = await LineupModel.findById(req.params.playerId)
-      .populate()
-  console.log(playerToGamble)
-    res.render("lineups/gamble.ejs", { player: playerToGamble, lineup: req.params.lineupId });
+  const playerToGamble = await PlayerModel.findById(
+    req.params.playerId
+  ).populate();
+  console.log(playerToGamble);
+  res.render("lineups/gamble.ejs", {
+    player: playerToGamble,
+    lineup: req.params.lineupId,
   });
+});
 //////////////////////////////
 // DELETE /:lineupId/edit - delete Lineup
 //////////////////////////////
 router.delete("/:lineupId/edit", async (req, res) => {
-    const ownerId = req.session.user._id;
-    const lineupId = req.params.lineupId
-    try {
-      const selectedLineup = await LineupModel.findById(lineupId);
-      
-      if (selectedLineup.owner.equals(ownerId)) {
-        await LineupModel.findByIdAndDelete(lineupId)
-        console.log("Lineup deleted successfully");
-        res.redirect(`/lineups/${ownerId}`);
-      } else {
-        res.status(403).send("You do not have permission to delete this lineup.");
-      }
-    } catch (err) {
-      console.error("Error deleting lineup:", err);
-      res.status(500).send("Error occurred in the lineup deletion process");
+  const ownerId = req.session.user._id;
+  const lineupId = req.params.lineupId;
+  try {
+    const selectedLineup = await LineupModel.findById(lineupId);
+
+    if (selectedLineup.owner.equals(ownerId)) {
+      await LineupModel.findByIdAndDelete(lineupId);
+      console.log("Lineup deleted successfully");
+      res.redirect(`/lineups/${ownerId}`);
+    } else {
+      res.status(403).send("You do not have permission to delete this lineup.");
     }
-  });
+  } catch (err) {
+    console.error("Error deleting lineup:", err);
+    res.status(500).send("Error occurred in the lineup deletion process");
+  }
+});
 //////////////////////////////
 // GET /:ownerId - View User Lineups
 //////////////////////////////

@@ -52,6 +52,10 @@ players.forEach((player) =>
     }
     // re-render with new form value for playerId
    updateGambleForm()
+//    confirm gamble btn
+   const confirmPlayerToGambleBtn = document?.getElementById('confirm-player-to-gamble')
+   confirmPlayerToGambleBtn.setAttribute('disabled', false);
+   confirmPlayerToGambleBtn.classList.remove('disabled-btn');
     // gold gamble btn
 initiateGambleBtn.setAttribute('disabled',true);
 initiateGambleBtn.classList.add('disabled-btn');
@@ -72,28 +76,24 @@ const deleteForm = `
 `;
 
 let gambleForm = `
- <form action="/lineups/${lineupId}/gamble/${playerId}" method="GET">
-  <h2>Select Player to Gamble</h2>
+ <h2>Select Player to Gamble</h2>
   <div>
     <a href="/lineups/${lineupId}/edit">Cancel</a>
-    <button disabled class="disabled-btn" id="confirm-player-to-gamble" type="submit">Confirm Player</button>
+    <button disabled class="disabled-btn" id="confirm-player-to-gamble"><a href="/lineups/${lineupId}/gamble/${playerId}">Confirm Player</a></button>
     <input type="hidden" value="${playerId}"/>
   </div>
-</form>
 `;
 //////////////////////////////
 // Update Gamble Form
 //////////////////////////////
 function updateGambleForm() {
     gambleForm = `
-      <form id="gambleForm" action="/lineups/${lineupId}/gamble/${playerId}" method="GET">
-        <h2>Select Player to Gamble</h2>
-        <div>
-          <a href="/lineups/${lineupId}/edit">Cancel</a>
-          <button  id="confirm-player-to-gamble" type="submit">Confirm Player</button>
-          <input name="playerId" id="playerId" type="hidden" value="${playerId}"/>
-        </div>
-      </form>
+    <h2>Select Player to Gamble</h2>
+  <div>
+    <a href="/lineups/${lineupId}/edit">Cancel</a>
+    <button disabled class="disabled-btn" id="confirm-player-to-gamble"><a href="/lineups/${lineupId}/gamble/${playerId}">Confirm Player</a></button>
+    <input type="hidden" value="${playerId}"/>
+  </div>
     `;
     showModal(gambleModal, gambleForm, "gamble");
   }
