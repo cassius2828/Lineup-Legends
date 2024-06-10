@@ -4,8 +4,9 @@ const lineupCtrl = require("../controllers/lineups.js");
 const PlayerModel = require("../models/player.js");
 const LineupModel = require("../models/lineup.js");
 
-// router.get("/", authCtrl.getSignUp);
-
+//////////////////////////////
+// GET /new - Create New Lineup Page
+//////////////////////////////
 router.get("/new", async (req, res) => {
   let value5Players;
   let value4Players;
@@ -47,6 +48,9 @@ router.get("/new", async (req, res) => {
   });
 });
 
+//////////////////////////////
+// POST /new - Create New Lineup
+//////////////////////////////
 router.post("/new", async (req, res) => {
   const playerIds = req.body["playerIds[]"] || [];
   const [pg, sg, sf, pf, c] = playerIds;
@@ -62,7 +66,7 @@ router.post("/new", async (req, res) => {
   };
 
   try {
-    // checks to ensure lineup is within the $15 value range
+    // Checks to ensure lineup is within the $15 value range
     const selectedPlayers = await PlayerModel.find({
       _id: { $in: playerIds },
     });
@@ -71,11 +75,12 @@ router.post("/new", async (req, res) => {
       0
     );
     if (totalValue > 15)
-      res
+      return res
         .status(500)
         .send(
           "Lineup funds were overdrawn. Lineup could not be created. Please try again"
         );
+
     await LineupModel.create(lineupData);
     console.log("Lineup created successfully");
     res.redirect(`${req.session.user._id}`);
@@ -85,8 +90,45 @@ router.post("/new", async (req, res) => {
   }
 });
 
+//////////////////////////////
+// GET /:lineupId/edit - Edit Lineup
+//////////////////////////////
+router.get("/:lineupId/edit", async (req, res) => {
+  const selectedLineup = await LineupModel.findById(req.params.lineupId)
+    .populate("pg")
+    .populate("sg")
+    .populate("sf")
+    .populate("pf")
+    .populate("c");
+
+  res.render("lineups/edit.ejs", { lineup: selectedLineup });
+});
+
+//////////////////////////////
+// DELETE /:lineupId/edit - delete Lineup
+//////////////////////////////
+router.delete("/:lineupId/edit", async (req, res) => {
+    const ownerId = req.session.user._id;
+    const lineupId = req.params.lineupId
+    try {
+      const selectedLineup = await LineupModel.findById(lineupId);
+      
+      if (selectedLineup.owner.equals(ownerId)) {
+        await LineupModel.findByIdAndDelete(lineupId)
+        console.log("Lineup deleted successfully");
+        res.redirect(`/lineups/${ownerId}`);
+      } else {
+        res.status(403).send("You do not have permission to delete this lineup.");
+      }
+    } catch (err) {
+      console.error("Error deleting lineup:", err);
+      res.status(500).send("Error occurred in the lineup deletion process");
+    }
+  });
+//////////////////////////////
+// GET /:ownerId - View User Lineups
+//////////////////////////////
 router.get("/:ownerId", async (req, res) => {
-  // clean this up later
   const userLineups = await LineupModel.find({ owner: req.session.user._id })
     .populate("pg")
     .populate("sg")
@@ -98,18 +140,4 @@ router.get("/:ownerId", async (req, res) => {
 
   res.render("lineups/index.ejs", { lineups: userLineups });
 });
-
-router.get("/:lineupId/edit", async (req, res) => {
-  const selectedLineup = await LineupModel.findById(req.params.lineupId).populate("pg")
-  .populate("sg")
-  .populate("sf")
-  .populate("pf")
-  .populate("c");
-  res.render("lineups/edit.ejs", { lineup: selectedLineup });
-});
-
-// router.post("/:lineupId/edit", authCtrl.postSignUp);
-
-// router.post("/sign-in", authCtrl.postSignIn);
-
 module.exports = router;
