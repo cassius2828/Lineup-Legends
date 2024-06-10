@@ -105,6 +105,19 @@ router.get("/:lineupId/edit", async (req, res) => {
 });
 
 //////////////////////////////
+// GET /:lineupId/gamble - gamble Lineup
+//////////////////////////////
+router.get("/:lineupId/gamble", async (req, res) => {
+    const selectedLineup = await LineupModel.findById(req.params.lineupId)
+      .populate("pg")
+      .populate("sg")
+      .populate("sf")
+      .populate("pf")
+      .populate("c");
+  
+    res.render("lineups/edit.ejs", { lineup: selectedLineup });
+  });
+//////////////////////////////
 // DELETE /:lineupId/edit - delete Lineup
 //////////////////////////////
 router.delete("/:lineupId/edit", async (req, res) => {

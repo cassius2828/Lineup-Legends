@@ -314,7 +314,8 @@ button:hover {
   background-color: #444;
   border-radius: 1rem;
   padding: 2.5rem 1.5rem 1.5rem 1.5rem;
-  width: 300px;
+  width: 40%;
+  max-width: 60rem;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
@@ -343,7 +344,7 @@ button:hover {
 .lineup-edit-close {
   position: absolute;
   top: -230%;
-  right: -2.5%;
+  right: 0;
   z-index: 10;
   font-size: 2.5rem;
   cursor: pointer;
@@ -360,16 +361,17 @@ button:hover {
 }
 
 .player img {
-  width: 50px;
-  height: 50px;
+  width: 100px;
+  height: 100px;
   border-radius: 50%;
   object-fit: cover;
   margin-bottom: 5px;
   background-color: #f2f2f2;
+  cursor: pointer;
 }
 
 .player-name {
-  font-size: 1.2rem;
+  font-size: 1.5rem;
 }
 
 .lineup-footer {
@@ -440,9 +442,10 @@ button:hover {
   background-color: #444;
   border-radius: 10px;
   padding: 35px 15px 15px 15px;
-  width: 300px;
+
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-  width: 50vw;
+  width: 50%;
+  max-width: 80rem;
 }
 #edit-lineup .player {
   text-align: center;
@@ -451,7 +454,7 @@ button:hover {
   align-items: center;
 }
 
-#edit-lineup .lineup-actions button {
+.lineup-actions button {
   min-width: 8rem;
 }
 
@@ -459,28 +462,47 @@ button:hover {
   justify-content: center;
   gap: 2rem;
 }
-.lineup-btn.delete {
+.lineup-btn.delete,
+.edit-modals.delete button {
   background-color: rgb(221, 90, 90);
 }
 .lineup-btn.gamble {
   background-color: #dfa315;
 }
-.lineup-btn.delete:hover {
+.lineup-btn.delete:hover,
+.edit-modals.delete button:hover {
   background-color: rgb(174, 70, 70);
 }
 .lineup-btn.gamble:hover {
   background-color: #bd8a12;
 }
-
-#edit-lineup .player img {
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
-  object-fit: cover;
-  margin-bottom: 5px;
-  background-color: #f2f2f2;
+.edit-modals {
+  position: absolute;
+  top: 70%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 3rem 1rem;
+  width: 50vw;
+  max-width: 50rem;
+  background-color: #555;
+  color: #f2f2f2;
+  border-radius: 4px;
+}
+.edit-modals a,
+.edit-modals button {
+  margin: 2rem;
 }
 
-#edit-lineup .player-name {
-  font-size: 1.5rem;
+/* gamble section */
+.select-gamble {
+  outline: solid 5px gold;
+}
+
+.disabled-btn ,.disabled-btn:hover{
+    cursor: not-allowed;
+    background-color: #627b68;
 }
