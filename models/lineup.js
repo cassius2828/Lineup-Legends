@@ -1,5 +1,11 @@
 const mongoose = require("mongoose");
-
+const commentSchema = new mongoose.Schema({
+    text: {
+      type: String,
+      required: true,
+    },
+  });
+  
 const lineupSchema = new mongoose.Schema({
   pg: {
     type: mongoose.Schema.Types.ObjectId,
@@ -23,6 +29,13 @@ const lineupSchema = new mongoose.Schema({
   },
   featured: {
     type: Boolean,
+  },
+  comments: [commentSchema],
+  rating: {
+    type: Number,
+  },
+  votes: {
+    type: Number,
   },
   owner: {
     type: mongoose.Schema.Types.ObjectId,

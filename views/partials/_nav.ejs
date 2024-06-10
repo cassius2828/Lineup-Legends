@@ -4,7 +4,7 @@
   <ul>
     <% if (user) { %>
     <li><a href="/lineups/new">create a lineup</a></li>
-    <li><a href="/lineups">your lineups</a></li>
+    <li><a href="/lineups/<%= user._id %>">your lineups</a></li>
     <li><a href="/lineups/explore">explore lineups</a></li>
     <li id="coins-container">
       <img id="coins" src="/images/misc/coins.svg" alt="" />

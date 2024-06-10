@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('../partials/head.ejs') %>
+  <body>
+    <%- include('../partials/_nav.ejs') %>
+
+    <section id="edit-lineup">
+      <h1>Edit Your Lineup</h1>
+  
+      <div class="lineup-container">
+    
+        <div class="lineup-card">
+          <header class="lineup-header">
+            <a href="/lineups/<%= user._id %>"><span class="lineup-edit-close">x</span></a>
+            
+            <% if (lineup?.rating) { %>
+                <h2 class="lineup-rating"><%= lineup?.rating %></h2> 
+                <% } else { %>
+                 <h2 class="lineup-rating">8.92</h2> 
+                <% } %>
+            <% if (lineup?.date) { %>
+              <span class="lineup-date">est. <%= lineup?.date %></span> 
+              <% } else { %>
+               <span class="lineup-date">4 hr ago</span> 
+              <% } %>
+          
+          </header>
+          <div class="lineup-players">
+            <% ['pg', 'sg', 'sf', 'pf', 'c'].forEach(position => { %>
+            <% if (lineup[position]) { %>
+            <div class="player">
+              <img
+                src="<%= lineup[position].imgUrl %>"
+                alt="<%= lineup[position].firstName %> <%= lineup[position].lastName %>"
+              />
+              <span class="player-name">
+                <%= lineup[position].firstName %> <%= lineup[position].lastName %>
+              </span>
+            </div>
+            <% } %>
+            <% }); %>
+          </div>
+          <footer class="lineup-footer">
+            <div class="lineup-actions">
+              <div class="move-btn-container">
+                <form class="move-form" action="/lineups/<%= lineup._id %>/move-players" method="GET">
+                 <input type="hidden" id="move-players" name="move-players">
+                    <button type="submit" class="lineup-btn up-vote">
+                        <span class="move-players-btn">
+                            move players
+                          </span>
+                    <i class="fa-solid fa-arrows-up-down-left-right"></i>
+                  </button>
+                </form>
+              </div>
+              <div class="comment-btn-container">
+                <form action="/lineups/<%= lineup._id %>/comment" method="GET">
+                  <button type="submit" class="lineup-btn gamble">
+                    <span class="gamble-btn">
+                      gamble
+                    </span>
+                    <i class="fa-solid fa-dice"></i>
+                  </button>
+                </form>
+              </div>
+          
+              <div class="share-btn-container">
+                <form action="/lineups/<%= lineup._id %>?_method=DELETE" method="POST">
+                  <button type="submit" class="lineup-btn delete">
+                  
+                    <span>Delete Lineup</span>
+                    <i class="fa-solid fa-trash-can"></i>
+                  </button>
+                </form>
+              </div>
+            </div>
+          </footer>
+        </div>
+   
+      </div>
+    </section>
+    <script>
+        // controls the voting input values
+        function setVoteValue(voteType) {
+          document.getElementById('up-vote').value = voteType === 'up' ? 'true' : '';
+          document.getElementById('down-vote').value = voteType === 'down' ? 'true' : '';
+        }
+      </script>
+  </body>
+</html>
