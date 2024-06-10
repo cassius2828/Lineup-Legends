@@ -2,7 +2,7 @@ const PlayerModel = require("../models/player.js");
 const LineupModel = require("../models/lineup.js");
 
 //////////////////////////////
-// Get New Lineup Page
+// * Get New Lineup Page
 //////////////////////////////
 const getNewLineup = async (req, res) => {
   let value5Players;
@@ -46,7 +46,7 @@ const getNewLineup = async (req, res) => {
 };
 
 //////////////////////////////
-// Post New Lineup
+// * Post New Lineup
 //////////////////////////////
 const postNewLineup = async (req, res) => {
   const playerIds = req.body["playerIds[]"] || [];
@@ -60,6 +60,7 @@ const postNewLineup = async (req, res) => {
     c,
     featured: false,
     owner: req.session.user?._id,
+    date: new Date()
   };
 
   try {
@@ -88,7 +89,7 @@ const postNewLineup = async (req, res) => {
 };
 
 //////////////////////////////
-// Get Edit Lineup Page
+// * Get Edit Lineup Page
 //////////////////////////////
 const getEditLineup = async (req, res) => {
   const selectedLineup = await LineupModel.findById(req.params.lineupId)
@@ -102,7 +103,7 @@ const getEditLineup = async (req, res) => {
 };
 
 //////////////////////////////
-// Get Gamble Lineup Page
+// * Get Gamble Lineup Page
 //////////////////////////////
 const getGambleLineup = async (req, res) => {
   const lineup = await LineupModel.findById(req.params.lineupId);
@@ -115,7 +116,7 @@ const getGambleLineup = async (req, res) => {
 };
 
 //////////////////////////////
-// Delete Lineup
+// * Delete Lineup
 //////////////////////////////
 const deleteLineup = async (req, res) => {
   const ownerId = req.session.user._id;
@@ -137,7 +138,7 @@ const deleteLineup = async (req, res) => {
 };
 
 //////////////////////////////
-// Get User Lineups
+// * Get User Lineups
 //////////////////////////////
 const getUserLineups = async (req, res) => {
   const userLineups = await LineupModel.find({ owner: req.session.user._id })
