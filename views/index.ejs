@@ -2,6 +2,8 @@
 <html lang="en">
   <%- include('./partials/head.ejs') %>
   <body>
+  <%- include('./partials/_nav.ejs') %>
+<section id="index"></section>
     <% if (user) { %>
     <h1>Welcome to the app, <%= user.username %>!</h1>
 <a href="/lineups/new">create a lineup</a>

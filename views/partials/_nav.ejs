@@ -1,0 +1,20 @@
+<nav>
+  <a href="/"><img id="logo" src="/images/brand/logo.webp" alt="" /></a>
+
+  <ul>
+    <% if (user) { %>
+    <li><a href="/lineups/new">create a lineup</a></li>
+    <li><a href="/lineups">your lineups</a></li>
+    <li><a href="/lineups/explore">explore lineups</a></li>
+    <li id="coins-container">
+      <img id="coins" src="/images/misc/coins.svg" alt="" />
+      <a id="coin-count" href="/lineups/explore">277</a>
+    </li>
+    <li>
+      <div class="profile-img-container">
+        <img src="/images/misc/default-user.jpg" alt="" />
+      </div>
+    </li>
+    <% } %>
+  </ul>
+</nav>

@@ -2,9 +2,15 @@
 <html lang="en">
   <%- include('../partials/head.ejs') %>
   <body>
+    <%- include('../partials/_nav.ejs') %>
+
     <section id="create-lineup">
       <div class="left-container">
-        <h1>Create a Lineup</h1>
+        <header id="lineup-header">
+          <h1>Build Your Starting 5</h1>
+          <span id="money-left" data-value="15">$15</span>
+        </header>
+
         <div class="grid">
           <div class="row-container">
             <h2>$5</h2>
@@ -129,76 +135,7 @@
         </form>
       </div>
     </section>
-    <script>
-      const players = document.querySelectorAll(".player-container");
-      const selectedCells = document.querySelectorAll(".selected-cell");
-      const removePlayerBtns = document.querySelectorAll(".remove-player-btn");
-
-      function confirmLineup() {
-        document.getElementById("lineupForm").submit();
-      }
-
-      players.forEach((player) => {
-        player.addEventListener("click", function (e) {
-          addPlayerToLineupRow(this);
-        });
-      });
-
-      function addPlayerToLineupRow(player) {
-        // Get value of the player img src
-        const imgEl = player.querySelector(".cell > img");
-        const playerImg = imgEl.src;
-        const playerId = imgEl.getAttribute("data-player-id");
-        console.log(playerId);
-        // Clone player to add to potential lineup
-        const clonedPlayer = player.cloneNode(true);
-
-        for (const cell of selectedCells) {
-          // Find the value of the img in the lineup squares
-          const selectedCellImg = cell.querySelector(
-            ".player-container > .cell > img"
-          )?.src;
-          // Early return if one of the image src is found in the lineup to submit
-          if (selectedCellImg === playerImg) return;
-          // If the space is empty then proceed
-          if (cell.innerHTML === "") {
-            // Creating the remove player button
-            const removePlayer = document.createElement("div");
-            removePlayer.innerHTML = "<span>x</span>";
-            cell.appendChild(removePlayer);
-            removePlayer.classList.add("remove-player-btn");
-            // create the hidden input for form submission
-            const hiddenInput = document.createElement("input");
-            hiddenInput.value = playerId;
-            hiddenInput.type = "hidden";
-            hiddenInput.name = "playerIds[]";
-            // Add event listener to btn as it is created
-            removePlayer.addEventListener("click", (e) => {
-              e.stopPropagation();
-              removePlayerFromLineupRow(player, cell, hiddenInput);
-            });
-            cell.style.border = "none";
-            // Append a clone to preserve the player on the original grid
-            cell.appendChild(clonedPlayer);
-            // Set filters to indicate to user that the player has been selected
-            player.classList.add("dim-player");
-
-            document.getElementById("lineupForm").appendChild(hiddenInput);
-            break;
-          }
-        }
-      }
-
-      // Remove player from potential lineup
-      function removePlayerFromLineupRow(originalPlayer, cell, hiddenInput) {
-        cell.innerHTML = "";
-        originalPlayer.classList.remove("dim-player");
-        hiddenInput.remove();
-      }
-
-      document
-        .querySelector(".confirm-button")
-        .addEventListener("click", confirmLineup);
-    </script>
+<!-- js file -->
+    <script src="/js/create-lineup.js"></script>
   </body>
 </html>
