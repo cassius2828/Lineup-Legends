@@ -108,13 +108,14 @@ router.get("/:lineupId/edit", async (req, res) => {
 // GET /:lineupId/gamble - gamble Lineup
 //////////////////////////////
 router.get("/:lineupId/gamble/:playerId", async (req, res) => {
+    const lineup = await LineupModel.findById(req.params.lineupId)
   const playerToGamble = await PlayerModel.findById(
     req.params.playerId
   ).populate();
   console.log(playerToGamble);
   res.render("lineups/gamble.ejs", {
     player: playerToGamble,
-    lineup: req.params.lineupId,
+    lineup
   });
 });
 //////////////////////////////

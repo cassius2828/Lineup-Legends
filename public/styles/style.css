@@ -387,7 +387,7 @@ button:hover {
 }
 
 .lineup-actions span {
-  font-size: 14px;
+  font-size: 1.4rem;
 }
 
 .lineup-actions button {
@@ -496,17 +496,51 @@ button:hover {
 .edit-modals button {
   margin: 2rem;
 }
-
+/* ////////////////// */
 /* gamble section */
+/* ////////////////// */
+.player-text.gamble {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.75rem;
+}
+.player-text.gamble span:first-child {
+  font-size: 2rem;
+  margin: 1rem 0;
+}
+
+.lineup-players.gamble {
+  position: relative;
+}
+
 .select-gamble {
   outline: solid 5px gold;
 }
 #confirm-player-to-gamble a {
-    color: #f2f2f2;
+  color: #f2f2f2;
 }
 
-.disabled-btn ,.disabled-btn:hover{
-    cursor: not-allowed;
-    pointer-events: none;
-    background-color: #627b68;
+.disabled-btn,
+.disabled-btn:hover {
+  cursor: not-allowed;
+  pointer-events: none;
+  background-color: #627b68;
+}
+
+.cancel-btn {
+  color: #f2f2f2;
+}
+.cancel-btn:hover {
+  color: #f2f2f2;
+}
+
+/* icons */
+
+.fa-angles-right {
+  font-size: 7rem;
+  position: absolute;
+  top: 40%;
+  transform: translateY(-50%);
 }

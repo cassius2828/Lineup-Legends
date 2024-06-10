@@ -1,75 +1,76 @@
 <!DOCTYPE html>
 <html lang="en">
+  <!-- Include the head partial -->
   <%- include('../partials/head.ejs') %>
   <body>
+    <!-- Include the navigation partial -->
     <%- include('../partials/_nav.ejs') %>
 
     <section id="edit-lineup">
       <h1>Roll the Dice</h1>
-  
+
+      <!-- Lineup Container -->
       <div class="lineup-container">
-    
+        <!-- Single Lineup Card -->
         <div class="lineup-card">
-        
+          <!-- Players Display for Gamble -->
           <div class="lineup-players gamble">
-     
+            <!-- Existing Player -->
             <div class="player">
               <img
                 src="<%= player.imgUrl %>"
                 alt="<%= player.firstName %> <%= player.lastName %>"
               />
-              <span class="player-name">
-                <%= player.firstName %> <%= player.lastName %>
-              </span>
+              <div class="player-text gamble">
+                <span class="player-name">
+                  <%= player.firstName %> <%= player.lastName %>
+                </span>
+                <span class="player-value"> Value: $<%= player.value %> </span>
+              </div>
             </div>
             <i class="fa-solid fa-angles-right"></i>
+            <!-- Mystery Player -->
             <div class="player mystery">
-                <img
-                  src="/iamges/misc/default-user.jpg"
-                  alt="mystery player"
-                />
-                <span class="player-name">
-                 Name: ???
-                </span>
-                <span class="player-value">
-                    Value: $?
-                   </span>
+              <img src="/images/misc/default-user.jpg" alt="mystery player" />
+              <div class="player-text gamble">
+                <span class="player-name"> Name: ??? </span>
+                <span class="player-value"> Value: $? </span>
               </div>
+            </div>
           </div>
+          <!-- Lineup Footer with Actions -->
           <footer class="lineup-footer">
             <div class="lineup-actions">
+              <!-- Cancel Button -->
               <div class="move-btn-container">
-                <form class="move-form" action="/lineups/<%= lineup._id %>/move-players" method="GET">
-                 <input type="hidden" id="move-players" name="move-players">
-                    <button type="submit" class="lineup-btn up-vote">
-                        <span class="move-players-btn">
-                            cancel
-                          </span>
-                          <i class="fa-solid fa-ban"></i>
-                  </button>
-                </form>
+                <button type="submit" class="lineup-btn up-vote">
+                  <span>
+                    <a
+                      class="cancel-btn"
+                      href="/lineups/<%= lineup._id %>/edit"
+                    >
+                      cancel
+                    </a>
+                  </span>
+                  <i class="fa-solid fa-ban"></i>
+                </button>
               </div>
+              <!-- Gamble Button -->
               <div class="comment-btn-container">
-                <form action="/lineups/<%= lineup._id %>/gamble/<%= player._id %>?_method=PUT" method="POST">
+                <form
+                  action="/lineups/<%= lineup._id %>/gamble/<%= player._id %>?_method=PUT"
+                  method="POST"
+                >
                   <button type="submit" class="lineup-btn gamble">
-                    <span class="gamble-btn">
-                      gamble
-                    </span>
+                    <span class="gamble-btn"> gamble </span>
                     <i class="fa-solid fa-dice"></i>
                   </button>
                 </form>
               </div>
-          
-        
             </div>
           </footer>
         </div>
-   
       </div>
     </section>
-    <script>
-
- 
-      </script>
   </body>
 </html>
