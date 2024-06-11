@@ -262,6 +262,22 @@ const reorderLineup = async (req, res) => {
   const { lineupId } = req.params;
   const ownerId = req.session.user._id;
 
+  console.log(req.body);
+
+  // Disallows duplicate players to be entered
+  const compareArr = Object.values(req.body);
+  const hasDuplicates = new Set(compareArr).size !== compareArr.length;
+  if (hasDuplicates) {
+    return res
+      .status(400)
+      .send("Duplicate players found. Lineup could not be updated");
+  }
+  compareArr.forEach((item) => {
+    if (item === "")
+      return res
+        .status(400)
+        .send("Empty entries found in request. Lineup could not be updated.");
+  });
   try {
     const reorderedLineup = await LineupModel.findByIdAndUpdate(
       lineupId,
@@ -272,11 +288,10 @@ const reorderLineup = async (req, res) => {
         pf,
         c,
       },
-      // returns new document
       { new: true }
     );
     if (!reorderedLineup) {
-      return res.status(404).send("lineup not found");
+      return res.status(404).send("Lineup not found");
     }
     console.log(reorderedLineup);
     res.redirect(`/lineups/${ownerId}`);
