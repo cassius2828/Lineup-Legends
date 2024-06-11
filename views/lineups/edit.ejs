@@ -6,76 +6,135 @@
 
     <section id="edit-lineup">
       <h1>Edit Your Lineup</h1>
-  
-      <div class="lineup-container">
-    
-        <div data-lineup-id="<%= lineup._id %>" class="lineup-card">
-          <header class="lineup-header">
-            <a href="/lineups/<%= user._id %>"><span class="lineup-edit-close">x</span></a>
-            
-            <% if (lineup?.rating) { %>
-                <h2 class="lineup-rating"><%= lineup?.rating %></h2> 
-                <% } else { %>
-                 <h2 class="lineup-rating">8.92</h2> 
-                <% } %>
-         
-          
-          </header>
-          <div class="lineup-players">
+      <div class="content-container">
+        <div class="reorder-lineup-container hide fade-in-from-left">
+          <form
+            id="reorder-lineup-form"
+            action="/lineups/<%= lineup._id %>/edit/reorder-lineup?_method=PUT"
+            method="POST"
+            style="display: flex; flex-direction: column; gap: 1rem"
+          >
             <% ['pg', 'sg', 'sf', 'pf', 'c'].forEach(position => { %>
-            <% if (lineup[position]) { %>
-            <div data-player-id="<%= lineup[position]._id %>" class="player">
-              <img
-                src="<%= lineup[position].imgUrl %>"
-                alt="<%= lineup[position].firstName %> <%= lineup[position].lastName %>"
-              />
-              <span class="player-name">
-                <%= lineup[position].firstName %> <%= lineup[position].lastName %>
-              </span>
-            </div>
-            <% } %>
+            <label for="<%= position %>"><%= position.toUpperCase() %></label>
+            <select name="<%= position %>" id="<%= position %>">
+              <option value="">Select Player</option>
+              <% ['pg', 'sg', 'sf', 'pf', 'c'].forEach(p => { %>
+              <% if (lineup[p]) { %>
+              <option value="<%= lineup[p]._id %>">
+                <%= lineup[p].firstName %> <%= lineup[p].lastName %>
+              </option>
+              <% } %>
+              <% }); %>
+            </select>
             <% }); %>
-          </div>
-          <footer class="lineup-footer">
-            <div class="lineup-actions">
-              <div class="move-btn-container">
-                <form class="move-form" action="/lineups/<%= lineup._id %>/move-players" method="GET">
-                 <input type="hidden" id="move-players" name="move-players">
-                    <button type="submit" class="lineup-btn ">
-                        <span class="move-players-btn">
-                            move players
-                          </span>
+            <button id="reorder-lineup-submit" type="submit" class="lineup-btn">
+              Save Lineup
+            </button>
+          </form>
+        </div>
+
+        <div class="lineup-container">
+          <div data-lineup-id="<%= lineup._id %>" class="lineup-card">
+            <header class="lineup-header">
+              <a href="/lineups/<%= user._id %>">
+                <span class="lineup-edit-close">x</span>
+              </a>
+              <% if (lineup?.rating) { %>
+              <h2 class="lineup-rating"><%= lineup?.rating %></h2>
+              <% } else { %>
+              <h2 class="lineup-rating">8.92</h2>
+              <% } %>
+            </header>
+            <div class="lineup-players">
+              <% ['pg', 'sg', 'sf', 'pf', 'c'].forEach(position => { %>
+              <% if (lineup[position]) { %>
+              <div data-player-id="<%= lineup[position]._id %>" class="player">
+                <img
+                  src="<%= lineup[position].imgUrl %>"
+                  alt="<%= lineup[position].firstName %> <%= lineup[position].lastName %>"
+                />
+                <span class="player-name">
+                  <%= lineup[position].firstName %> <%= lineup[position].lastName %>
+                </span>
+              </div>
+              <% } %>
+              <% }); %>
+            </div>
+            <footer class="lineup-footer">
+              <div class="lineup-actions">
+                <div class="move-btn-container">
+                  <input
+                    type="hidden"
+                    id="reorder-lineup"
+                    name="reorder-lineup"
+                  />
+                  <button type="submit" class="lineup-btn">
+                    <span class="reorder-lineup-btn"> reorder lineup </span>
                     <i class="fa-solid fa-arrows-up-down-left-right"></i>
                   </button>
-                </form>
-              </div>
-              <div class="comment-btn-container">
-                <!-- <form action="" method=""> -->
+                </div>
+                <div class="comment-btn-container">
                   <button type="submit" class="lineup-btn gamble edit-gamble">
-                    <span class="gamble-btn">
-                      gamble
-                    </span>
+                    <span class="gamble-btn"> gamble </span>
                     <i class="fa-solid fa-dice"></i>
                   </button>
-                <!-- </form> -->
-              </div>
-          
-              <div class="share-btn-container">
-               
-                  <button  class="lineup-btn delete">
-                  
+                </div>
+                <div class="share-btn-container">
+                  <button class="lineup-btn delete">
                     <span>Delete Lineup</span>
                     <i class="fa-solid fa-trash-can"></i>
                   </button>
-               
+                </div>
               </div>
-            </div>
-          </footer>
+            </footer>
+          </div>
         </div>
-   
       </div>
     </section>
-   
- <script src="/js/gamble-player.js"></script>
+
+    <script src="/js/gamble-player.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", (event) => {
+        const reorderLineupContainer = document.querySelector(".reorder-lineup-container");
+        const reorderLineupForm = document.getElementById("reorder-lineup-form");
+        const reorderLineupBtn = document.querySelector(".reorder-lineup-btn");
+        const selectEls = document.querySelectorAll("select");
+        const reorderLineupSubmitBtn = document.getElementById("reorder-lineup-submit");
+
+        reorderLineupBtn.addEventListener("click", () => {
+          reorderLineupContainer.classList.remove("hide");
+        });
+
+        selectEls.forEach((select) => {
+          select.addEventListener("change", (e) => {
+            console.log(e.target.value);
+          });
+        });
+
+        reorderLineupSubmitBtn.addEventListener("click", (e) => {
+          e.preventDefault();
+          // check for any duplicates
+          const selectedValues = [];
+          selectEls.forEach((select) => {
+            selectedValues.push(select.value);
+          });
+
+          // Sets can only contain UNIQUE values. Compare the size of the Set to the length of the array
+          // this will let us know if there are any duplicate values
+          const hasDuplicates = new Set(selectedValues).size !== selectedValues.length;
+
+          if (hasDuplicates) {
+            alert("Please ensure each player is only listed at ONE position.");
+          } else if (selectedValues.includes("")) {
+            alert("Please select one player for each position, resulting in 5 selected players.");
+          } else {
+            reorderLineupForm.submit();
+          }
+        });
+
+        console.log(reorderLineupForm);
+      });
+    </script>
+    <!-- <script src="/js/reorder-lineup.js"></script> -->
   </body>
 </html>

@@ -32,12 +32,17 @@ const lineupSchema = new mongoose.Schema(
       type: Boolean,
     },
     comments: [commentSchema],
-    rating: {
-      type: Number,
-    },
-    votes: {
-      type: Number,
-    },
+    ratings: [
+        {
+          type: Number,
+          min: 1,
+          max: 10, 
+        },
+      ],
+      votes: {
+        type: Number,
+        default: 0,
+      },
     owner: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",

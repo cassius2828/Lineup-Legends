@@ -61,7 +61,6 @@ const postNewLineup = async (req, res) => {
     c,
     featured: false,
     owner: req.session.user?._id,
-    date: new Date(),
   };
 
   try {
@@ -115,7 +114,7 @@ const getGamblePlayer = async (req, res) => {
   res.render("lineups/gamble.ejs", {
     player: playerToGamble,
     lineup,
-    randomPlayer:null
+    randomPlayer: null,
   });
 };
 //////////////////////////////
@@ -178,8 +177,8 @@ const putGamblePlayer = async (req, res) => {
     for (const position of positions) {
       if (lineup[position].toString() === playerToGamble._id.toString()) {
         // replace with the value of the random player generated
-        if(playerToGamble._id.toString() === randomPlayer[0]._id.toString()){
-             randomPlayer = await determineValueOfPlayer()
+        if (playerToGamble._id.toString() === randomPlayer[0]._id.toString()) {
+          randomPlayer = await determineValueOfPlayer();
         }
         lineup[position] = randomPlayer[0]._id;
         // save changes of our document
@@ -194,7 +193,7 @@ const putGamblePlayer = async (req, res) => {
 
     res.render("lineups/gamble.ejs", {
       player: playerToGamble,
-      randomPlayer:randomPlayer[0],
+      randomPlayer: randomPlayer[0],
       lineup,
     });
   } catch (err) {
@@ -244,9 +243,47 @@ const getUserLineups = async (req, res) => {
         addSuffix: true,
       });
     }
+    if (lineup.updatedAt) {
+      lineup.updatedTime = formatDistanceToNow(new Date(lineup.updatedAt), {
+        // adds the m/h/d/y
+        addSuffix: true,
+      });
+    }
   });
 
   res.render("lineups/index.ejs", { lineups: userLineups });
+};
+
+//////////////////////////////
+// * PUT reorder lineup
+//////////////////////////////
+const reorderLineup = async (req, res) => {
+  const { pg, sg, sf, pf, c } = req.body;
+  const { lineupId } = req.params;
+  const ownerId = req.session.user._id;
+
+  try {
+    const reorderedLineup = await LineupModel.findByIdAndUpdate(
+      lineupId,
+      {
+        pg,
+        sg,
+        sf,
+        pf,
+        c,
+      },
+      // returns new document
+      { new: true }
+    );
+    if (!reorderedLineup) {
+      return res.status(404).send("lineup not found");
+    }
+    console.log(reorderedLineup);
+    res.redirect(`/lineups/${ownerId}`);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send(`Error reordering lineup: ${error.message}`);
+  }
 };
 
 module.exports = {
@@ -257,4 +294,5 @@ module.exports = {
   deleteLineup,
   getUserLineups,
   putGamblePlayer,
+  reorderLineup,
 };

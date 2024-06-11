@@ -8,7 +8,7 @@ const lineupCtrl = require("../controllers/lineups.js");
 router.get("/new", lineupCtrl.getNewLineup);
 
 //////////////////////////////
-// POST /new - Create New Lineup
+// ? POST /new - Create New Lineup
 //////////////////////////////
 router.post("/new", lineupCtrl.postNewLineup);
 
@@ -18,18 +18,23 @@ router.post("/new", lineupCtrl.postNewLineup);
 router.get("/:lineupId/edit", lineupCtrl.getEditLineup);
 
 //////////////////////////////
+// * PUT /:lineupId/move-players - Update Gamble Lineup Page
+//////////////////////////////
+router.put("/:lineupId/edit/reorder-lineup", lineupCtrl.reorderLineup);
+
+//////////////////////////////
 // GET /:lineupId/gamble/:playerid  - Gamble Lineup Page
 //////////////////////////////
 router.get("/:lineupId/gamble/:playerId", lineupCtrl.getGamblePlayer);
 
 //////////////////////////////
-// PUT /:lineupId/gamble/:playerid - Update Gamble Lineup Page
+// * PUT /:lineupId/gamble/:playerid - Update Gamble Lineup Page
 //////////////////////////////
 router.put("/:lineupId/gamble/:playerId", lineupCtrl.putGamblePlayer);
 
 
 //////////////////////////////
-// DELETE /:lineupId/edit - Delete Lineup
+// ! DELETE /:lineupId/edit - Delete Lineup
 //////////////////////////////
 router.delete("/:lineupId/edit", lineupCtrl.deleteLineup);
 
