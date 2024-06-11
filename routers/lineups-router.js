@@ -13,6 +13,10 @@ router.get("/new", lineupCtrl.getNewLineup);
 router.post("/new", lineupCtrl.postNewLineup);
 
 //////////////////////////////
+// ? POST /new - Create New Lineup
+//////////////////////////////
+router.post("/new/reorder", lineupCtrl.postNewLineupRedirectToReorderLineup);
+//////////////////////////////
 // GET /:lineupId/edit - Edit Lineup Page
 //////////////////////////////
 router.get("/:lineupId/edit", lineupCtrl.getEditLineup);

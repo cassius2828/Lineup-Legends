@@ -14,6 +14,8 @@ let moneyLeftValue = Number(moneyLeft.getAttribute("data-value"));
 // Function to submit the lineup form
 function confirmLineup() {
   document.getElementById("lineupForm").submit();
+  //  this form creates lineup then redirects user to reorder page
+  document.getElementById("lineupFormReorder").submit();
 }
 
 /////////////////////////
@@ -69,16 +71,22 @@ function addPlayerToLineupRow(player) {
       cell.appendChild(removePlayer);
       removePlayer.classList.add("remove-player-btn");
 
-      // create the hidden input for form submission
-      const hiddenInput = document.createElement("input");
-      hiddenInput.value = playerId;
-      hiddenInput.type = "hidden";
-      hiddenInput.name = "playerIds[]";
+      // Create the hidden inputs for form submission | we have two forms, one allows you to edit your lineup after creation
+      const hiddenInput1 = document.createElement("input");
+      hiddenInput1.value = playerId;
+      hiddenInput1.type = "hidden";
+      hiddenInput1.name = "playerIds[]";
+
+      const hiddenInput2 = document.createElement("input");
+      hiddenInput2.value = playerId;
+      hiddenInput2.type = "hidden";
+      hiddenInput2.name = "playerIds[]";
 
       // Add event listener to btn as it is created
       removePlayer.addEventListener("click", (e) => {
         e.stopPropagation();
-        removePlayerFromLineupRow(player, cell, hiddenInput);
+
+        removePlayerFromLineupRow(player, cell, hiddenInput1, hiddenInput2);
       });
 
       cell.style.border = "none";
@@ -89,7 +97,12 @@ function addPlayerToLineupRow(player) {
       // Set filters to indicate to user that the player has been selected
       player.classList.add("dim-player");
 
-      document.getElementById("lineupForm").appendChild(hiddenInput);
+      document.getElementById("lineupForm").appendChild(hiddenInput1);
+      //  this form creates lineup then redirects user to reorder page
+      document.getElementById("lineupFormReorder").appendChild(hiddenInput2);
+
+      console.log(document.getElementById("lineupForm"));
+      console.log(document.getElementById("lineupFormReorder"));
       break;
     }
   }
@@ -98,10 +111,17 @@ function addPlayerToLineupRow(player) {
 ////////////////////////////////
 // Remove Player from Lineup Row
 ////////////////////////////////
-function removePlayerFromLineupRow(originalPlayer, cell, hiddenInput) {
+function removePlayerFromLineupRow(
+  originalPlayer,
+  cell,
+  hiddenInput1,
+  hiddenInput2
+) {
   cell.innerHTML = "";
   originalPlayer.classList.remove("dim-player");
-  hiddenInput.remove();
+  hiddenInput1.remove();
+  hiddenInput2.remove();
+
   const playerDataValue = originalPlayer
     .querySelector(".cell img")
     .getAttribute("data-value");

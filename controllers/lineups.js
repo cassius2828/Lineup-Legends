@@ -3,7 +3,7 @@ const PlayerModel = require("../models/player.js");
 const LineupModel = require("../models/lineup.js");
 
 //////////////////////////////
-// * Get New Lineup Page
+//  Get New Lineup Page
 //////////////////////////////
 const getNewLineup = async (req, res) => {
   let value5Players;
@@ -47,49 +47,23 @@ const getNewLineup = async (req, res) => {
 };
 
 //////////////////////////////
-// * Post New Lineup
+// ? Post New Lineup
 //////////////////////////////
 const postNewLineup = async (req, res) => {
-  const playerIds = req.body["playerIds[]"] || [];
-  const [pg, sg, sf, pf, c] = playerIds;
+  // function logic at bottom of file
+  createNewLineup(req, res);
+};
 
-  const lineupData = {
-    pg,
-    sg,
-    sf,
-    pf,
-    c,
-    featured: false,
-    owner: req.session.user?._id,
-  };
-
-  try {
-    // Checks to ensure lineup is within the $15 value range
-    const selectedPlayers = await PlayerModel.find({
-      _id: { $in: playerIds },
-    });
-    const totalValue = selectedPlayers.reduce(
-      (acc, player) => acc + player["value"],
-      0
-    );
-    if (totalValue > 15)
-      return res
-        .status(500)
-        .send(
-          "Lineup funds were overdrawn. Lineup could not be created. Please try again"
-        );
-
-    await LineupModel.create(lineupData);
-    console.log("Lineup created successfully");
-    res.redirect(`${req.session.user._id}`);
-  } catch (err) {
-    console.error("Error creating lineup:", err);
-    res.status(500).send("Error occurred in the lineup creation process");
-  }
+////////////////////////////////////////////////////////////
+// ? Post New Lineup | Redirect to Reorder Lineup
+////////////////////////////////////////////////////////////
+const postNewLineupRedirectToReorderLineup = async (req, res) => {
+  // function logic at bottom of file
+  createNewLineup(req, res, "reorder");
 };
 
 //////////////////////////////
-// * Get Edit Lineup Page
+//  Get Edit Lineup Page
 //////////////////////////////
 const getEditLineup = async (req, res) => {
   const selectedLineup = await LineupModel.findById(req.params.lineupId)
@@ -103,7 +77,7 @@ const getEditLineup = async (req, res) => {
 };
 
 //////////////////////////////
-// * Get Gamble Player Page
+//  Get Gamble Player Page
 //////////////////////////////
 const getGamblePlayer = async (req, res) => {
   const lineup = await LineupModel.findById(req.params.lineupId);
@@ -202,7 +176,7 @@ const putGamblePlayer = async (req, res) => {
   }
 };
 //////////////////////////////
-// * Delete Lineup
+// ! Delete Lineup
 //////////////////////////////
 const deleteLineup = async (req, res) => {
   const ownerId = req.session.user._id;
@@ -224,7 +198,7 @@ const deleteLineup = async (req, res) => {
 };
 
 //////////////////////////////
-// * Get User Lineups
+//  Get User Lineups
 //////////////////////////////
 const getUserLineups = async (req, res) => {
   const userLineups = await LineupModel.find({ owner: req.session.user._id })
@@ -309,5 +283,65 @@ module.exports = {
   deleteLineup,
   getUserLineups,
   putGamblePlayer,
+  postNewLineupRedirectToReorderLineup,
   reorderLineup,
 };
+
+///////////////////////////
+// FUNCTIONS
+///////////////////////////
+
+async function createNewLineup(req, res, decideRedirectPath) {
+  let redirectPath;
+  const playerIds = req.body["playerIds[]"] || [];
+  const [pg, sg, sf, pf, c] = playerIds;
+
+  const lineupData = {
+    pg,
+    sg,
+    sf,
+    pf,
+    c,
+    featured: false,
+    owner: req.session.user?._id,
+  };
+
+  try {
+    // Checks to ensure lineup is within the $15 value range
+    const selectedPlayers = await PlayerModel.find({
+      _id: { $in: playerIds },
+    });
+    const totalValue = selectedPlayers.reduce(
+      (acc, player) => acc + player["value"],
+      0
+    );
+    if (totalValue > 15)
+      return res
+        .status(500)
+        .send(
+          "Lineup funds were overdrawn. Lineup could not be created. Please try again"
+        );
+
+    const newLineup = await LineupModel.create(lineupData);
+    console.log("Lineup created successfully");
+    const newLineupId = newLineup._id;
+
+    // conditionally redirect based on which btn was chosen for confirm lineup
+    if (decideRedirectPath === "reorder") {
+      redirectPath = `/lineups/${newLineupId}/edit`;
+    } else {
+      redirectPath = `${req.session.user._id}`;
+    }
+    res.redirect(redirectPath);
+  } catch (err) {
+    console.error("Error creating lineup:", err);
+    res.status(500).send("Error occurred in the lineup creation process");
+  }
+}
+
+/*
+reorder lineup
+      res.redirect(`${newLineupId}/edit`);
+view lineups 
+req.session.user._id
+*/

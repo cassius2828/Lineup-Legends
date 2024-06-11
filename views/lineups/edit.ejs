@@ -8,7 +8,7 @@
       <h1>Edit Your Lineup</h1>
       <div class="content-container">
         <div class="reorder-lineup-container hide fade-in-from-left">
-          <form
+            <form
             id="reorder-lineup-form"
             action="/lineups/<%= lineup._id %>/edit/reorder-lineup?_method=PUT"
             method="POST"
@@ -18,13 +18,11 @@
             <label for="<%= position %>"><%= position.toUpperCase() %></label>
             <select name="<%= position %>" id="<%= position %>">
               <option value="">Select Player</option>
-              <% ['pg', 'sg', 'sf', 'pf', 'c'].forEach(p => { %>
-              <% if (lineup[p]) { %>
+              <% ['pg', 'sg', 'sf', 'pf', 'c'].forEach(p => { %> <% if (lineup[p]) { %>
               <option value="<%= lineup[p]._id %>">
                 <%= lineup[p].firstName %> <%= lineup[p].lastName %>
               </option>
-              <% } %>
-              <% }); %>
+              <% } %> <% }); %>
             </select>
             <% }); %>
             <button id="reorder-lineup-submit" type="submit" class="lineup-btn">
@@ -42,7 +40,7 @@
               <% if (lineup?.rating) { %>
               <h2 class="lineup-rating"><%= lineup?.rating %></h2>
               <% } else { %>
-              <h2 class="lineup-rating">8.92</h2>
+              <h2 class="lineup-rating">N/A</h2>
               <% } %>
             </header>
             <div class="lineup-players">

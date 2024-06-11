@@ -125,14 +125,23 @@
       </div>
 
       <div class="right-container">
+        <!-- reorder form -->
+
+
         <div class="selected-players">
           <% for (let i = 0; i < 5; i++) { %>
           <div class="selected-cell"></div>
           <% } %>
         </div>
-        <form id="lineupForm" action="/lineups/new" method="POST">
+        <div style="display: flex;">
+           <form style="background-color: transparent;" id="lineupForm" action="/lineups/new" method="POST">
           <button type="submit" class="confirm-button">Confirm Lineup</button>
+        </form> 
+        <form style="background-color: transparent;" id="lineupFormReorder" action="/lineups/new/reorder" method="POST">
+          <button type="submit" class="confirm-button">Confirm & Reorder</button>
         </form>
+        </div>
+       
       </div>
     </section>
 <!-- js file -->
