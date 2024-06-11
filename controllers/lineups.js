@@ -272,8 +272,8 @@ const reorderLineup = async (req, res) => {
       .status(400)
       .send("Duplicate players found. Lineup could not be updated");
   }
-  compareArr.forEach((item) => {
-    if (item === "")
+  compareArr.forEach((value) => {
+    if (value === "")
       return res
         .status(400)
         .send("Empty entries found in request. Lineup could not be updated.");

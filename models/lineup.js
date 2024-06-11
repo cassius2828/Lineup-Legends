@@ -55,3 +55,29 @@ const lineupSchema = new mongoose.Schema(
 const LineupModel = mongoose.model("Lineup", lineupSchema);
 
 module.exports = LineupModel;
+
+
+/*
+RATINGS:
+look into virtual fields for mongoose schemas so you can 
+automatically convert the average for the ratings
+
+I am thinking I could use an aggregate pipeline and do something like this
+I will need to look up how to do this properly, but this is my general idea
+
+LineupModel.aggregation([
+{
+//* choose the key I am manipulating
+$project: {
+rating: 1,
+* get the total ammount of all ratings
+totalAmount: {$sum: [rating]},
+* get average of the ratings by dividing the total amount by the num of ratings listed in array
+avgRating: {$divide: [$sum, $numOfRatings]}
+
+}
+}
+])
+
+
+*/

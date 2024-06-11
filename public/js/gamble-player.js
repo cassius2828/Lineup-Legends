@@ -8,7 +8,7 @@ const deleteModal = document.createElement("div");
 const gambleModal = document.createElement("div");
 
 // Buttons
-// come up with better names
+// * come up with better names
 const initiateGambleBtn = document.querySelector(".lineup-btn.gamble");
 const firstDeleteBtn = document.querySelector(".lineup-btn.delete");
 
