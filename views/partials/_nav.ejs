@@ -12,9 +12,25 @@
     </li>
     <li>
       <div class="profile-img-container">
-        <img src="/images/misc/default-user.jpg" alt="" />
+        <img id="profile-img" src="/images/misc/default-user.jpg" alt="" />
       </div>
     </li>
     <% } %>
   </ul>
+  <% if (user) { %>
+    <div class="hide" id="profile-dropdown">
+    <ul>
+      <li>
+        <a href="">edit profile</a>
+      </li>
+      <li>
+        <a href="">add friends</a>
+      </li>
+      <li>
+        <a href="/auth/sign-out">sign out</a>
+      </li>
+    </ul>
+  </div>
+  <% } %>
+ 
 </nav>

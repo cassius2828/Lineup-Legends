@@ -6,11 +6,7 @@ const LineupModel = require("../models/lineup.js");
 //  Get New Lineup Page
 //////////////////////////////
 const getNewLineup = async (req, res) => {
-  let value5Players;
-  let value4Players;
-  let value3Players;
-  let value2Players;
-  let value1Players;
+  let value5Players, value4Players, value3Players, value2Players, value1Players;
 
   try {
     value5Players = await PlayerModel.aggregate([
@@ -50,7 +46,6 @@ const getNewLineup = async (req, res) => {
 // ? Post New Lineup
 //////////////////////////////
 const postNewLineup = async (req, res) => {
-  // function logic at bottom of file
   createNewLineup(req, res);
 };
 
@@ -58,7 +53,6 @@ const postNewLineup = async (req, res) => {
 // ? Post New Lineup | Redirect to Reorder Lineup
 ////////////////////////////////////////////////////////////
 const postNewLineupRedirectToReorderLineup = async (req, res) => {
-  // function logic at bottom of file
   createNewLineup(req, res, "reorder");
 };
 
@@ -84,13 +78,13 @@ const getGamblePlayer = async (req, res) => {
   const playerToGamble = await PlayerModel.findById(
     req.params.playerId
   ).populate();
-  //   console.log(playerToGamble);
   res.render("lineups/gamble.ejs", {
     player: playerToGamble,
     lineup,
     randomPlayer: null,
   });
 };
+
 //////////////////////////////
 // * PUT Gamble Lineup Page
 //////////////////////////////
@@ -110,44 +104,27 @@ const putGamblePlayer = async (req, res) => {
     async function determineValueOfPlayer() {
       if (playerToGambleValue === 1) {
         return await PlayerModel.aggregate([
-          {
-            $match: {
-              value: { $eq: playerToGambleValue },
-            },
-          },
-          {
-            $sample: { size: 1 },
-          },
+          { $match: { value: { $eq: playerToGambleValue } } },
+          { $sample: { size: 1 } },
         ]);
       } else if (playerToGambleValue === 5) {
         return await PlayerModel.aggregate([
-          {
-            $match: {
-              value: { $lte: playerToGambleValue },
-            },
-          },
-          {
-            $sample: { size: 1 },
-          },
+          { $match: { value: { $lte: playerToGambleValue } } },
+          { $sample: { size: 1 } },
         ]);
       } else {
         return await PlayerModel.aggregate([
-          {
-            $match: {
-              value: { $lte: playerToGambleValue + 1 },
-            },
-          },
-          {
-            $sample: { size: 1 },
-          },
+          { $match: { value: { $lte: playerToGambleValue + 1 } } },
+          { $sample: { size: 1 } },
         ]);
       }
     }
-    // LET allows for recursion if the same player has been selected
-    // it wont fully prevent it, but it drastically lowers the odds of it happening back to back
-    let randomPlayer = await determineValueOfPlayer();
-    // iterate over each position to find the position of the player we are gambling away
 
+    // LET allows for recursion if the same player has been selected
+    // it won't fully prevent it, but it drastically lowers the odds of it happening back to back
+    let randomPlayer = await determineValueOfPlayer();
+
+    // iterate over each position to find the position of the player we are gambling away
     for (const position of positions) {
       if (lineup[position].toString() === playerToGamble._id.toString()) {
         // replace with the value of the random player generated
@@ -171,10 +148,11 @@ const putGamblePlayer = async (req, res) => {
       lineup,
     });
   } catch (err) {
-    console.error(err); // Log the error to the console
+    console.error(err);
     return res.status(500).send(err.message || "Internal Server Error");
   }
 };
+
 //////////////////////////////
 // ! Delete Lineup
 //////////////////////////////
@@ -201,7 +179,7 @@ const deleteLineup = async (req, res) => {
 //  Get User Lineups
 //////////////////////////////
 const getUserLineups = async (req, res) => {
-  const userLineups = await LineupModel.find({ owner: req.session.user._id })
+  let userLineups = await LineupModel.find({ owner: req.session.user._id })
     .populate("pg")
     .populate("sg")
     .populate("sf")
@@ -209,21 +187,7 @@ const getUserLineups = async (req, res) => {
     .populate("c");
 
   // for each lineup, I will iterate over it and add my timestamp to the res.locals
-  userLineups.forEach((lineup) => {
-    if (lineup.createdAt) {
-      // using the module to format the date from when it was created
-      lineup.relativeTime = formatDistanceToNow(new Date(lineup.createdAt), {
-        // adds the m/h/d/y
-        addSuffix: true,
-      });
-    }
-    if (lineup.updatedAt) {
-      lineup.updatedTime = formatDistanceToNow(new Date(lineup.updatedAt), {
-        // adds the m/h/d/y
-        addSuffix: true,
-      });
-    }
-  });
+  userLineups = getRelativeTime(userLineups);
 
   res.render("lineups/index.ejs", { lineups: userLineups });
 };
@@ -246,22 +210,19 @@ const reorderLineup = async (req, res) => {
       .status(400)
       .send("Duplicate players found. Lineup could not be updated");
   }
+
   compareArr.forEach((value) => {
-    if (value === "")
+    if (value === "") {
       return res
         .status(400)
         .send("Empty entries found in request. Lineup could not be updated.");
+    }
   });
+
   try {
     const reorderedLineup = await LineupModel.findByIdAndUpdate(
       lineupId,
-      {
-        pg,
-        sg,
-        sf,
-        pf,
-        c,
-      },
+      { pg, sg, sf, pf, c },
       { new: true }
     );
     if (!reorderedLineup) {
@@ -275,6 +236,42 @@ const reorderLineup = async (req, res) => {
   }
 };
 
+//////////////////////////////
+// GET explore lineups
+//////////////////////////////
+const getExploreLineups = async (req, res) => {
+  let allLineups = await LineupModel.find({})
+    .populate("pg")
+    .populate("sg")
+    .populate("sf")
+    .populate("pf")
+    .populate("c");
+
+  // for each lineup, I will iterate over it and add my timestamp to the res.locals
+  allLineups = getRelativeTime(allLineups);
+
+  res.render("lineups/explore.ejs", { lineups: allLineups });
+};
+
+//////////////////////////////
+// GET rate lineup
+//////////////////////////////
+const getRateLineup = async (req, res) => {
+  const selectedLineup = await LineupModel.findById(req.params.lineupId)
+    .populate("pg")
+    .populate("sg")
+    .populate("sf")
+    .populate("pf")
+    .populate("c");
+    
+    // allows me to use my fucntion to add the relative time to the locals obj
+  let lineupArr = [];
+  lineupArr.push(selectedLineup);
+  lineupArr = getRelativeTime(lineupArr);
+
+  res.render("lineups/rate.ejs", { lineup: lineupArr[0] });
+};
+
 module.exports = {
   getNewLineup,
   postNewLineup,
@@ -285,6 +282,8 @@ module.exports = {
   putGamblePlayer,
   postNewLineupRedirectToReorderLineup,
   reorderLineup,
+  getExploreLineups,
+  getRateLineup,
 };
 
 ///////////////////////////
@@ -308,19 +307,18 @@ async function createNewLineup(req, res, decideRedirectPath) {
 
   try {
     // Checks to ensure lineup is within the $15 value range
-    const selectedPlayers = await PlayerModel.find({
-      _id: { $in: playerIds },
-    });
+    const selectedPlayers = await PlayerModel.find({ _id: { $in: playerIds } });
     const totalValue = selectedPlayers.reduce(
       (acc, player) => acc + player["value"],
       0
     );
-    if (totalValue > 15)
+    if (totalValue > 15) {
       return res
         .status(500)
         .send(
           "Lineup funds were overdrawn. Lineup could not be created. Please try again"
         );
+    }
 
     const newLineup = await LineupModel.create(lineupData);
     console.log("Lineup created successfully");
@@ -330,7 +328,7 @@ async function createNewLineup(req, res, decideRedirectPath) {
     if (decideRedirectPath === "reorder") {
       redirectPath = `/lineups/${newLineupId}/edit`;
     } else {
-      redirectPath = `${req.session.user._id}`;
+      redirectPath = `/lineups/${req.session.user._id}`;
     }
     res.redirect(redirectPath);
   } catch (err) {
@@ -339,9 +337,22 @@ async function createNewLineup(req, res, decideRedirectPath) {
   }
 }
 
-/*
-reorder lineup
-      res.redirect(`${newLineupId}/edit`);
-view lineups 
-req.session.user._id
-*/
+// gets relative time to display on UI
+function getRelativeTime(arr) {
+  arr.forEach((lineup) => {
+    if (lineup.createdAt) {
+      // using the module to format the date from when it was created
+      lineup.relativeTime = formatDistanceToNow(new Date(lineup.createdAt), {
+        // adds the m/h/d/y
+        addSuffix: true,
+      });
+    }
+    if (lineup.updatedAt) {
+      lineup.updatedTime = formatDistanceToNow(new Date(lineup.updatedAt), {
+        // adds the m/h/d/y
+        addSuffix: true,
+      });
+    }
+  });
+  return arr;
+}

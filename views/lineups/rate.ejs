@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('../partials/head.ejs') %>
+  <body>
+    <%- include('../partials/_nav.ejs') %>
+
+    <section id="edit-lineup">
+      <h1>Rate This Lineup</h1>
+      <div class="content-container">
+        <div class="reorder-lineup-container hide fade-in-from-left">
+            <form
+            id="reorder-lineup-form"
+            action="/lineups/<%= lineup._id %>/edit/reorder-lineup?_method=PUT"
+            method="POST"
+            style="display: flex; flex-direction: column; gap: 1rem"
+          >
+            <% ['pg', 'sg', 'sf', 'pf', 'c'].forEach(position => { %>
+            <label for="<%= position %>"><%= position.toUpperCase() %></label>
+            <select name="<%= position %>" id="<%= position %>">
+              <option value="">Select Player</option>
+              <% ['pg', 'sg', 'sf', 'pf', 'c'].forEach(p => { %> <% if (lineup[p]) { %>
+              <option value="<%= lineup[p]._id %>">
+                <%= lineup[p].firstName %> <%= lineup[p].lastName %>
+              </option>
+              <% } %> <% }); %>
+            </select>
+            <% }); %>
+            <button id="reorder-lineup-submit" type="submit" class="lineup-btn">
+              Save Lineup
+            </button>
+          </form>
+        </div>
+
+        <div class="lineup-container">
+          <div data-lineup-id="<%= lineup._id %>" class="lineup-card">
+            <header class="lineup-header">  
+                <span class="lineup-edit-close">x</span>
+            
+                <h3 class="owner-username">
+                        <%= lineup.owner._id %>  
+                </h3>
+                <% if (lineup?.rating) { %>
+                    <h2 class="lineup-rating"><%= lineup?.rating %></h2> 
+                    <% } else { %>
+                     <h2 class="lineup-rating">Rating: N/A</h2> 
+                    <% } %>
+                <% if (lineup?.relativeTime) { %>
+                  <span class="lineup-relativeTime">est. <%= lineup?.relativeTime %></span> 
+                  <% } else { %>
+                   <span class="lineup-relativeTime">4 hr ago</span> 
+                  <% } %>
+              
+              </header>
+            <div class="lineup-players">
+              <% ['pg', 'sg', 'sf', 'pf', 'c'].forEach(position => { %>
+              <% if (lineup[position]) { %>
+              <div data-player-id="<%= lineup[position]._id %>" class="player">
+                <img
+                  src="<%= lineup[position].imgUrl %>"
+                  alt="<%= lineup[position].firstName %> <%= lineup[position].lastName %>"
+                />
+                <span class="player-name">
+                  <%= lineup[position].firstName %> <%= lineup[position].lastName %>
+                </span>
+              </div>
+              <% } %>
+              <% }); %>
+            </div>
+            <div class="slidecontainer">  <span id="ratingValue">5.0</span>
+                <input type="range" min="1" max="10" step="0.1" value="5" class="slider" id="myRating">
+              
+              </div>              
+            <footer class="lineup-footer">
+              <div class="lineup-actions">
+                <div class="move-btn-container">
+                  <input
+                    type="hidden"
+                    id="reorder-lineup"
+                    name="reorder-lineup"
+                  />
+                 <!-- Cancel Button -->
+           
+                <button type="submit" class="lineup-btn up-vote">
+                  <span>
+                    <a
+                      class="cancel-btn"
+                      href="/lineups/explore"
+                    >
+                      cancel
+                    </a>
+                  </span>
+                  <i class="fa-solid fa-ban"></i>
+                </button>
+            
+                </div>
+                <form action="/lineups/<%= lineup._id %>/rate" method="POST">
+                    <div class="rate-btn-container">
+                      <button type="submit" class="lineup-btn gamble edit-gamble">
+                        <span class="rate-btn"> confirm rating </span>
+                        <i class="fa-solid fa-gavel"></i>
+
+                      </button>
+                    </div>
+                </form>
+             
+              </div>
+            </footer>
+          </div>
+        </div>
+      </div>
+    </section>
+    <script>
+        const closeBtn = document.querySelector('.lineup-edit-close');
+        document.addEventListener('DOMContentLoaded', (event) => {
+  const slider = document.getElementById("myRating");
+  const output = document.getElementById("ratingValue");
+
+  // Set initial value
+  output.innerHTML = slider.value;
+
+  // Update the current slider value
+  slider.oninput = function() {
+    output.innerHTML = this.value;
+  }
+});
+
+    </script>
+  </body>
+</html>

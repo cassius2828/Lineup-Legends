@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('../partials/head.ejs') %>
+  <body>
+    <%- include('../partials/_nav.ejs') %>
+
+    <section id="user-lineups">
+      <h1>Explore Lineups</h1>
+      <% if (lineups.length === 0) { %>
+      <p>
+        You don't have any lineups yet... let's fix that and create your first
+        lineup now!
+      </p>
+      <button class="create-btn">
+        <a href="/lineups/new">Create a lineup</a>
+      </button>
+      <% } %>
+      <div class="lineup-container">
+        <% lineups.forEach(lineup => { %>
+        <div class="lineup-card">
+          <header class="lineup-header">
+            <% if (user._id.toString() === lineup.owner._id.toString()) { %>
+               
+                <a href="/lineups/<%= lineup._id %>/edit"><span class="lineup-edit">...</span></a>
+               <% } %>
+            <h3 class="owner-username">
+                <% if (user._id.toString() === lineup.owner._id.toString()) { %>
+                 Your lineup
+                <% } else { %>
+                    <%= lineup.owner._id %>
+                    <% } %>
+            </h3>
+            <% if (lineup?.rating) { %>
+                <h2 class="lineup-rating"><%= lineup?.rating %></h2> 
+                <% } else { %>
+                 <h2 class="lineup-rating">Rating: N/A</h2> 
+                <% } %>
+            <% if (lineup?.relativeTime) { %>
+              <span class="lineup-relativeTime">est. <%= lineup?.relativeTime %></span> 
+              <% } else { %>
+               <span class="lineup-relativeTime">4 hr ago</span> 
+              <% } %>
+          
+          </header>
+          <div class="lineup-players">
+            <% ['pg', 'sg', 'sf', 'pf', 'c'].forEach(position => { %>
+            <% if (lineup[position]) { %>
+            <div class="player">
+              <img
+                src="<%= lineup[position].imgUrl %>"
+                alt="<%= lineup[position].firstName %> <%= lineup[position].lastName %>"
+              />
+              <span class="player-name">
+                <%= lineup[position].firstName %> <%= lineup[position].lastName %>
+              </span>
+            </div>
+            <% } %>
+            <% }); %>
+          </div>
+          <footer class="lineup-footer">
+            <div class="lineup-actions">
+              <div class="vote-btn-container">
+                <form class="vote-form" action="/lineups/<%= lineup._id %>/vote" method="POST">
+                 <input type="hidden" id="up-vote" name="up-vote" value="" onclick="setVoteValue('up')">
+                    <button type="submit" class="lineup-btn up-vote">
+                    <i class="fa-solid fa-circle-arrow-up"></i>
+                  </button>
+              
+                <span class="num-of-votes"> <% if (lineup?.comments) { %>
+                    <%= lineup?.comments.length %>
+                  <% } else { %>
+                    4
+                  <% } %></span>
+             
+                  <button type="submit" class="lineup-btn down-vote">
+                 <input type="hidden" id="down-vote" name="down-vote" value="" onclick="setVoteValue('down')">
+                    <i class="fa-solid fa-circle-arrow-down"></i>
+                  </button>
+                </form>
+              </div>
+              <div class="comment-btn-container">
+                <form action="/lineups/<%= lineup._id %>/comment" method="GET">
+                  <button type="submit" class="lineup-btn">
+                    <i class="fa-regular fa-comment"></i>
+                    <span class="comment-btn">
+                        <% if (lineup?.comments) { %>
+                            <%= lineup?.comments.length %>
+                          <% } else { %>
+                            4
+                          <% } %>
+                    </span>
+                  </button>
+                </form>
+              </div>
+              <% if (user._id.toString() === lineup.owner._id.toString()) { %>
+   <div class="award-btn-container">
+
+                <form action="">
+                    <button class="award-btn">
+                         <i class="fa-solid fa-award"></i>
+                    </button>
+                </form>
+               
+              </div>
+               
+              <% } else { %>
+                <div class="award-btn-container">
+                  <a href="/lineups/<%= lineup._id %>/rate">
+                      <button class="award-btn">
+                          Rate
+                          <i class="fa-solid fa-gavel"></i>
+                      </button>
+                  </a>
+                </div>
+                <% } %>
+           
+              <div class="share-btn-container">
+                <form action="/lineups/<%= lineup._id %>/share" method="GET">
+                  <button type="submit" class="lineup-btn">
+                    <i class="fa-solid fa-share"></i>
+                    <span>Share</span>
+                  </button>
+                </form>
+              </div>
+            </div>
+          </footer>
+        </div>
+        <% }); %>
+      </div>
+    </section>
+    <script>
+        // controls the voting input values
+        function setVoteValue(voteType) {
+          document.getElementById('up-vote').value = voteType === 'up' ? 'true' : '';
+          document.getElementById('down-vote').value = voteType === 'down' ? 'true' : '';
+        }
+      </script>
+  </body>
+</html>
