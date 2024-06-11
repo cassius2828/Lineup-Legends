@@ -122,37 +122,71 @@ const getGamblePlayer = async (req, res) => {
 //////////////////////////////
 const putGamblePlayer = async (req, res) => {
   try {
+    // get lineup from params
     const lineup = await LineupModel.findById(req.params.lineupId);
+    // select the player to gamble from params
     const playerToGamble = await PlayerModel.findById(req.params.playerId);
+    // value of player to gamble
     const playerToGambleValue = playerToGamble.value;
-
-    const randomPlayer = await PlayerModel.aggregate([
-      {
-        $match: {
-          value: { $lte: playerToGambleValue + 1 },
-        },
-      },
-      {
-        $sample: { size: 1 },
-      },
-    ]);
 
     // list of keys to plug in as we iterate over the document
     const positions = ["pg", "sg", "sf", "pf", "c"];
-    positions.forEach((position) => {
-        // if the document key value matches the player to gamble now we know where to replace
+
+    // function to determine what players are availble to be received from gamble
+    async function determineValueOfPlayer() {
+      if (playerToGambleValue === 1) {
+        return await PlayerModel.aggregate([
+          {
+            $match: {
+              value: { $eq: playerToGambleValue },
+            },
+          },
+          {
+            $sample: { size: 1 },
+          },
+        ]);
+      } else if (playerToGambleValue === 5) {
+        return await PlayerModel.aggregate([
+          {
+            $match: {
+              value: { $lte: playerToGambleValue },
+            },
+          },
+          {
+            $sample: { size: 1 },
+          },
+        ]);
+      } else {
+        return await PlayerModel.aggregate([
+          {
+            $match: {
+              value: { $lte: playerToGambleValue + 1 },
+            },
+          },
+          {
+            $sample: { size: 1 },
+          },
+        ]);
+      }
+    }
+    const randomPlayer = await determineValueOfPlayer();
+    // iterate over each position to find the position of the player we are gambling away
+
+    for (const position of positions) {
       if (lineup[position].toString() === playerToGamble._id.toString()) {
         // replace with the value of the random player generated
+        console.log(randomPlayer);
         lineup[position] = randomPlayer[0]._id;
-        lineup.save();
-    
+        // save changes of our document
+        await lineup.save();
+
         console.log(
           `We replaced ${playerToGamble.firstName} with ${randomPlayer[0].firstName}`
         );
+        break;
       }
-    });
+    }
 
-    return res.send("gambnle");
     res.render("lineups/gamble.ejs", {
       player: playerToGamble,
       randomPlayer,
