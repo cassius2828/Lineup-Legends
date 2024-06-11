@@ -29,6 +29,21 @@
               </div>
             </div>
             <i class="fa-solid fa-angles-right"></i>
+            <% if (randomPlayer) { %>
+            <!-- Random Player -->
+            <div class="player random">
+              <img src="<%= randomPlayer.imgUrl %>" alt="mystery player" />
+              <div class="player-text gamble">
+                <span class="player-name">
+                  Name: <%= randomPlayer.firstName %> <%= randomPlayer.lastName
+                  %>
+                </span>
+                <span class="player-value">
+                  Value: $<%= randomPlayer.value %>
+                </span>
+              </div>
+            </div>
+            <% } else { %>
             <!-- Mystery Player -->
             <div class="player mystery">
               <img src="/images/misc/default-user.jpg" alt="mystery player" />
@@ -37,10 +52,29 @@
                 <span class="player-value"> Value: $? </span>
               </div>
             </div>
+            <span class="loader hide"></span>
+            <% } %>
           </div>
+
           <!-- Lineup Footer with Actions -->
           <footer class="lineup-footer">
             <div class="lineup-actions">
+              <% if (randomPlayer) { %>
+              <!-- Cancel Button -->
+              <div class="move-btn-container">
+                <button type="submit" class="lineup-btn up-vote">
+                  <span>
+                    <a
+                      class="cancel-btn"
+                      href="/lineups/<%= lineup._id %>/edit"
+                    >
+                      back to lineup edit
+                    </a>
+                  </span>
+                  <i class="fa-solid fa-arrow-rotate-left"></i>
+                </button>
+              </div>
+              <% } else { %>
               <!-- Cancel Button -->
               <div class="move-btn-container">
                 <button type="submit" class="lineup-btn up-vote">
@@ -58,19 +92,47 @@
               <!-- Gamble Button -->
               <div class="comment-btn-container">
                 <form
+                  id="gamble-form"
                   action="/lineups/<%= lineup._id %>/gamble/<%= player._id %>?_method=PUT"
                   method="POST"
                 >
-                  <button type="submit" class="lineup-btn gamble">
+                  <button
+                    type="submit"
+                    class="lineup-btn gamble initiate-gamble"
+                  >
                     <span class="gamble-btn"> gamble </span>
                     <i class="fa-solid fa-dice"></i>
                   </button>
                 </form>
               </div>
+              <% } %>
             </div>
           </footer>
         </div>
       </div>
     </section>
+    <script>
+      const gambleForm = document.querySelector("#gamble-form");
+      const gambleViewGambleBtn = document.querySelector(
+        ".gamble.lineup-btn.initiate-gamble"
+      );
+      const loader = document.querySelector('.loader')
+      const mysteryPlayer = document.querySelector(".player.mystery");
+    
+      // Delay the form submission
+      gambleViewGambleBtn?.addEventListener("click", (e) => {
+        e.preventDefault(); // Prevent the default form submission
+        mysteryPlayer.classList.add("fade-out");
+  
+        loader.classList.remove("hide");
+        loader.classList.add("fade-in");
+        loader.classList.add("quick");
+        console.log(mysteryPlayer);
+        setTimeout(() => {
+          console.log("i am trying to delay the HTTP request");
+          gambleForm.submit(); // Submit the form after 3 seconds
+        }, 1750);
+      });
+    </script>
   </body>
 </html>

@@ -8,6 +8,7 @@ const deleteModal = document.createElement("div");
 const gambleModal = document.createElement("div");
 
 // Buttons
+// come up with better names
 const initiateGambleBtn = document.querySelector(".lineup-btn.gamble");
 const firstDeleteBtn = document.querySelector(".lineup-btn.delete");
 
@@ -15,9 +16,11 @@ const firstDeleteBtn = document.querySelector(".lineup-btn.delete");
 // Players selector
 const players = document.querySelectorAll(".player");
 let selectedPlayerArr = [];
-  let playerId = null;
+let playerId = null;
 
-  const lineupId = document.querySelector('.lineup-card').getAttribute('data-lineup-id')
+const lineupId = document
+  .querySelector(".lineup-card")
+  .getAttribute("data-lineup-id");
 //////////////////////////////
 // Event listener for player selection
 //////////////////////////////
@@ -30,7 +33,6 @@ players.forEach((player) =>
         // If it does not have the class, it will be added to the array and style added to img
         player.querySelector("img").classList.add("select-gamble");
         selectedPlayerArr.push(player);
-    
       } else if (selectedPlayerArr.length === 1) {
         // Check if each player has the class, if it does remove it from the array and the style
         players.forEach((p) => {
@@ -47,18 +49,18 @@ players.forEach((player) =>
         selectedPlayerArr.push(player);
       }
       playerId = selectedPlayerArr?.[0]?.getAttribute("data-player-id");
-  
-      
     }
     // re-render with new form value for playerId
-   updateGambleForm()
-//    confirm gamble btn
-   const confirmPlayerToGambleBtn = document?.getElementById('confirm-player-to-gamble')
-   confirmPlayerToGambleBtn.setAttribute('disabled', false);
-   confirmPlayerToGambleBtn.classList.remove('disabled-btn');
+    updateGambleForm();
+    //    confirm gamble btn
+    const confirmPlayerToGambleBtn = document?.getElementById(
+      "confirm-player-to-gamble"
+    );
+    confirmPlayerToGambleBtn.setAttribute("disabled", false);
+    confirmPlayerToGambleBtn.classList.remove("disabled-btn");
     // gold gamble btn
-initiateGambleBtn.setAttribute('disabled',true);
-initiateGambleBtn.classList.add('disabled-btn');
+    initiateGambleBtn.setAttribute("disabled", true);
+    initiateGambleBtn.classList.add("disabled-btn");
   })
 );
 
@@ -87,7 +89,7 @@ let gambleForm = `
 // Update Gamble Form
 //////////////////////////////
 function updateGambleForm() {
-    gambleForm = `
+  gambleForm = `
     <h2>Select Player to Gamble</h2>
   <div>
     <a href="/lineups/${lineupId}/edit">Cancel</a>
@@ -95,8 +97,8 @@ function updateGambleForm() {
     <input type="hidden" value="${playerId}"/>
   </div>
     `;
-    showModal(gambleModal, gambleForm, "gamble");
-  }
+  showModal(gambleModal, gambleForm, "gamble");
+}
 //////////////////////////////
 // Event listener for gamble modal
 //////////////////////////////
@@ -115,15 +117,14 @@ firstDeleteBtn.addEventListener("click", (e) => {
 // Modal utility function
 //////////////////////////////
 function showModal(modal, form, selector) {
-    if(modal){
-        modal.innerHTML = ''
-    }
-    console.log(playerId)
+  if (modal) {
+    modal.innerHTML = "";
+  }
+  console.log(playerId);
   modal.innerHTML = form;
   section.appendChild(modal);
   modal.classList.add("edit-modals", selector);
 }
-
 
 /**
  // * anchor version of button

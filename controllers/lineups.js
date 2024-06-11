@@ -115,6 +115,7 @@ const getGamblePlayer = async (req, res) => {
   res.render("lineups/gamble.ejs", {
     player: playerToGamble,
     lineup,
+    randomPlayer:null
   });
 };
 //////////////////////////////
@@ -169,13 +170,17 @@ const putGamblePlayer = async (req, res) => {
         ]);
       }
     }
-    const randomPlayer = await determineValueOfPlayer();
+    // LET allows for recursion if the same player has been selected
+    // it wont fully prevent it, but it drastically lowers the odds of it happening back to back
+    let randomPlayer = await determineValueOfPlayer();
     // iterate over each position to find the position of the player we are gambling away
 
     for (const position of positions) {
       if (lineup[position].toString() === playerToGamble._id.toString()) {
         // replace with the value of the random player generated
-        console.log(randomPlayer);
+        if(playerToGamble._id.toString() === randomPlayer[0]._id.toString()){
+             randomPlayer = await determineValueOfPlayer()
+        }
         lineup[position] = randomPlayer[0]._id;
         // save changes of our document
         await lineup.save();
@@ -189,7 +194,7 @@ const putGamblePlayer = async (req, res) => {
 
     res.render("lineups/gamble.ejs", {
       player: playerToGamble,
-      randomPlayer,
+      randomPlayer:randomPlayer[0],
       lineup,
     });
   } catch (err) {
