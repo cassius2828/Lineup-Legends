@@ -26,10 +26,10 @@
                 <% } else { %>
                  <h2 class="lineup-rating">8.92</h2> 
                 <% } %>
-            <% if (lineup?.date) { %>
-              <span class="lineup-date">est. <%= lineup?.date %></span> 
+            <% if (lineup?.relativeTime) { %>
+              <span class="lineup-relativeTime">est. <%= lineup?.relativeTime %></span> 
               <% } else { %>
-               <span class="lineup-date">4 hr ago</span> 
+               <span class="lineup-relativeTime">4 hr ago</span> 
               <% } %>
           
           </header>

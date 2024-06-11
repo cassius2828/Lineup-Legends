@@ -1,3 +1,4 @@
+const { formatDistanceToNow } = require("date-fns");
 const PlayerModel = require("../models/player.js");
 const LineupModel = require("../models/lineup.js");
 
@@ -60,7 +61,7 @@ const postNewLineup = async (req, res) => {
     c,
     featured: false,
     owner: req.session.user?._id,
-    date: new Date()
+    date: new Date(),
   };
 
   try {
@@ -103,18 +104,65 @@ const getEditLineup = async (req, res) => {
 };
 
 //////////////////////////////
-// * Get Gamble Lineup Page
+// * Get Gamble Player Page
 //////////////////////////////
-const getGambleLineup = async (req, res) => {
+const getGamblePlayer = async (req, res) => {
   const lineup = await LineupModel.findById(req.params.lineupId);
-  const playerToGamble = await PlayerModel.findById(req.params.playerId).populate();
-  console.log(playerToGamble);
+  const playerToGamble = await PlayerModel.findById(
+    req.params.playerId
+  ).populate();
+  //   console.log(playerToGamble);
   res.render("lineups/gamble.ejs", {
     player: playerToGamble,
-    lineup
+    lineup,
   });
 };
+//////////////////////////////
+// * PUT Gamble Lineup Page
+//////////////////////////////
+const putGamblePlayer = async (req, res) => {
+  try {
+    const lineup = await LineupModel.findById(req.params.lineupId);
+    const playerToGamble = await PlayerModel.findById(req.params.playerId);
+    const playerToGambleValue = playerToGamble.value;
 
+    const randomPlayer = await PlayerModel.aggregate([
+      {
+        $match: {
+          value: { $lte: playerToGambleValue + 1 },
+        },
+      },
+      {
+        $sample: { size: 1 },
+      },
+    ]);
+
+    // list of keys to plug in as we iterate over the document
+    const positions = ["pg", "sg", "sf", "pf", "c"];
+    positions.forEach((position) => {
+        // if the document key value matches the player to gamble now we know where to replace
+      if (lineup[position].toString() === playerToGamble._id.toString()) {
+        // replace with the value of the random player generated
+        lineup[position] = randomPlayer[0]._id;
+        lineup.save();
+    
+        console.log(
+          `We replaced ${playerToGamble.firstName} with ${randomPlayer[0].firstName}`
+        );
+      }
+    });
+
+    return res.send("gambnle");
+    res.render("lineups/gamble.ejs", {
+      player: playerToGamble,
+      randomPlayer,
+      lineup,
+    });
+  } catch (err) {
+    console.error(err); // Log the error to the console
+    return res.status(500).send(err.message || "Internal Server Error");
+  }
+};
 //////////////////////////////
 // * Delete Lineup
 //////////////////////////////
@@ -148,7 +196,16 @@ const getUserLineups = async (req, res) => {
     .populate("pf")
     .populate("c");
 
-  console.log(userLineups);
+  // for each lineup, I will iterate over it and add my timestamp to the res.locals
+  userLineups.forEach((lineup) => {
+    if (lineup.createdAt) {
+      // using the module to format the date from when it was created
+      lineup.relativeTime = formatDistanceToNow(new Date(lineup.createdAt), {
+        // adds the m/h/d/y
+        addSuffix: true,
+      });
+    }
+  });
 
   res.render("lineups/index.ejs", { lineups: userLineups });
 };
@@ -157,7 +214,8 @@ module.exports = {
   getNewLineup,
   postNewLineup,
   getEditLineup,
-  getGambleLineup,
+  getGamblePlayer,
   deleteLineup,
   getUserLineups,
+  putGamblePlayer,
 };

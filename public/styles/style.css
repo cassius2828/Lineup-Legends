@@ -327,7 +327,7 @@ button:hover {
   margin-bottom: 1rem;
 }
 
-.lineup-date {
+.lineup-relativeTime {
   font-size: 1.25rem;
 }
 
@@ -431,8 +431,12 @@ button:hover {
   display: flex;
 }
 
+#edit-lineup header {
+    margin-bottom: 4rem;
+}
+
 #edit-lineup .lineup-edit-close {
-  top: -200%;
+  top: -3rem;
   right: 0;
   color: rgb(221, 90, 90);
   font-size: 2.25rem;

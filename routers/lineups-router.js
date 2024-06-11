@@ -18,9 +18,15 @@ router.post("/new", lineupCtrl.postNewLineup);
 router.get("/:lineupId/edit", lineupCtrl.getEditLineup);
 
 //////////////////////////////
-// GET /:lineupId/gamble - Gamble Lineup Page
+// GET /:lineupId/gamble/:playerid  - Gamble Lineup Page
 //////////////////////////////
-router.get("/:lineupId/gamble/:playerId", lineupCtrl.getGambleLineup);
+router.get("/:lineupId/gamble/:playerId", lineupCtrl.getGamblePlayer);
+
+//////////////////////////////
+// PUT /:lineupId/gamble/:playerid - Update Gamble Lineup Page
+//////////////////////////////
+router.put("/:lineupId/gamble/:playerId", lineupCtrl.putGamblePlayer);
+
 
 //////////////////////////////
 // DELETE /:lineupId/edit - Delete Lineup
