@@ -212,7 +212,7 @@ input {
 
 button,
 .vote-form {
-  background-color: #28a745;
+  background-color: #8c8258;
   color: #fff;
   border: none;
   padding: 1rem 2rem;
@@ -220,10 +220,6 @@ button,
   cursor: pointer;
   margin-top: 2rem;
   border-radius: 0.5rem;
-}
-
-button:hover {
-  background-color: #218838;
 }
 
 /* ///////////////// */
@@ -449,7 +445,6 @@ button:hover {
 }
 
 .lineup-actions button {
-  /* background-color: #28a745; */
   border: none;
   padding: 5px 10px;
   cursor: pointer;
@@ -458,6 +453,8 @@ button:hover {
 
 .vote-btn-container {
   display: flex;
+  position: relative;
+  gap:3rem
 }
 
 .vote-form button {
@@ -472,13 +469,6 @@ button:hover {
   padding: 0.5rem 1rem;
   font-size: 1.6rem;
   border-radius: 0.5rem;
-}
-
-.lineup-actions .award-btn-container .award-btn {
-  background-color: rgb(134, 129, 100);
-}
-.lineup-actions .award-btn.featured {
-  background-color: rgb(218, 192, 45);
 }
 
 /* ///////////////// */
@@ -497,10 +487,6 @@ button:hover {
 /* ///////////////// */
 #user-lineups a {
   color: #fff;
-}
-
-.lineup-actions button:hover {
-  background-color: #218838;
 }
 
 #user-lineups footer {
@@ -588,6 +574,9 @@ button:hover {
 .lineup-btn.gamble:hover {
   background-color: #bd8a12;
 }
+.lineup-btn.share span {
+  margin: 0 1rem;
+}
 .edit-modals {
   position: absolute;
   top: 70%;
@@ -630,6 +619,16 @@ button:hover {
 .select-gamble {
   outline: solid 5px gold;
 }
+
+.num-of-votes {
+  position: absolute;
+  top: 72.5%;
+  left: 50%;
+  transform: translate(-55%, -50%);
+  font-size: 1.53rem;
+}
+
+/* BTNS */
 #confirm-player-to-gamble a {
   color: #f2f2f2;
 }
@@ -638,7 +637,7 @@ button:hover {
 .disabled-btn:hover {
   cursor: not-allowed;
   pointer-events: none;
-  background-color: #627b68;
+  background-color: #4f4b3a;
 }
 
 .cancel-btn {
@@ -647,6 +646,40 @@ button:hover {
 .cancel-btn:hover {
   color: #f2f2f2;
 }
+
+.lineup-actions button:hover {
+  background-color: #c8af42;
+}
+.lineup-btn.share {
+  background-color: #aaa95f;
+}
+
+.lineup-actions .award-btn-container .award-btn {
+  background-color: #968553;
+}
+.lineup-actions .award-btn.featured {
+  background-color: #ffc107;
+}
+.lineup-actions .rate-btn-container .rate-btn {
+  background-color: #daa520;
+}
+.lineup-actions .comment-btn {
+  background-color: #756b34;
+}
+/* BTNS
+
+.comment-btn {
+    background-color: #5bc0de;
+}
+
+
+
+.lineup-btn.upvote {
+    background-color: #5bc0de;
+}
+.lineup-btn.downvote {
+    background-color: #0275d8;
+} */
 
 /* icons */
 

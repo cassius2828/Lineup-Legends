@@ -84,7 +84,7 @@
                 <form action="/lineups/<%= lineup._id %>/comment" method="GET">
                   <button type="submit" class="lineup-btn">
                     <i class="fa-regular fa-comment"></i>
-                    <span class="comment-btn">
+                    <span class="comment-num">
                         <% if (lineup?.comments) { %>
                             <%= lineup?.comments.length %>
                           <% } else { %>
