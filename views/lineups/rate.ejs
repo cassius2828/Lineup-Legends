@@ -130,7 +130,23 @@
         slider.oninput = function () {
           output.innerHTML = this.value;
           hiddenInputSlider.value = this.value;
+          if (this.value >= 10) {
+  output.style.color = '#99fcff';
+} else if (this.value >= 9) {
+  output.style.color = '#37d108';
+
+} else if (this.value >= 8) {
+  output.style.color = '#d19c08';
+} else if (this.value >= 7) {
+  output.style.color = '#d15908';
+} else if (this.value >= 6) {
+  output.style.color = '#d10812';
+} else {
+  output.style.color = '#6e0005';
+}
+
         };
+        
       });
     </script>
   </body>

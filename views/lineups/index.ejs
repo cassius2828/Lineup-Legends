@@ -21,7 +21,7 @@
           <header class="lineup-header">
             <a href="/lineups/<%= lineup._id %>/edit"><span class="lineup-edit">...</span></a>
             
-            <% if (lineup?.rating) { %>
+            <% if (lineup?.avgRating) { %>
                 <h2 class="lineup-rating"><%= lineup?.avgRating %></h2> 
                 <% } else { %>
                  <h2 class="lineup-rating">Rating: N/A</h2> 
@@ -105,6 +105,7 @@
         <% }); %>
       </div>
     </section>
+    <script src="/js/rating-color.js"></script>
     <script>
         // controls the voting input values
         function setVoteValue(voteType) {
