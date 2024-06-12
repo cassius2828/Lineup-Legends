@@ -358,15 +358,13 @@ button:hover {
   padding: 2.5rem 1.5rem 1.5rem 1.5rem;
   width: 40%;
   max-width: 60rem;
-  box-shadow: 0px 0px 11px 3px rgba(0,0,0,0.45);
+  box-shadow: 0px 0px 11px 3px rgba(0, 0, 0, 0.45);
 }
 .lineup-card.owner {
-    /* background-color: #636363; */
+  /* background-color: #636363; */
 
-
-    border: solid 3px #f2f2f2
-
-  }
+  border: solid 3px #f2f2f2;
+}
 .lineup-header {
   position: relative;
   display: flex;
@@ -428,7 +426,6 @@ button:hover {
   margin-bottom: 5px;
   background-color: #f2f2f2;
   cursor: pointer;
-
 }
 
 .player-name {
@@ -478,11 +475,10 @@ button:hover {
 }
 
 .lineup-actions .award-btn-container .award-btn {
-    background-color: rgb(134, 129, 100) ;
-
+  background-color: rgb(134, 129, 100);
 }
-.lineup-actions .award-btn.featured{
-    background-color: rgb(218, 192, 45) ;
+.lineup-actions .award-btn.featured {
+  background-color: rgb(218, 192, 45);
 }
 
 /* ///////////////// */
@@ -494,7 +490,6 @@ button:hover {
   left: 0;
   font-size: 1.35rem;
   text-transform: capitalize;
-
 }
 
 /* ///////////////// */
@@ -567,6 +562,17 @@ button:hover {
 #edit-lineup .lineup-actions {
   justify-content: center;
   gap: 2rem;
+}
+.vote-form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+  background-color: transparent;
+}
+.vote-form .lineup-btn {
+  width: 100%;
+  padding: 5px 0;
 }
 .lineup-btn.delete,
 .edit-modals.delete button {

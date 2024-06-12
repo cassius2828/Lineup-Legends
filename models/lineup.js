@@ -109,5 +109,25 @@ avgRating: {$divide: [$sum, $numOfRatings]}
 
 
 */
+// async function updateLineups() {
+//     try {
+//       const lineups = await LineupModel.find({});
+//       for (const lineup of lineups) {
+      
+//           lineup.totalVotes = 0; // Initialize totalVotes if not present
+     
+      
+//           lineup.votes = []; // Initialize votes if not present
+        
+//         // Save the updated lineup
+//         await lineup.save();
+//       }
+//       console.log("Lineups updated successfully.");
+//     } catch (error) {
+//       console.error("Error updating lineups:", error);
+//     } finally {
+//       mongoose.connection.close();
+//     }
+//   }
 
-  
+//   updateLineups()

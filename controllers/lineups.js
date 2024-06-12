@@ -332,9 +332,8 @@ const postUpvoteLineup = async (req, res) => {
     console.error(`Error: ${err}`);
     res.status(500).send(`Unable to add upvote to the lineup`);
   }
-  res.send("upvote updated");
 
-  // res.redirect("/lineups/explore");
+res.redirect("/lineups/explore");
 };
 
 //////////////////////////////
@@ -349,9 +348,8 @@ const postDownvoteLineup = async (req, res) => {
     console.error(`Error: ${err}`);
     res.status(500).send(`Unable to add downvote to the lineup`);
   }
-  res.send("downvote updated");
 
-  // res.redirect("/lineups/explore");
+res.redirect("/lineups/explore");
 };
 //////////////////////////////
 // * PUT feature lineup
@@ -514,4 +512,16 @@ async function handleVotes(
   }
   // save changes
   await lineup.save();
+  lineup.totalVotes = await calculateTotalVotes(lineup);
+  await lineup.save();
+
+}
+
+async function calculateTotalVotes(lineup) {
+  let upvotes = lineup.votes.filter((vote) => vote.upvote === true).length;
+  let downvotes = lineup.votes.filter(
+    (vote) => vote.downvote === true
+  ).length;
+  downvotes = downvotes * -1;
+  return upvotes + downvotes;
 }
