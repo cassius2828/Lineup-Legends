@@ -17,32 +17,32 @@
       <% } %>
       <div class="lineup-container">
         <% lineups.forEach(lineup => { %>
-        <div class="lineup-card">
+        <div  class="lineup-card">
           <header class="lineup-header">
             <% if (user._id.toString() === lineup.owner._id.toString()) { %>
                
                 <a href="/lineups/<%= lineup._id %>/edit"><span class="lineup-edit">...</span></a>
                <% } %>
             <h3 class="owner-username">
-                <% if (user._id.toString() === lineup.owner._id.toString()) { %>
-                 Your lineup
-                <% } else { %>
-                    <%= lineup.owner._id %>
-                    <% } %>
+                    <%= lineup.owner.username %>
             </h3>
             <% if (lineup?.avgRating) { %>
                 <h2 class="lineup-rating"><%= lineup?.avgRating %></h2> 
                 <% } else { %>
                  <h2 class="lineup-rating">Rating: N/A</h2> 
                 <% } %>
-            <% if (lineup?.relativeTime) { %>
-              <span class="lineup-relativeTime">est. <%= lineup?.relativeTime %></span> 
-              <% } else { %>
-               <span class="lineup-relativeTime">4 hr ago</span> 
-              <% } %>
+                <% if (lineup?.relativeTime) { %>
+                    <span class="lineup-relativeTime <% if (user._id.toString()!==lineup.owner._id.toString()) { %>
+                     other-user
+                    <% } %>">est. <%= lineup?.relativeTime %></span> 
+                    <% } else { %>
+                     <span class="lineup-relativeTime">4 hr ago</span> 
+                    <% } %>
           
           </header>
-          <div class="lineup-players">
+          <div <% if (user._id.toString()!==lineup.owner._id.toString()) { %>
+           style="margin-top:2.5rem"
+          <% } %> class="lineup-players">
             <% ['pg', 'sg', 'sf', 'pf', 'c'].forEach(position => { %>
             <% if (lineup[position]) { %>
             <div class="player">

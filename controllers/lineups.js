@@ -246,7 +246,8 @@ const getExploreLineups = async (req, res) => {
     .populate("sg")
     .populate("sf")
     .populate("pf")
-    .populate("c");
+    .populate("c")
+    .populate('owner');
 
   // for each lineup, I will iterate over it and add my timestamp to the res.locals
   allLineups = getRelativeTime(allLineups);
