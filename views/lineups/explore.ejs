@@ -17,7 +17,9 @@
       <% } %>
       <div class="lineup-container">
         <% lineups.forEach(lineup => { %>
-        <div  class="lineup-card">
+            <div class="lineup-card <% if (user._id.toString()===lineup.owner._id.toString()) { %>
+                owner
+               <% } %>">
           <header class="lineup-header">
             <% if (user._id.toString() === lineup.owner._id.toString()) { %>
                

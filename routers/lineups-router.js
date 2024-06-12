@@ -24,13 +24,21 @@ router.post("/new/reorder", lineupCtrl.postNewLineupRedirectToReorderLineup);
 router.get("/explore", lineupCtrl.getExploreLineups);
 
 //////////////////////////////
-// GET /explore - Explore Lineup Page
+// GET /:lineupId/rate - Rate Lineup
 //////////////////////////////
 router.get("/:lineupId/rate", lineupCtrl.getRateLineup);
+
+
 //////////////////////////////
-// GET /explore - Explore Lineup Page
+// ? POST /explore - Rate Lineup
 //////////////////////////////
 router.post("/:lineupId/rate", lineupCtrl.postRateLineup);
+
+//////////////////////////////
+// ? put /:lineupId/featured- Feature Lineup
+//////////////////////////////
+router.put("/:lineupId/edit/featured", lineupCtrl.putFeatureLineup);
+
 
 //////////////////////////////
 // GET /:lineupId/edit - Edit Lineup Page

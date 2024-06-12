@@ -247,7 +247,7 @@ const getExploreLineups = async (req, res) => {
     .populate("sf")
     .populate("pf")
     .populate("c")
-    .populate('owner');
+    .populate("owner");
 
   // for each lineup, I will iterate over it and add my timestamp to the res.locals
   allLineups = getRelativeTime(allLineups);
@@ -264,7 +264,8 @@ const getRateLineup = async (req, res) => {
     .populate("sg")
     .populate("sf")
     .populate("pf")
-    .populate("c");
+    .populate("c")
+    .populate("owner");
 
   // allows me to use my fucntion to add the relative time to the locals obj
   let lineupArr = [];
@@ -274,6 +275,9 @@ const getRateLineup = async (req, res) => {
   res.render("lineups/rate.ejs", { lineup: lineupArr[0] });
 };
 
+//////////////////////////////
+// ? POST rate lineup
+//////////////////////////////
 const postRateLineup = async (req, res) => {
   const { lineupId } = req.params;
   const { value, userId } = req.body;
@@ -295,7 +299,7 @@ const postRateLineup = async (req, res) => {
     } else {
       // otherwise create a new rating by pushing the user id for the user key and the value for the value key
       lineupToRate.ratings.push({
-        user : {'_id': userId},
+        user: { _id: userId },
         value,
       });
     }
@@ -316,6 +320,25 @@ const postRateLineup = async (req, res) => {
   res.redirect("/lineups/explore");
 };
 
+//////////////////////////////
+// * PUT feature lineup
+//////////////////////////////
+const putFeatureLineup = async (req, res) => {
+  const { lineupId } = req.params;
+  const userId = req.session.user._id;
+  const lineupToFeature = await LineupModel.findById(lineupId);
+
+  // toggle featured key value
+  lineupToFeature.featured = !lineupToFeature.featured;
+  // save the lineup
+  await lineupToFeature.save();
+  console.log(
+    "This lineup now has a featured value of",
+    lineupToFeature.featured
+  );
+  res.redirect(`/lineups/${userId}`);
+};
+
 module.exports = {
   getNewLineup,
   postNewLineup,
@@ -329,6 +352,7 @@ module.exports = {
   getExploreLineups,
   getRateLineup,
   postRateLineup,
+  putFeatureLineup,
 };
 
 ///////////////////////////

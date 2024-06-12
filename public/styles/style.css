@@ -358,9 +358,15 @@ button:hover {
   padding: 2.5rem 1.5rem 1.5rem 1.5rem;
   width: 40%;
   max-width: 60rem;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  box-shadow: 0px 0px 11px 3px rgba(0,0,0,0.45);
 }
+.lineup-card.owner {
+    /* background-color: #636363; */
 
+
+    border: solid 3px #f2f2f2
+
+  }
 .lineup-header {
   position: relative;
   display: flex;
@@ -446,7 +452,7 @@ button:hover {
 }
 
 .lineup-actions button {
-  background-color: #28a745;
+  /* background-color: #28a745; */
   border: none;
   padding: 5px 10px;
   cursor: pointer;
@@ -469,6 +475,14 @@ button:hover {
   padding: 0.5rem 1rem;
   font-size: 1.6rem;
   border-radius: 0.5rem;
+}
+
+.lineup-actions .award-btn-container .award-btn {
+    background-color: rgb(134, 129, 100) ;
+
+}
+.lineup-actions .award-btn.featured{
+    background-color: rgb(218, 192, 45) ;
 }
 
 /* ///////////////// */

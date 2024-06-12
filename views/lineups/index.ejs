@@ -51,10 +51,16 @@
           </div>
           <footer class="lineup-footer">
             <div class="lineup-actions">
-              <div class="vote-btn-container">
-                <form class="vote-form" action="/lineups/<%= lineup._id %>/vote" method="POST">
+              <div class="vote-btn-container ">
+                <form class="vote-form <% if (user._id.toString() === lineup.owner._id.toString()) { %>
+                    disabled-btn
+                   <% } %> " action="/lineups/<%= lineup._id %>/vote" method="POST">
                  <input type="hidden" id="up-vote" name="up-vote" value="" onclick="setVoteValue('up')">
-                    <button type="submit" class="lineup-btn up-vote">
+                    <button <% if (user._id.toString() === lineup.owner._id.toString()) { %>
+                     disabled
+                    <% } %> type="submit" class="lineup-btn up-vote <% if (user._id.toString() === lineup.owner._id.toString()) { %>
+                        disabled-btn
+                       <% } %> ">
                     <i class="fa-solid fa-circle-arrow-up"></i>
                   </button>
               
@@ -64,7 +70,11 @@
                     4
                   <% } %></span>
              
-                  <button type="submit" class="lineup-btn down-vote">
+                  <button <% if (user._id.toString() === lineup.owner._id.toString()) { %>
+                    disabled
+                   <% } %>  type="submit" class="lineup-btn down-vote <% if (user._id.toString() === lineup.owner._id.toString()) { %>
+                    disabled-btn
+                   <% } %> ">
                  <input type="hidden" id="down-vote" name="down-vote" value="" onclick="setVoteValue('down')">
                     <i class="fa-solid fa-circle-arrow-down"></i>
                   </button>
@@ -85,8 +95,10 @@
                 </form>
               </div>
               <div class="award-btn-container">
-                <form action="">
-                    <button class="award-btn">
+                <form action="/lineups/<%= lineup._id %>/edit/featured?_method=PUT" method="POST">
+                    <button type="submit" class="award-btn <% if (lineup.featured) { %>
+                     featured
+                    <% } %>">
                          <i class="fa-solid fa-award"></i>
                     </button>
                 </form>
