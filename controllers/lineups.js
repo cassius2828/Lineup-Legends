@@ -263,13 +263,22 @@ const getRateLineup = async (req, res) => {
     .populate("sf")
     .populate("pf")
     .populate("c");
-    
-    // allows me to use my fucntion to add the relative time to the locals obj
+
+  // allows me to use my fucntion to add the relative time to the locals obj
   let lineupArr = [];
   lineupArr.push(selectedLineup);
   lineupArr = getRelativeTime(lineupArr);
 
   res.render("lineups/rate.ejs", { lineup: lineupArr[0] });
+};
+
+const postRateLineup = async (req, res) => {
+  console.log(req.body);
+//   value
+// userId
+// params lineupId
+
+  res.redirect('/lineups/explore');
 };
 
 module.exports = {
@@ -284,6 +293,7 @@ module.exports = {
   reorderLineup,
   getExploreLineups,
   getRateLineup,
+  postRateLineup,
 };
 
 ///////////////////////////

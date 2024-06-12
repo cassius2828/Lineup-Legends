@@ -27,6 +27,10 @@ router.get("/explore", lineupCtrl.getExploreLineups);
 // GET /explore - Explore Lineup Page
 //////////////////////////////
 router.get("/:lineupId/rate", lineupCtrl.getRateLineup);
+//////////////////////////////
+// GET /explore - Explore Lineup Page
+//////////////////////////////
+router.post("/:lineupId/rate", lineupCtrl.postRateLineup);
 
 //////////////////////////////
 // GET /:lineupId/edit - Edit Lineup Page
