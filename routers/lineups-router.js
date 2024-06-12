@@ -18,6 +18,7 @@ router.post("/new", lineupCtrl.postNewLineup);
 router.post("/new/reorder", lineupCtrl.postNewLineupRedirectToReorderLineup);
 
 
+
 //////////////////////////////
 // GET /explore - Explore Lineup Page
 //////////////////////////////
@@ -43,6 +44,7 @@ router.post("/:lineupId/upvote", lineupCtrl.postUpvoteLineup);
 // ? POST /vote - downvote Lineup
 //////////////////////////////
 router.post("/:lineupId/downvote", lineupCtrl.postDownvoteLineup);
+
 
 //////////////////////////////
 // * PUT /:lineupId/featured- Feature Lineup

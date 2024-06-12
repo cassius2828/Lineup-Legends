@@ -327,7 +327,7 @@ const postUpvoteLineup = async (req, res) => {
   const { lineupId } = req.params;
   const userId = req.session.user._id;
   try {
-    handleVotes(lineupId, userId, "upvote", "downvote");
+    await handleVotes(lineupId, userId, "upvote", "downvote");
   } catch (err) {
     console.error(`Error: ${err}`);
     res.status(500).send(`Unable to add upvote to the lineup`);
@@ -343,7 +343,7 @@ const postDownvoteLineup = async (req, res) => {
   const { lineupId } = req.params;
   const userId = req.session.user._id;
   try {
-    handleVotes(lineupId, userId, "downvote", "upvote");
+    await handleVotes(lineupId, userId, "downvote", "upvote");
   } catch (err) {
     console.error(`Error: ${err}`);
     res.status(500).send(`Unable to add downvote to the lineup`);
@@ -351,6 +351,7 @@ const postDownvoteLineup = async (req, res) => {
 
 res.redirect("/lineups/explore");
 };
+
 //////////////////////////////
 // * PUT feature lineup
 //////////////////////////////
@@ -369,6 +370,8 @@ const putFeatureLineup = async (req, res) => {
   );
   res.redirect(`/lineups/${userId}`);
 };
+
+
 
 module.exports = {
   getNewLineup,
