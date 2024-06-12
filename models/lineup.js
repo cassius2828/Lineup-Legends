@@ -6,6 +6,20 @@ const commentSchema = new mongoose.Schema({
   },
 });
 
+const ratingSchema = new mongoose.Schema({
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+    required: true,
+  },
+  value: {
+    type: Number,
+    min: 1,
+    max: 10,
+    required: true,
+  },
+});
+
 const lineupSchema = new mongoose.Schema(
   {
     pg: {
@@ -32,30 +46,23 @@ const lineupSchema = new mongoose.Schema(
       type: Boolean,
     },
     comments: [commentSchema],
-    ratings: [
-        {
-          type: Number,
-          min: 1,
-          max: 10, 
-        },
-      ],
-      votes: {
-        type: Number,
-        default: 0,
-      },
+    ratings: [ratingSchema],
+    votes: {
+      type: Number,
+      default: 0,
+    },
     owner: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
     },
   },
-//   this automatically creates keys createdAt and updatedAt in my document
+  //   this automatically creates keys createdAt and updatedAt in my document
   { timestamps: true }
 );
 
 const LineupModel = mongoose.model("Lineup", lineupSchema);
 
 module.exports = LineupModel;
-
 
 /*
 RATINGS:
