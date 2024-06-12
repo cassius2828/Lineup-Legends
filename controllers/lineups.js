@@ -1,6 +1,7 @@
 const { formatDistanceToNow } = require("date-fns");
 const PlayerModel = require("../models/player.js");
 const LineupModel = require("../models/lineup.js");
+const mongoose = require("mongoose");
 
 //////////////////////////////
 //  Get New Lineup Page
@@ -273,12 +274,45 @@ const getRateLineup = async (req, res) => {
 };
 
 const postRateLineup = async (req, res) => {
-  console.log(req.body);
-//   value
-// userId
-// params lineupId
+  const { lineupId } = req.params;
+  const { value, userId } = req.body;
+  try {
+    //   find the lineup to rate by its id
+    const lineupToRate = await LineupModel.findById(lineupId);
 
-  res.redirect('/lineups/explore');
+    //   check if we found a lineup to rate
+    if (!lineupToRate) {
+      res.status(404).send("Could not find lineup to rate");
+    }
+    //   check to see if this lineup has already been rated by the user
+    const existingRating = lineupToRate.ratings.find(
+      (rating) => rating.user.toString() === userId.toString()
+    );
+    // if a rating exists, then only update the value of the rating
+    if (existingRating) {
+      existingRating.value = value;
+    } else {
+      // otherwise create a new rating by pushing the user id for the user key and the value for the value key
+      lineupToRate.ratings.push({
+        user : {'_id': userId},
+        value,
+      });
+    }
+    // save the rating
+    await lineupToRate.save();
+
+    // this returns the avgRating, which is now in our schema
+    const avgRating = await updateAvgRating(lineupToRate);
+    // update the avgRating
+    await lineupToRate.updateOne({ avgRating });
+    // save the average
+    await lineupToRate.save();
+  } catch (err) {
+    console.error("Unable to rate the lineup: ", err);
+    return res.status(500).send("Internal Server Error");
+  }
+
+  res.redirect("/lineups/explore");
 };
 
 module.exports = {
@@ -365,4 +399,20 @@ function getRelativeTime(arr) {
     }
   });
   return arr;
+}
+
+async function updateAvgRating(lineup) {
+  const numOfRatings = lineup.ratings.length;
+  // if there are no ratings then return
+  if (numOfRatings === 0) {
+    return;
+  } else {
+    // otherwise calculate the average rating and return
+    const sumOfRatings = lineup.ratings.reduce(
+      (acc, val) => acc + val["value"],
+      0
+    );
+    let avgRating = sumOfRatings / numOfRatings;
+    return avgRating;
+  }
 }

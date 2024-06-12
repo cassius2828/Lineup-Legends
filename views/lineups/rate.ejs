@@ -37,8 +37,8 @@
           <div data-lineup-id="<%= lineup._id %>" class="lineup-card">
             <header class="lineup-header">
               <h3 class="owner-username"><%= lineup.owner._id %></h3>
-              <% if (lineup?.rating) { %>
-              <h2 class="lineup-rating"><%= lineup?.rating %></h2>
+              <% if (lineup?.avgRating) { %>
+              <h2 class="lineup-rating"><%= lineup?.avgRating %></h2>
               <% } else { %>
               <h2 class="lineup-rating">Rating: N/A</h2>
               <% } %> 

@@ -47,6 +47,10 @@ const lineupSchema = new mongoose.Schema(
     },
     comments: [commentSchema],
     ratings: [ratingSchema],
+    avgRating: {
+        type: Number,
+        default: 0,
+      },
     votes: {
       type: Number,
       default: 0,

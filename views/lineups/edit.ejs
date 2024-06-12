@@ -37,8 +37,8 @@
               <a href="/lineups/<%= user._id %>">
                 <span class="lineup-edit-close">x</span>
               </a>
-              <% if (lineup?.rating) { %>
-              <h2 class="lineup-rating"><%= lineup?.rating %></h2>
+              <% if (lineup?.avgRating) { %>
+              <h2 class="lineup-rating"><%= lineup?.avgRating %></h2>
               <% } else { %>
               <h2 class="lineup-rating">N/A</h2>
               <% } %>
