@@ -20,6 +20,22 @@ const ratingSchema = new mongoose.Schema({
   },
 });
 
+const voteSchema = new mongoose.Schema({
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+    required: true,
+  },
+  upvote: {
+    type: Boolean,
+    default: false,
+  },
+  downvote: {
+    type: Boolean,
+    default: false,
+  },
+});
+
 const lineupSchema = new mongoose.Schema(
   {
     pg: {
@@ -48,10 +64,11 @@ const lineupSchema = new mongoose.Schema(
     comments: [commentSchema],
     ratings: [ratingSchema],
     avgRating: {
-        type: Number,
-        default: 0,
-      },
-    votes: {
+      type: Number,
+      default: 0,
+    },
+    votes: [voteSchema],
+    totalVotes: {
       type: Number,
       default: 0,
     },
@@ -92,3 +109,5 @@ avgRating: {$divide: [$sum, $numOfRatings]}
 
 
 */
+
+  

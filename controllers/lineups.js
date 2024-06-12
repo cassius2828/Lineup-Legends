@@ -321,6 +321,39 @@ const postRateLineup = async (req, res) => {
 };
 
 //////////////////////////////
+// ? POST upvote lineup
+//////////////////////////////
+const postUpvoteLineup = async (req, res) => {
+  const { lineupId } = req.params;
+  const userId = req.session.user._id;
+  try {
+    handleVotes(lineupId, userId, "upvote", "downvote");
+  } catch (err) {
+    console.error(`Error: ${err}`);
+    res.status(500).send(`Unable to add upvote to the lineup`);
+  }
+  res.send("upvote updated");
+
+  // res.redirect("/lineups/explore");
+};
+
+//////////////////////////////
+// ? POST downvote lineup
+//////////////////////////////
+const postDownvoteLineup = async (req, res) => {
+  const { lineupId } = req.params;
+  const userId = req.session.user._id;
+  try {
+    handleVotes(lineupId, userId, "downvote", "upvote");
+  } catch (err) {
+    console.error(`Error: ${err}`);
+    res.status(500).send(`Unable to add downvote to the lineup`);
+  }
+  res.send("downvote updated");
+
+  // res.redirect("/lineups/explore");
+};
+//////////////////////////////
 // * PUT feature lineup
 //////////////////////////////
 const putFeatureLineup = async (req, res) => {
@@ -353,6 +386,8 @@ module.exports = {
   getRateLineup,
   postRateLineup,
   putFeatureLineup,
+  postDownvoteLineup,
+  postUpvoteLineup,
 };
 
 ///////////////////////////
@@ -426,6 +461,7 @@ function getRelativeTime(arr) {
   return arr;
 }
 
+// updates the avg rating of lineups
 async function updateAvgRating(lineup) {
   const numOfRatings = lineup.ratings.length;
   // if there are no ratings then return
@@ -440,4 +476,42 @@ async function updateAvgRating(lineup) {
     let avgRating = sumOfRatings / numOfRatings;
     return avgRating;
   }
+}
+
+// handles both upvotes and downvotes
+async function handleVotes(
+  lineupId,
+  userId,
+  targetVoteType,
+  secondaryVoteType
+) {
+  const lineup = await LineupModel.findById(lineupId);
+
+  if (!lineup) {
+    return res.status(404).send("Could not find lineup to vote on");
+  }
+  // does a vote already exist for this user?
+  const existingVote = lineup.votes.find(
+    (vote) => vote.user.toString() === userId.toString()
+  );
+
+  if (existingVote) {
+    if (existingVote[targetVoteType]) {
+      // if there is already an existing vote with [targetVoteType] then delete it
+      lineup.votes.remove(existingVote);
+      // if there is an existing vote with downvote then change the values of each
+    } else if (existingVote[secondaryVoteType]) {
+      existingVote[targetVoteType] = true;
+      existingVote[secondaryVoteType] = false;
+    }
+  } else {
+    // if there is not existing vote then create an [targetVoteType]
+    lineup.votes.push({
+      user: { _id: userId },
+      [targetVoteType]: true,
+      [secondaryVoteType]: false,
+    });
+  }
+  // save changes
+  await lineup.save();
 }

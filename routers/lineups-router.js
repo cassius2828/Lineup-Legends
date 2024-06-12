@@ -35,7 +35,17 @@ router.get("/:lineupId/rate", lineupCtrl.getRateLineup);
 router.post("/:lineupId/rate", lineupCtrl.postRateLineup);
 
 //////////////////////////////
-// ? put /:lineupId/featured- Feature Lineup
+// ? POST /vote - upvote Lineup
+//////////////////////////////
+router.post("/:lineupId/upvote", lineupCtrl.postUpvoteLineup);
+
+//////////////////////////////
+// ? POST /vote - downvote Lineup
+//////////////////////////////
+router.post("/:lineupId/downvote", lineupCtrl.postDownvoteLineup);
+
+//////////////////////////////
+// * PUT /:lineupId/featured- Feature Lineup
 //////////////////////////////
 router.put("/:lineupId/edit/featured", lineupCtrl.putFeatureLineup);
 
