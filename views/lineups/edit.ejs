@@ -48,6 +48,8 @@
               <% if (lineup[position]) { %>
               <div data-player-id="<%= lineup[position]._id %>" class="player">
                 <img
+              data-value="<%= lineup[position].value %>"
+
                   src="<%= lineup[position].imgUrl %>"
                   alt="<%= lineup[position].firstName %> <%= lineup[position].lastName %>"
                 />

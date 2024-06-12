@@ -145,6 +145,38 @@
       </div>
     </section>
 <!-- js file -->
+    <script >
+
+document.addEventListener("DOMContentLoaded", (e) => {
+
+const playerImgs = document.querySelectorAll('.cell img')
+const playerCells = document.querySelectorAll('.cell')
+
+
+
+//   PLAYER COLORS
+playerImgs?.forEach((player) => {
+    const playerDataValue = Number(
+    player
+    .getAttribute("data-value")
+ )
+ console.log(playerDataValue)
+
+    if (playerDataValue === 5) {
+      player.parentElement.style.boxShadow = "0px 0px 10px 3px #99fcff";
+    } else if (playerDataValue === 4) {
+      player.parentElement.style.boxShadow = "0px 0px 10px 3px #8317e8";
+    } else if (playerDataValue === 3) {
+      player.parentElement.style.boxShadow = "0px 0px 10px 3px #e3b920";
+    } else if (playerDataValue === 2) {
+      player.parentElement.style.boxShadow = "0px 0px 10px 3px #c0c0c0";
+    }  else {
+      player.parentElement.style.boxShadow = "0px 0px 10px 3px #804a14";
+    }
+  });
+});
+
+    </script>
     <script src="/js/create-lineup.js"></script>
   </body>
 </html>
