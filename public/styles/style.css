@@ -685,7 +685,11 @@ button,
 #comment-section {
     margin-top: 20px;
   }
-  
+  .lineup-container.comments {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
   #comment-input-form {
     display: flex;
     flex-direction: column;
@@ -740,6 +744,7 @@ button,
   .view-all,.view-featured {
     margin: 2rem 0;
     font-size: 1.33rem;
+    cursor: pointer;
   }
   .comment {
     background-color: #272729;
@@ -752,7 +757,7 @@ button,
   .comment header {
     display: flex;
     align-items: center;
-    margin-bottom: 12px;
+    margin-bottom: 6px !important;
   }
   
   .comment .img-container {
@@ -778,7 +783,7 @@ button,
   }
   
   .comment-text p {
-    font-size: 14px;
+    font-size: 1.4rem;
     color: #d7dadc;
     margin: 0;
   }

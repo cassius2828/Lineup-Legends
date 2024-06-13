@@ -2,6 +2,7 @@ const { formatDistanceToNow } = require("date-fns");
 const PlayerModel = require("../models/player.js");
 const LineupModel = require("../models/lineup.js");
 const mongoose = require("mongoose");
+const User = require("../models/user.js");
 
 //////////////////////////////
 //  Get New Lineup Page
@@ -286,7 +287,7 @@ const getRateLineup = async (req, res) => {
   // allows me to use my fucntion to add the relative time to the locals obj
   let lineupArr = [];
   lineupArr.push(selectedLineup);
-  lineupArr = getRelativeTime(lineupArr);
+  lineupArr = await getRelativeTime(lineupArr);
 
   res.render("lineups/rate.ejs", { lineup: lineupArr[0] });
 };
@@ -399,9 +400,29 @@ const getLineupComment = async (req, res) => {
     .populate("sf")
     .populate("pf")
     .populate("c")
-    .populate("owner");
-
-  res.render(`lineups/comment.ejs`, { lineup });
+    .populate("owner")
+    .populate({
+      path: "comments",
+      populate: {
+        path: "user",
+        select: "username",
+      },
+    })
+    .populate({
+      path: "comments.thread",
+      populate: {
+        path: "user",
+        select: "username",
+      },
+    });
+  // allows me to use my fucntion to add the relative time to the locals obj
+  let lineupArr = [];
+  lineupArr.push(lineup);
+  lineupArr = await getRelativeTime(lineupArr);
+  lineup.comments = await getRelativeTime(lineup.comments);
+  await lineup.save()
+  console.log(lineup)
+  res.render(`lineups/comment.ejs`, { lineup:lineupArr[0] });
 };
 
 //////////////////////////////
@@ -411,6 +432,7 @@ const postLineupComment = async (req, res) => {
   const { lineupId } = req.params;
   const { text } = req.body;
   const userId = req.session.user._id;
+
   const lineup = await LineupModel.findById(lineupId);
 
   lineup.comments.push({
@@ -419,10 +441,12 @@ const postLineupComment = async (req, res) => {
     },
     text,
   });
-  console.log(lineup.comments)
-  await lineup.save()
-res.send('added new comment')
-//   res.render(`lineups/comment.ejs`, { lineup });
+
+  console.log(lineup.comments);
+
+  await lineup.save();
+
+  res.redirect(`/lineups/${lineupId}/comment`);
 };
 
 module.exports = {

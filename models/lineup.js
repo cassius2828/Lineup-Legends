@@ -187,7 +187,7 @@ avgRating: {$divide: [$sum, $numOfRatings]}
 //       const lineups = await LineupModel.find({});
 //       for (const lineup of lineups) {
 
-//         lineup.timesGambled = 0
+//        lineup.comments = []
 
 //         // Save the updated lineup
 //         await lineup.save();

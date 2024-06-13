@@ -8,9 +8,7 @@
   <section id="edit-lineup">
     <h1>Comment Page</h1>
 
-
-
-    <div class="lineup-container">
+    <div class="lineup-container comments">
       <div class="lineup-card <% if (user._id.toString()===lineup.owner._id.toString()) { %> owner <% } %>">
         <header class="lineup-header">
           <% if (user._id.toString() === lineup.owner._id.toString()) { %>
@@ -102,14 +100,12 @@
       <div id="comment-section">
 
         <form id="comment-input-form" action="/lineups/<%= lineup._id %>/comment/new" method="POST">
-          <input id="comment-input" type="textarea" cols="20" rows="100" name="text"  placeholder="comment on this lineup...">
+          <input id="comment-input" type="textarea" cols="20" rows="100" name="text" placeholder="comment on this lineup...">
           <div class="btn-container">
             <button><a href="/lineups/<%= lineup._id %>/comment">cancel</a></button><button type="submit">comment</button>
           </div>
 
         </form>
-
-
 
         <div class="search-comments-container">
           <input name="comment-search" id="comment-search" type="text" value="" placeholder="Search Comments">
@@ -178,16 +174,20 @@
             <% }); %>
           </div>
           <div class="featured-comments">
+       
+
+            <% lineup.comments.forEach(comment => { %>
             <div class="comment">
               <header>
                 <div class="img-container">
                   <img src="/images/misc/default-user.jpg" alt="user-profile">
                 </div>
-                <span class="comment-username">username</span>
-                <span class="comment-timestamp">2hr ago</span>
+                <span class="comment-username"><%= comment.user.username %></span>
+                <span class="comment-timestamp"> <%=  comment.relativeTime %>
+                 </span>
               </header>
               <div class="comment-text">
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nobis modi debitis inventore quas eveniet repellat. Enim repellat, deserunt ipsum fugit consectetur perferendis sit ut quisquam, ex, facilis esse. Eius, itaque.</p>
+                <p><%= comment.text %></p>
               </div>
               <footer class="comment-footer">
 
@@ -195,15 +195,15 @@
                   <!-- Vote buttons and form -->
                   <div class="vote-btn-container">
                     <!-- upvote -->
-                    <form class="vote-form <% if (user._id.toString() === lineup.owner._id.toString()) { %> disabled-btn <% } %>" action="/lineups/<%= lineup._id %>/upvote" method="POST">
+                    <form class="vote-form <% if (user._id.toString() === comment.user._id.toString()) { %> disabled-btn <% } %>" action="/lineups/<%= lineup._id %>/upvote" method="POST">
                       <input type="hidden" id="upvote" name="upvote" value="upvote">
-                      <button <% if (user._id.toString() === lineup.owner._id.toString()) { %> disabled <% } %> type="submit" class="lineup-btn up-vote <% if (user._id.toString() === lineup.owner._id.toString()) { %> disabled-btn <% } %>"><i class="fa-solid fa-circle-arrow-up"></i></button>
+                      <button <% if (user._id.toString() === comment.user._id.toString()) { %> disabled <% } %> type="submit" class="lineup-btn up-vote <% if (user._id.toString() === lineup.owner._id.toString()) { %> disabled-btn <% } %>"><i class="fa-solid fa-circle-arrow-up"></i></button>
                     </form>
                     <!-- display votes -->
-                    <span class="num-of-votes"><% if (lineup?.totalVotes) { %> <%= lineup?.totalVotes %> <% } else { %> 0 <% } %></span>
+                    <span class="num-of-votes"><%= comment?.totalVotes %> </span>
                     <!-- down votes -->
-                    <form class="vote-form <% if (user._id.toString() === lineup.owner._id.toString()) { %> disabled-btn <% } %>" action="/lineups/<%= lineup._id %>/downvote" method="POST">
-                      <button <% if (user._id.toString() === lineup.owner._id.toString()) { %> disabled <% } %> type="submit" class="lineup-btn down-vote <% if (user._id.toString() === lineup.owner._id.toString()) { %> disabled-btn <% } %>">
+                    <form class="vote-form <% if (user._id.toString() === comment.user._id.toString()) { %> disabled-btn <% } %>" action="/lineups/<%= lineup._id %>/downvote" method="POST">
+                      <button <% if (user._id.toString() === comment.user._id.toString()) { %> disabled <% } %> type="submit" class="lineup-btn down-vote <% if (user._id.toString() === lineup.owner._id.toString()) { %> disabled-btn <% } %>">
                         <input type="hidden" id="downvote" name="downvote" value="downvote">
                         <i class="fa-solid fa-circle-arrow-down"></i>
                       </button>
@@ -227,6 +227,7 @@
 
               </footer>
             </div>
+            <% }); %>
           </div>
 
         </div>
@@ -240,23 +241,18 @@
     const viewFeaturedBtn = document.querySelector('.view-featured');
     const allComments = document.querySelector('.all-comments');
     const featuredComments = document.querySelector('.featured-comments')
-    // const commentInput = document.getElementById('comment-input');
-
-
-
 
     viewAllBtn.addEventListener('click', (e) => {
       allComments.classList.toggle('hide')
       featuredComments.classList.toggle('hide')
       viewAllBtn.classList.toggle('hide')
-
       viewFeaturedBtn.classList.toggle('hide')
     })
+
     viewFeaturedBtn.addEventListener('click', (e) => {
       allComments.classList.toggle('hide')
       featuredComments.classList.toggle('hide')
       viewAllBtn.classList.toggle('hide')
-
       viewFeaturedBtn.classList.toggle('hide')
     })
   </script>
