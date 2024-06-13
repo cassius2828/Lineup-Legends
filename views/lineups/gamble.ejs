@@ -97,8 +97,13 @@
                   method="POST"
                 >
                   <button
+                  <% if (lineup.timesGambled > 2) { %>
+                    disabled
+                   <% } %>
                     type="submit"
-                    class="lineup-btn gamble initiate-gamble"
+                    class="lineup-btn gamble initiate-gamble  <% if (lineup.timesGambled > 2) { %>
+                        disabled-btn
+                       <% } %>"
                   >
                     <span class="gamble-btn"> gamble </span>
                     <i class="fa-solid fa-dice"></i>

@@ -79,6 +79,7 @@ const getGamblePlayer = async (req, res) => {
   const playerToGamble = await PlayerModel.findById(
     req.params.playerId
   ).populate();
+
   res.render("lineups/gamble.ejs", {
     player: playerToGamble,
     lineup,
@@ -149,7 +150,8 @@ const putGamblePlayer = async (req, res) => {
         lineup[position] = randomPlayer[0]._id;
         // save changes of our document
         await lineup.save();
-
+        // tracks how many times you gambled on your lineup
+        lineup.timesGambled++;
         console.log(
           `We replaced ${playerToGamble.firstName} with ${randomPlayer[0].firstName}`
         );

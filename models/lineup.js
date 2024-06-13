@@ -72,6 +72,10 @@ const lineupSchema = new mongoose.Schema(
       type: Number,
       default: 0,
     },
+    timesGambled: {
+        type: Number,
+        default:0
+    },
     owner: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
@@ -130,4 +134,21 @@ avgRating: {$divide: [$sum, $numOfRatings]}
 //     }
 //   }
 
+// async function updateLineups() {
+//     try {
+//       const lineups = await LineupModel.find({});
+//       for (const lineup of lineups) {
+      
+//         lineup.timesGambled = 0
+        
+//         // Save the updated lineup
+//         await lineup.save();
+//       }
+//       console.log("Lineups updated successfully.");
+//     } catch (error) {
+//       console.error("Error updating lineups:", error);
+//     } finally {
+//       mongoose.connection.close();
+//     }
+//   }
 //   updateLineups()

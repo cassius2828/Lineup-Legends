@@ -29,7 +29,13 @@
           <a href="/lineups/<%= lineup._id %>/edit"><span class="lineup-edit">...</span></a>
           <% } %>
           <!-- Display lineup owner's username -->
-          <h3 class="owner-username"><%= lineup.owner.username %></h3>
+          <h3 class="owner-username">
+            <% if (user._id.toString()===lineup.owner._id.toString()) { %>
+              Your Lineup
+            <% } else { %>
+              <%= lineup.owner.username %>
+            <% } %>
+          </h3>
           <!-- Display average rating or N/A if not available -->
           <% if (lineup?.avgRating) { %>
           <h2 class="lineup-rating"><%= lineup?.avgRating %></h2>
@@ -59,27 +65,19 @@
             <!-- Vote buttons and form -->
             <div class="vote-btn-container">
               <!-- upvote -->
-              <form class="vote-form <% if (user._id.toString() === lineup.owner._id.toString()) { %>
-                disabled-btn
-               <% } %>" action="/lineups/<%= lineup._id %>/upvote" method="POST">
+              <form class="vote-form <% if (user._id.toString() === lineup.owner._id.toString()) { %> disabled-btn <% } %>" action="/lineups/<%= lineup._id %>/upvote" method="POST">
                 <input type="hidden" id="upvote" name="upvote" value="upvote">
-                <button <% if (user._id.toString() === lineup.owner._id.toString()) { %> disabled <% } %> type="submit" class="lineup-btn up-vote <% if (user._id.toString() === lineup.owner._id.toString()) { %>
-                    disabled-btn
-                   <% } %>"><i class="fa-solid fa-circle-arrow-up"></i></button>
-              </form> <!-- display votes -->
-              <span class="num-of-votes"><% if (lineup?.totalVotes) { %> <%= lineup?.totalVotes%> <% } else { %> 0 <% } %></span>
+                <button <% if (user._id.toString() === lineup.owner._id.toString()) { %> disabled <% } %> type="submit" class="lineup-btn up-vote <% if (user._id.toString() === lineup.owner._id.toString()) { %> disabled-btn <% } %>"><i class="fa-solid fa-circle-arrow-up"></i></button>
+              </form>
+              <!-- display votes -->
+              <span class="num-of-votes"><% if (lineup?.totalVotes) { %> <%= lineup?.totalVotes %> <% } else { %> 0 <% } %></span>
               <!-- down votes -->
-              <form class="vote-form <% if (user._id.toString() === lineup.owner._id.toString()) { %>
-                disabled-btn
-               <% } %>" action="/lineups/<%= lineup._id %>/downvote" method="POST">
-                <button <% if (user._id.toString() === lineup.owner._id.toString()) { %> disabled <% } %> type="submit" class="lineup-btn down-vote <% if (user._id.toString() === lineup.owner._id.toString()) { %>
-                    disabled-btn
-                   <% } %>">
+              <form class="vote-form <% if (user._id.toString() === lineup.owner._id.toString()) { %> disabled-btn <% } %>" action="/lineups/<%= lineup._id %>/downvote" method="POST">
+                <button <% if (user._id.toString() === lineup.owner._id.toString()) { %> disabled <% } %> type="submit" class="lineup-btn down-vote <% if (user._id.toString() === lineup.owner._id.toString()) { %> disabled-btn <% } %>">
                   <input type="hidden" id="downvote" name="downvote" value="downvote">
                   <i class="fa-solid fa-circle-arrow-down"></i>
                 </button>
               </form>
-
             </div>
             <!-- Comment button and form -->
             <div class="comment-btn-container">
@@ -118,24 +116,6 @@
 
   <!-- External JavaScript for rating color -->
   <script src="/js/rating-color.js"></script>
-
-  <script>
-    // Controls the voting input values
-    // const upvoteBtn = document.querySelector('.lineup-btn.up-vote')
-    // const downvoteBtn = document.querySelector('.lineup-btn.down-vote')
-    // const voteNumDisplay = document.querySelector('.num-of-votes')
-    // let voteValue = Number(voteNumDisplay.innerText);
-    // upvoteBtn.addEventListener('click', () => {
-
-    //   voteValue++
-    //   voteNumDisplay.innerText = voteValue
-    // });
-    // downvoteBtn.addEventListener('click', () => {
-    //   voteValue--
-    //   voteNumDisplay.innerText = voteValue
-
-    // });
-  </script>
 </body>
 
 </html>
