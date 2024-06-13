@@ -198,6 +198,15 @@ a:hover {
   border-radius: 0.5rem;
 }
 
+#sign-up-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+#sign-up-form input {
+ margin: 8px 0 2rem 0;
+}
 label {
   font-size: 1.4rem;
 }

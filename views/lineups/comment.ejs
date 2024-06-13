@@ -114,24 +114,24 @@
 
         <div class="comments-container">
           <div class="view-all">
-            <h3>View all <span>23 </span>comments</h3>
+            <h3>View all <span><%= lineup.comments.length %> </span>comments</h3>
           </div>
           <div class="view-featured hide">
             <h3>View featured comments only</h3>
           </div>
           <div class="all-comments hide">
-            <% const exampleArray = Array.from({ length: 12 }, (_, index) => index + 1); %>
-            <% exampleArray.forEach(item => { %>
+        
+            <% lineup.comments.forEach(comment => { %>
             <div class="comment">
               <header>
                 <div class="img-container">
                   <img src="/images/misc/default-user.jpg" alt="user-profile">
                 </div>
-                <span class="comment-username">username</span>
-                <span class="comment-timestamp">2hr ago</span>
+                <span class="comment-username"><%= comment.user.username %></span>
+                <span class="comment-timestamp"><%= comment.relativeTime %></span>
               </header>
               <div class="comment-text">
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nobis modi debitis inventore quas eveniet repellat. Enim repellat, deserunt ipsum fugit consectetur perferendis sit ut quisquam, ex, facilis esse. Eius, itaque.</p>
+                <p><%= comment.text %></p>
               </div>
               <footer class="comment-footer">
 
@@ -139,15 +139,15 @@
                   <!-- Vote buttons and form -->
                   <div class="vote-btn-container">
                     <!-- upvote -->
-                    <form class="vote-form <% if (user._id.toString() === lineup.owner._id.toString()) { %> disabled-btn <% } %>" action="/lineups/<%= lineup._id %>/upvote" method="POST">
+                    <form class="vote-form <% if (user._id.toString() === comment.user._id.toString()) { %> disabled-btn <% } %>" action="/lineups/<%= lineup._id %>/upvote" method="POST">
                       <input type="hidden" id="upvote" name="upvote" value="upvote">
-                      <button <% if (user._id.toString() === lineup.owner._id.toString()) { %> disabled <% } %> type="submit" class="lineup-btn up-vote <% if (user._id.toString() === lineup.owner._id.toString()) { %> disabled-btn <% } %>"><i class="fa-solid fa-circle-arrow-up"></i></button>
+                      <button <% if (user._id.toString() === comment.user._id.toString()) { %> disabled <% } %> type="submit" class="lineup-btn up-vote <% if (user._id.toString() === comment.user._id.toString()) { %> disabled-btn <% } %>"><i class="fa-solid fa-circle-arrow-up"></i></button>
                     </form>
                     <!-- display votes -->
-                    <span class="num-of-votes"><% if (lineup?.totalVotes) { %> <%= lineup?.totalVotes %> <% } else { %> 0 <% } %></span>
+                    <span class="num-of-votes"> <%= comment?.totalVotes %></span>
                     <!-- down votes -->
-                    <form class="vote-form <% if (user._id.toString() === lineup.owner._id.toString()) { %> disabled-btn <% } %>" action="/lineups/<%= lineup._id %>/downvote" method="POST">
-                      <button <% if (user._id.toString() === lineup.owner._id.toString()) { %> disabled <% } %> type="submit" class="lineup-btn down-vote <% if (user._id.toString() === lineup.owner._id.toString()) { %> disabled-btn <% } %>">
+                    <form class="vote-form <% if (user._id.toString() === comment.user._id.toString()) { %> disabled-btn <% } %>" action="/lineups/<%= lineup._id %>/downvote" method="POST">
+                      <button <% if (user._id.toString() === comment.user._id.toString()) { %> disabled <% } %> type="submit" class="lineup-btn down-vote <% if (user._id.toString() === comment.user._id.toString()) { %> disabled-btn <% } %>">
                         <input type="hidden" id="downvote" name="downvote" value="downvote">
                         <i class="fa-solid fa-circle-arrow-down"></i>
                       </button>
@@ -197,13 +197,13 @@
                     <!-- upvote -->
                     <form class="vote-form <% if (user._id.toString() === comment.user._id.toString()) { %> disabled-btn <% } %>" action="/lineups/<%= lineup._id %>/upvote" method="POST">
                       <input type="hidden" id="upvote" name="upvote" value="upvote">
-                      <button <% if (user._id.toString() === comment.user._id.toString()) { %> disabled <% } %> type="submit" class="lineup-btn up-vote <% if (user._id.toString() === lineup.owner._id.toString()) { %> disabled-btn <% } %>"><i class="fa-solid fa-circle-arrow-up"></i></button>
+                      <button <% if (user._id.toString() === comment.user._id.toString()) { %> disabled <% } %> type="submit" class="lineup-btn up-vote <% if (user._id.toString() === comment.user._id.toString()) { %> disabled-btn <% } %>"><i class="fa-solid fa-circle-arrow-up"></i></button>
                     </form>
                     <!-- display votes -->
                     <span class="num-of-votes"><%= comment?.totalVotes %> </span>
                     <!-- down votes -->
                     <form class="vote-form <% if (user._id.toString() === comment.user._id.toString()) { %> disabled-btn <% } %>" action="/lineups/<%= lineup._id %>/downvote" method="POST">
-                      <button <% if (user._id.toString() === comment.user._id.toString()) { %> disabled <% } %> type="submit" class="lineup-btn down-vote <% if (user._id.toString() === lineup.owner._id.toString()) { %> disabled-btn <% } %>">
+                      <button <% if (user._id.toString() === comment.user._id.toString()) { %> disabled <% } %> type="submit" class="lineup-btn down-vote <% if (user._id.toString() === comment.user._id.toString()) { %> disabled-btn <% } %>">
                         <input type="hidden" id="downvote" name="downvote" value="downvote">
                         <i class="fa-solid fa-circle-arrow-down"></i>
                       </button>
