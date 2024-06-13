@@ -344,7 +344,8 @@ const postUpvoteLineup = async (req, res) => {
   const { lineupId } = req.params;
   const userId = req.session.user._id;
   const lineup = await LineupModel.findById(lineupId).populate("owner");
-  if ((lineup.owner._id = userId)) {
+
+  if ((lineup.owner._id === userId)) {
     return res.status(400).send("A user cannot vote for their own lineup.");
   }
   try {
@@ -364,7 +365,7 @@ const postDownvoteLineup = async (req, res) => {
   const { lineupId } = req.params;
   const userId = req.session.user._id;
   const lineup = await LineupModel.findById(lineupId).populate("owner");
-  if ((lineup.owner._id = userId)) {
+  if ((lineup.owner._id === userId)) {
     return res.status(400).send("A user cannot vote for their own lineup.");
   }
 
