@@ -1,10 +1,59 @@
 const mongoose = require("mongoose");
-const commentSchema = new mongoose.Schema({
-  text: {
-    type: String,
-    required: true,
+
+const threadSchema = new mongoose.Schema(
+  {
+    text: {
+      type: String,
+      required: true,
+    },
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
+    upvote: {
+      type: Boolean,
+      default: false,
+    },
+    downvote: {
+      type: Boolean,
+      default: false,
+    },
+    totalVotes: {
+      type: Number,
+      default: 0,
+    },
   },
-});
+  { timestamps: true }
+);
+
+const commentSchema = new mongoose.Schema(
+  {
+    text: {
+      type: String,
+      required: true,
+    },
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
+    upvote: {
+      type: Boolean,
+      default: false,
+    },
+    downvote: {
+      type: Boolean,
+      default: false,
+    },
+    totalVotes: {
+      type: Number,
+      default: 0,
+    },
+    thread: [threadSchema],
+  },
+  { timestamps: true }
+);
 
 const ratingSchema = new mongoose.Schema({
   user: {
@@ -73,8 +122,8 @@ const lineupSchema = new mongoose.Schema(
       default: 0,
     },
     timesGambled: {
-        type: Number,
-        default:0
+      type: Number,
+      default: 0,
     },
     owner: {
       type: mongoose.Schema.Types.ObjectId,
@@ -117,12 +166,11 @@ avgRating: {$divide: [$sum, $numOfRatings]}
 //     try {
 //       const lineups = await LineupModel.find({});
 //       for (const lineup of lineups) {
-      
+
 //           lineup.totalVotes = 0; // Initialize totalVotes if not present
-     
-      
+
 //           lineup.votes = []; // Initialize votes if not present
-        
+
 //         // Save the updated lineup
 //         await lineup.save();
 //       }
@@ -138,9 +186,9 @@ avgRating: {$divide: [$sum, $numOfRatings]}
 //     try {
 //       const lineups = await LineupModel.find({});
 //       for (const lineup of lineups) {
-      
+
 //         lineup.timesGambled = 0
-        
+
 //         // Save the updated lineup
 //         await lineup.save();
 //       }

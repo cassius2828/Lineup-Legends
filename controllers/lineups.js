@@ -387,6 +387,44 @@ const putFeatureLineup = async (req, res) => {
   res.redirect(`/lineups/${userId}`);
 };
 
+//////////////////////////////
+// GET  lineup comment
+//////////////////////////////
+const getLineupComment = async (req, res) => {
+  const { lineupId } = req.params;
+  const userId = req.session.user._id;
+  const lineup = await LineupModel.findById(lineupId)
+    .populate("pg")
+    .populate("sg")
+    .populate("sf")
+    .populate("pf")
+    .populate("c")
+    .populate("owner");
+
+  res.render(`lineups/comment.ejs`, { lineup });
+};
+
+//////////////////////////////
+// ? POST  lineup comment
+//////////////////////////////
+const postLineupComment = async (req, res) => {
+  const { lineupId } = req.params;
+  const { text } = req.body;
+  const userId = req.session.user._id;
+  const lineup = await LineupModel.findById(lineupId);
+
+  lineup.comments.push({
+    user: {
+      _id: userId,
+    },
+    text,
+  });
+  console.log(lineup.comments)
+  await lineup.save()
+res.send('added new comment')
+//   res.render(`lineups/comment.ejs`, { lineup });
+};
+
 module.exports = {
   getNewLineup,
   postNewLineup,
@@ -403,6 +441,8 @@ module.exports = {
   putFeatureLineup,
   postDownvoteLineup,
   postUpvoteLineup,
+  getLineupComment,
+  postLineupComment,
 };
 
 ///////////////////////////

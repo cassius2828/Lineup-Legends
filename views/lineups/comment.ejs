@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('../partials/head.ejs') %>
+
+<body>
+  <%- include('../partials/_nav.ejs') %>
+
+  <section id="edit-lineup">
+    <h1>Comment Page</h1>
+
+
+
+    <div class="lineup-container">
+      <div class="lineup-card <% if (user._id.toString()===lineup.owner._id.toString()) { %> owner <% } %>">
+        <header class="lineup-header">
+          <% if (user._id.toString() === lineup.owner._id.toString()) { %>
+          <!-- Edit button for lineup owner -->
+          <a href="/lineups/<%= lineup._id %>/edit"><span class="lineup-edit">...</span></a>
+          <% } %>
+          <!-- Display lineup owner's username -->
+          <h3 class="owner-username">
+            <% if (user._id.toString()===lineup.owner._id.toString()) { %>
+            Your Lineup
+            <% } else { %>
+            <%= lineup.owner.username %>
+            <% } %>
+          </h3>
+          <!-- Display average rating or N/A if not available -->
+          <% if (lineup?.avgRating) { %>
+          <h2 class="lineup-rating"><%= lineup?.avgRating %></h2>
+          <% } else { %>
+          <h2 class="lineup-rating">Rating: N/A</h2>
+          <% } %>
+          <!-- Display relative time of creation or default to 4 hr ago -->
+          <% if (lineup?.relativeTime) { %>
+          <span class="lineup-relativeTime <% if (user._id.toString()!==lineup.owner._id.toString()) { %> other-user <% } %>">est. <%= lineup?.relativeTime %></span>
+          <% } else { %>
+          <span class="lineup-relativeTime">4 hr ago</span>
+          <% } %>
+        </header>
+        <div <% if (user._id.toString()!==lineup.owner._id.toString()) { %> style="margin-top:2.5rem" <% } %> class="lineup-players">
+          <!-- Display players in the lineup for each position -->
+          <% ['pg', 'sg', 'sf', 'pf', 'c'].forEach(position => { %>
+          <% if (lineup[position]) { %>
+          <div class="player">
+            <img data-value="<%= lineup[position].value %>" src="<%= lineup[position].imgUrl %>" alt="<%= lineup[position].firstName %> <%= lineup[position].lastName %>" />
+            <span class="player-name"><%= lineup[position].firstName %> <%= lineup[position].lastName %></span>
+          </div>
+          <% } %>
+          <% }); %>
+        </div>
+        <footer class="lineup-footer">
+          <div class="lineup-actions">
+            <!-- Vote buttons and form -->
+            <div class="vote-btn-container">
+              <!-- upvote -->
+              <form class="vote-form <% if (user._id.toString() === lineup.owner._id.toString()) { %> disabled-btn <% } %>" action="/lineups/<%= lineup._id %>/upvote" method="POST">
+                <input type="hidden" id="upvote" name="upvote" value="upvote">
+                <button <% if (user._id.toString() === lineup.owner._id.toString()) { %> disabled <% } %> type="submit" class="lineup-btn up-vote <% if (user._id.toString() === lineup.owner._id.toString()) { %> disabled-btn <% } %>"><i class="fa-solid fa-circle-arrow-up"></i></button>
+              </form>
+              <!-- display votes -->
+              <span class="num-of-votes"><% if (lineup?.totalVotes) { %> <%= lineup?.totalVotes %> <% } else { %> 0 <% } %></span>
+              <!-- down votes -->
+              <form class="vote-form <% if (user._id.toString() === lineup.owner._id.toString()) { %> disabled-btn <% } %>" action="/lineups/<%= lineup._id %>/downvote" method="POST">
+                <button <% if (user._id.toString() === lineup.owner._id.toString()) { %> disabled <% } %> type="submit" class="lineup-btn down-vote <% if (user._id.toString() === lineup.owner._id.toString()) { %> disabled-btn <% } %>">
+                  <input type="hidden" id="downvote" name="downvote" value="downvote">
+                  <i class="fa-solid fa-circle-arrow-down"></i>
+                </button>
+              </form>
+            </div>
+            <!-- Comment button and form -->
+            <div class="comment-btn-container">
+              <form action="/lineups/<%= lineup._id %>/comment" method="GET">
+                <button type="submit" class="lineup-btn comment-btn"><i class="fa-regular fa-comment"></i>
+                  <span class="comment-num"><% if (lineup?.comments) { %> <%= lineup?.comments.length %> <% } else { %> 4 <% } %></span>
+                </button>
+              </form>
+            </div>
+            <!-- Feature or Rate button based on ownership -->
+            <% if (user._id.toString() === lineup.owner._id.toString()) { %>
+            <div class="award-btn-container">
+              <form action="">
+                <button class="award-btn"><i class="fa-solid fa-award"></i></button>
+              </form>
+            </div>
+            <% } else { %>
+            <div class="rate-btn-container">
+              <a href="/lineups/<%= lineup._id %>/rate">
+                <button class="rate-btn">Rate <i class="fa-solid fa-gavel"></i></button>
+              </a>
+            </div>
+            <% } %>
+            <!-- Share button and form -->
+            <div class="share-btn-container">
+              <form action="/lineups/<%= lineup._id %>/share" method="GET">
+                <button type="submit" class="lineup-btn share"><i class="fa-solid fa-share"></i><span>Share</span></button>
+              </form>
+            </div>
+          </div>
+        </footer>
+      </div>
+      <div id="comment-section">
+
+        <form id="comment-input-form" action="/lineups/<%= lineup._id %>/comment/new" method="POST">
+          <input id="comment-input" type="textarea" cols="20" rows="100" name="text"  placeholder="comment on this lineup...">
+          <div class="btn-container">
+            <button><a href="/lineups/<%= lineup._id %>/comment">cancel</a></button><button type="submit">comment</button>
+          </div>
+
+        </form>
+
+
+
+        <div class="search-comments-container">
+          <input name="comment-search" id="comment-search" type="text" value="" placeholder="Search Comments">
+          <i class="fa-solid fa-magnifying-glass"></i>
+        </div>
+
+        <div class="comments-container">
+          <div class="view-all">
+            <h3>View all <span>23 </span>comments</h3>
+          </div>
+          <div class="view-featured hide">
+            <h3>View featured comments only</h3>
+          </div>
+          <div class="all-comments hide">
+            <% const exampleArray = Array.from({ length: 12 }, (_, index) => index + 1); %>
+            <% exampleArray.forEach(item => { %>
+            <div class="comment">
+              <header>
+                <div class="img-container">
+                  <img src="/images/misc/default-user.jpg" alt="user-profile">
+                </div>
+                <span class="comment-username">username</span>
+                <span class="comment-timestamp">2hr ago</span>
+              </header>
+              <div class="comment-text">
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nobis modi debitis inventore quas eveniet repellat. Enim repellat, deserunt ipsum fugit consectetur perferendis sit ut quisquam, ex, facilis esse. Eius, itaque.</p>
+              </div>
+              <footer class="comment-footer">
+
+                <div class="lineup-actions">
+                  <!-- Vote buttons and form -->
+                  <div class="vote-btn-container">
+                    <!-- upvote -->
+                    <form class="vote-form <% if (user._id.toString() === lineup.owner._id.toString()) { %> disabled-btn <% } %>" action="/lineups/<%= lineup._id %>/upvote" method="POST">
+                      <input type="hidden" id="upvote" name="upvote" value="upvote">
+                      <button <% if (user._id.toString() === lineup.owner._id.toString()) { %> disabled <% } %> type="submit" class="lineup-btn up-vote <% if (user._id.toString() === lineup.owner._id.toString()) { %> disabled-btn <% } %>"><i class="fa-solid fa-circle-arrow-up"></i></button>
+                    </form>
+                    <!-- display votes -->
+                    <span class="num-of-votes"><% if (lineup?.totalVotes) { %> <%= lineup?.totalVotes %> <% } else { %> 0 <% } %></span>
+                    <!-- down votes -->
+                    <form class="vote-form <% if (user._id.toString() === lineup.owner._id.toString()) { %> disabled-btn <% } %>" action="/lineups/<%= lineup._id %>/downvote" method="POST">
+                      <button <% if (user._id.toString() === lineup.owner._id.toString()) { %> disabled <% } %> type="submit" class="lineup-btn down-vote <% if (user._id.toString() === lineup.owner._id.toString()) { %> disabled-btn <% } %>">
+                        <input type="hidden" id="downvote" name="downvote" value="downvote">
+                        <i class="fa-solid fa-circle-arrow-down"></i>
+                      </button>
+                    </form>
+                  </div>
+                  <!-- Comment button and form -->
+                  <div class="comment-btn-container">
+                    <form action="" method="">
+                      <button type="submit" class="lineup-btn comment-btn"><i class="fa-brands fa-threads"></i>
+
+                      </button>
+                    </form>
+                  </div>
+                  <!-- Share button and form -->
+                  <div class="share-btn-container">
+                    <form action="/lineups/<%= lineup._id %>/share" method="GET">
+                      <button type="submit" class="lineup-btn share"><i class="fa-solid fa-share"></i><span>Share</span></button>
+                    </form>
+                  </div>
+                </div>
+
+              </footer>
+            </div>
+            <% }); %>
+          </div>
+          <div class="featured-comments">
+            <div class="comment">
+              <header>
+                <div class="img-container">
+                  <img src="/images/misc/default-user.jpg" alt="user-profile">
+                </div>
+                <span class="comment-username">username</span>
+                <span class="comment-timestamp">2hr ago</span>
+              </header>
+              <div class="comment-text">
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nobis modi debitis inventore quas eveniet repellat. Enim repellat, deserunt ipsum fugit consectetur perferendis sit ut quisquam, ex, facilis esse. Eius, itaque.</p>
+              </div>
+              <footer class="comment-footer">
+
+                <div class="lineup-actions">
+                  <!-- Vote buttons and form -->
+                  <div class="vote-btn-container">
+                    <!-- upvote -->
+                    <form class="vote-form <% if (user._id.toString() === lineup.owner._id.toString()) { %> disabled-btn <% } %>" action="/lineups/<%= lineup._id %>/upvote" method="POST">
+                      <input type="hidden" id="upvote" name="upvote" value="upvote">
+                      <button <% if (user._id.toString() === lineup.owner._id.toString()) { %> disabled <% } %> type="submit" class="lineup-btn up-vote <% if (user._id.toString() === lineup.owner._id.toString()) { %> disabled-btn <% } %>"><i class="fa-solid fa-circle-arrow-up"></i></button>
+                    </form>
+                    <!-- display votes -->
+                    <span class="num-of-votes"><% if (lineup?.totalVotes) { %> <%= lineup?.totalVotes %> <% } else { %> 0 <% } %></span>
+                    <!-- down votes -->
+                    <form class="vote-form <% if (user._id.toString() === lineup.owner._id.toString()) { %> disabled-btn <% } %>" action="/lineups/<%= lineup._id %>/downvote" method="POST">
+                      <button <% if (user._id.toString() === lineup.owner._id.toString()) { %> disabled <% } %> type="submit" class="lineup-btn down-vote <% if (user._id.toString() === lineup.owner._id.toString()) { %> disabled-btn <% } %>">
+                        <input type="hidden" id="downvote" name="downvote" value="downvote">
+                        <i class="fa-solid fa-circle-arrow-down"></i>
+                      </button>
+                    </form>
+                  </div>
+                  <!-- Comment button and form -->
+                  <div class="comment-btn-container">
+                    <form action="" method="">
+                      <button type="submit" class="lineup-btn comment-btn"><i class="fa-brands fa-threads"></i>
+
+                      </button>
+                    </form>
+                  </div>
+                  <!-- Share button and form -->
+                  <div class="share-btn-container">
+                    <form action="/lineups/<%= lineup._id %>/share" method="GET">
+                      <button type="submit" class="lineup-btn share"><i class="fa-solid fa-share"></i><span>Share</span></button>
+                    </form>
+                  </div>
+                </div>
+
+              </footer>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+  </section>
+  <script src="/js/rating-color.js"></script>
+  <script>
+    const viewAllBtn = document.querySelector('.view-all');
+    const viewFeaturedBtn = document.querySelector('.view-featured');
+    const allComments = document.querySelector('.all-comments');
+    const featuredComments = document.querySelector('.featured-comments')
+    // const commentInput = document.getElementById('comment-input');
+
+
+
+
+    viewAllBtn.addEventListener('click', (e) => {
+      allComments.classList.toggle('hide')
+      featuredComments.classList.toggle('hide')
+      viewAllBtn.classList.toggle('hide')
+
+      viewFeaturedBtn.classList.toggle('hide')
+    })
+    viewFeaturedBtn.addEventListener('click', (e) => {
+      allComments.classList.toggle('hide')
+      featuredComments.classList.toggle('hide')
+      viewAllBtn.classList.toggle('hide')
+
+      viewFeaturedBtn.classList.toggle('hide')
+    })
+  </script>
+</body>
+
+</html>

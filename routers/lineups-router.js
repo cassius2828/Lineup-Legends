@@ -82,6 +82,19 @@ router.put("/:lineupId/gamble/:playerId", lineupCtrl.putGamblePlayer);
 
 
 //////////////////////////////
+// GET /:lineupId/comment
+//////////////////////////////
+router.get("/:lineupId/comment", lineupCtrl.getLineupComment);
+
+
+//////////////////////////////
+// POST /:lineupId/comment
+//////////////////////////////
+router.post("/:lineupId/comment/new", lineupCtrl.postLineupComment);
+
+
+
+//////////////////////////////
 // GET /:ownerId - View User Lineups
 //////////////////////////////
 router.get("/:ownerId", lineupCtrl.getUserLineups);

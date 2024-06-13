@@ -681,6 +681,120 @@ button,
     background-color: #0275d8;
 } */
 
+/* Comment section */
+#comment-section {
+    margin-top: 20px;
+  }
+  
+  #comment-input-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 2rem;
+    width: 100%;
+  }
+  
+  #comment-input-form input[type="textarea"] {
+    background-color: #272729;
+    color: #d7dadc;
+    border: 1px solid #343536;
+    border-radius: 4px;
+    padding: 8px;
+    margin-bottom: 1rem;
+    width:100%
+  }
+  
+  #comment-input-form button {
+    background-color: #3a3a3c;
+    color: #d7dadc;
+    border: none;
+    border-radius: 4px;
+    padding: 8px;
+    cursor: pointer;
+    margin-right: 5px;
+  }
+  
+  #comment-input-form button:hover {
+    background-color: #4a4a4c;
+  }
+  
+  #comment-search {
+    width: 100%;
+    background-color: #272729;
+    color: #d7dadc;
+    border: 1px solid #343536;
+    border-radius: 4px;
+    padding: 8px;
+    margin-bottom: 20px;
+  }
+  #comment-search + i {
+    position: relative;
+    left: -3rem;
+    color: #9f9f9f;
+    font-size: 1.5rem;
+  }
+  .comments-container {
+    display: flex;
+    flex-direction: column;
+  }
+  .view-all,.view-featured {
+    margin: 2rem 0;
+    font-size: 1.33rem;
+  }
+  .comment {
+    background-color: #272729;
+    border: 1px solid #343536;
+    border-radius: 8px;
+    padding: 16px;
+    margin-bottom: 16px;
+  }
+  
+  .comment header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 12px;
+  }
+  
+  .comment .img-container {
+    width: 40px;
+    height: 40px;
+    margin-right: 8px;
+  }
+  
+  .comment .img-container img {
+    width: 100%;
+    border-radius: 50%;
+  }
+  
+  .comment-username {
+    font-size: 14px;
+    color: #d7dadc;
+    margin-right: 8px;
+  }
+  
+  .comment-timestamp {
+    font-size: 12px;
+    color: #818384;
+  }
+  
+  .comment-text p {
+    font-size: 14px;
+    color: #d7dadc;
+    margin: 0;
+  }
+  
+  .comment-footer {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 12px;
+  }
+  
+  .comment-footer .lineup-actions {
+    display: flex;
+    align-items: center;
+  }
+  
+
 /* icons */
 
 .fa-angles-right {
