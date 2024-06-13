@@ -11,13 +11,13 @@ document.addEventListener("DOMContentLoaded", (e) => {
     } else if (ratingAsNum >= 9) {
       rating.style.color = "#37d108";
     } else if (ratingAsNum >= 8) {
-      rating.style.color = "#d19c08";
+      rating.style.color = "#95d108";
     } else if (ratingAsNum >= 7) {
-      rating.style.color = "#d15908";
+      rating.style.color = "#d19c08";
     } else if (ratingAsNum >= 6) {
-      rating.style.color = "#d10812";
+      rating.style.color = "#d15908";
     } else if (ratingAsNum >= 5) {
-      rating.style.color = "#6e0005";
+      rating.style.color = "#d10812";
     } else if (ratingAsNum !== typeof Number) {
       rating.style.color = "#f2f2f2";
     }
