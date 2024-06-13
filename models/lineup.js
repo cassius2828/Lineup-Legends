@@ -1,5 +1,21 @@
 const mongoose = require("mongoose");
 
+    const voteSchema = new mongoose.Schema({
+      user: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+        required: true,
+      },
+      upvote: {
+        type: Boolean,
+        default: false,
+      },
+      downvote: {
+        type: Boolean,
+        default: false,
+      },
+    });
+
 const threadSchema = new mongoose.Schema(
   {
     text: {
@@ -11,14 +27,7 @@ const threadSchema = new mongoose.Schema(
       ref: "User",
       required: true,
     },
-    upvote: {
-      type: Boolean,
-      default: false,
-    },
-    downvote: {
-      type: Boolean,
-      default: false,
-    },
+    votes: [voteSchema],
     totalVotes: {
       type: Number,
       default: 0,
@@ -38,14 +47,7 @@ const commentSchema = new mongoose.Schema(
       ref: "User",
       required: true,
     },
-    upvote: {
-      type: Boolean,
-      default: false,
-    },
-    downvote: {
-      type: Boolean,
-      default: false,
-    },
+    votes: [voteSchema],
     totalVotes: {
       type: Number,
       default: 0,
@@ -69,21 +71,6 @@ const ratingSchema = new mongoose.Schema({
   },
 });
 
-const voteSchema = new mongoose.Schema({
-  user: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "User",
-    required: true,
-  },
-  upvote: {
-    type: Boolean,
-    default: false,
-  },
-  downvote: {
-    type: Boolean,
-    default: false,
-  },
-});
 
 const lineupSchema = new mongoose.Schema(
   {

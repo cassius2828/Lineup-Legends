@@ -32,7 +32,7 @@ const getNewLineup = async (req, res) => {
       { $sample: { size: 5 } },
     ]);
   } catch (err) {
-    console.log(`Error randomizing players: ${err}`);
+    // console.log(`Error randomizing players: ${err}`);
   }
 
   res.render("lineups/new.ejs", {
@@ -153,9 +153,9 @@ const putGamblePlayer = async (req, res) => {
         await lineup.save();
         // tracks how many times you gambled on your lineup
         lineup.timesGambled++;
-        console.log(
-          `We replaced ${playerToGamble.firstName} with ${randomPlayer[0].firstName}`
-        );
+        // console.log(
+        //   `We replaced ${playerToGamble.firstName} with ${randomPlayer[0].firstName}`
+        // );
         break;
       }
     }
@@ -182,7 +182,7 @@ const deleteLineup = async (req, res) => {
 
     if (selectedLineup.owner.equals(ownerId)) {
       await LineupModel.findByIdAndDelete(lineupId);
-      console.log("Lineup deleted successfully");
+    //   console.log("Lineup deleted successfully");
       res.redirect(`/lineups/${ownerId}`);
     } else {
       res.status(403).send("You do not have permission to delete this lineup.");
@@ -218,7 +218,7 @@ const reorderLineup = async (req, res) => {
   const { lineupId } = req.params;
   const ownerId = req.session.user._id;
 
-  console.log(req.body);
+//   console.log(req.body);
 
   // Disallows duplicate players to be entered
   const compareArr = Object.values(req.body);
@@ -246,7 +246,7 @@ const reorderLineup = async (req, res) => {
     if (!reorderedLineup) {
       return res.status(404).send("Lineup not found");
     }
-    console.log(reorderedLineup);
+    // console.log(reorderedLineup);
     res.redirect(`/lineups/${ownerId}`);
   } catch (error) {
     console.error(error);
@@ -343,6 +343,10 @@ const postRateLineup = async (req, res) => {
 const postUpvoteLineup = async (req, res) => {
   const { lineupId } = req.params;
   const userId = req.session.user._id;
+  const lineup = await LineupModel.findById(lineupId).populate("owner");
+  if ((lineup.owner._id = userId)) {
+    return res.status(400).send("A user cannot vote for their own lineup.");
+  }
   try {
     await handleVotes(lineupId, userId, "upvote", "downvote");
   } catch (err) {
@@ -359,6 +363,11 @@ const postUpvoteLineup = async (req, res) => {
 const postDownvoteLineup = async (req, res) => {
   const { lineupId } = req.params;
   const userId = req.session.user._id;
+  const lineup = await LineupModel.findById(lineupId).populate("owner");
+  if ((lineup.owner._id = userId)) {
+    return res.status(400).send("A user cannot vote for their own lineup.");
+  }
+
   try {
     await handleVotes(lineupId, userId, "downvote", "upvote");
   } catch (err) {
@@ -367,6 +376,44 @@ const postDownvoteLineup = async (req, res) => {
   }
 
   res.redirect("/lineups/explore");
+};
+
+//////////////////////////////
+// ? POST upvote comments
+//////////////////////////////
+const postUpvoteComments = async (req, res) => {
+  const { lineupId } = req.params;
+  const userId = req.session.user._id;
+  const { commentId } = req.body;
+  
+  try {
+    await handleCommentVotes(lineupId, userId, commentId, "upvote", "downvote");
+  } catch (err) {
+    console.error(`Error: ${err}`);
+    res.status(500).send(`Unable to add upvote to the comment`);
+  }
+
+  res.redirect(`/lineups/${lineupId}/comment`);
+};
+
+//////////////////////////////
+// ? POST downvote comments
+//////////////////////////////
+const postDownvoteComments = async (req, res) => {
+  const { lineupId } = req.params;
+  const userId = req.session.user._id;
+  const { commentId } = req.body;
+  console.log(req.body, ' <-- req.body')
+console.log(commentId, ' <-- comment id')
+
+  try {
+    await handleCommentVotes(lineupId, userId,commentId, "downvote", "upvote");
+  } catch (err) {
+    console.error(`Error: ${err}`);
+    res.status(500).send(`Unable to add downvote to the comment`);
+  }
+
+  res.redirect(`/lineups/${lineupId}/comment`);
 };
 
 //////////////////////////////
@@ -381,10 +428,10 @@ const putFeatureLineup = async (req, res) => {
   lineupToFeature.featured = !lineupToFeature.featured;
   // save the lineup
   await lineupToFeature.save();
-  console.log(
-    "This lineup now has a featured value of",
-    lineupToFeature.featured
-  );
+//   console.log(
+//     "This lineup now has a featured value of",
+//     lineupToFeature.featured
+//   );
   res.redirect(`/lineups/${userId}`);
 };
 
@@ -420,9 +467,9 @@ const getLineupComment = async (req, res) => {
   lineupArr.push(lineup);
   lineupArr = await getRelativeTime(lineupArr);
   lineup.comments = await getRelativeTime(lineup.comments);
-  await lineup.save()
-  console.log(lineup)
-  res.render(`lineups/comment.ejs`, { lineup:lineupArr[0] });
+  await lineup.save();
+//   console.log(lineup);
+  res.render(`lineups/comment.ejs`, { lineup: lineupArr[0] });
 };
 
 //////////////////////////////
@@ -442,7 +489,7 @@ const postLineupComment = async (req, res) => {
     text,
   });
 
-  console.log(lineup.comments);
+//   console.log(lineup.comments);
 
   await lineup.save();
 
@@ -467,6 +514,8 @@ module.exports = {
   postUpvoteLineup,
   getLineupComment,
   postLineupComment,
+  postUpvoteComments,
+  postDownvoteComments,
 };
 
 ///////////////////////////
@@ -504,7 +553,7 @@ async function createNewLineup(req, res, decideRedirectPath) {
     }
 
     const newLineup = await LineupModel.create(lineupData);
-    console.log("Lineup created successfully");
+    // console.log("Lineup created successfully");
     const newLineupId = newLineup._id;
 
     // conditionally redirect based on which btn was chosen for confirm lineup
@@ -596,7 +645,55 @@ async function handleVotes(
   lineup.totalVotes = await calculateTotalVotes(lineup);
   await lineup.save();
 }
+// handles both upvotes and downvotes || Comments (nested one layer)
+async function handleCommentVotes(
+  lineupId,
+  userId,
+  commentId,
+  targetVoteType,
+  secondaryVoteType
+) {
+  const lineup = await LineupModel.findById(lineupId);
 
+  if (!lineup) {
+    return res.status(404).send("Could not find lineup to vote on");
+  }
+  const targetedComment = lineup.comments.id(commentId);
+  console.log(targetedComment, ' <-- targeted comment')
+  if(targetedComment.user.toString()=== userId.toString()){
+    return res.status(403).send("User cannot vote for their own comment")
+  }
+if(!targetedComment) return res.status(404).send("Could not find comment to vote on")
+
+// Find existing vote
+const existingVote = targetedComment.votes.find(
+    (vote) => vote.user.toString() === userId.toString()
+  );
+
+console.log(existingVote, ' <-- existing vote')
+  if (existingVote) {
+    if (existingVote[targetVoteType]) {
+      // if there is already an existing vote with [targetVoteType] then delete it
+      targetedComment.votes.id(existingVote._id).remove();
+      // if there is an existing vote with downvote then change the values of each
+    } else if (existingVote[secondaryVoteType]) {
+      existingVote[targetVoteType] = true;
+      existingVote[secondaryVoteType] = false;
+    }
+  } else {
+    // if there is not existing vote then create an [targetVoteType]
+    targetedComment.votes.push({
+      user: { _id: userId },
+      [targetVoteType]: true,
+      [secondaryVoteType]: false,
+    });
+  }
+  // save changes
+  await lineup.save();
+  targetedComment.totalVotes = await calculateTotalVotes(targetedComment);
+  await lineup.save();
+}
+//   calculate the total votes
 async function calculateTotalVotes(lineup) {
   let upvotes = lineup.votes.filter((vote) => vote.upvote === true).length;
   let downvotes = lineup.votes.filter((vote) => vote.downvote === true).length;

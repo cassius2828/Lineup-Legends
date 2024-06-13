@@ -16,17 +16,16 @@ document.addEventListener("DOMContentLoaded", (e) => {
       rating.style.color = "#d15908";
     } else if (ratingAsNum >= 6) {
       rating.style.color = "#d10812";
+    } else if (ratingAsNum >= 5) {
+      rating.style.color = "#6e0005";
     } else if (ratingAsNum !== typeof Number) {
       rating.style.color = "#f2f2f2";
-    } else {
-      rating.style.color = "#6e0005";
     }
   });
 
   //   PLAYER COLORS
   playerImgs?.forEach((player) => {
     const playerDataValue = Number(player.getAttribute("data-value"));
-
 
     if (playerDataValue === 5) {
       player.style.boxShadow = "0px 0px 14px 5px #99fcff";

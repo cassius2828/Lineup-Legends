@@ -47,6 +47,17 @@ router.post("/:lineupId/downvote", lineupCtrl.postDownvoteLineup);
 
 
 //////////////////////////////
+// ? POST /vote - upvote Lineup
+//////////////////////////////
+router.post("/:lineupId/comment/upvote", lineupCtrl.postUpvoteComments);
+
+//////////////////////////////
+// ? POST /vote - downvote Lineup
+//////////////////////////////
+router.post("/:lineupId/comment/downvote", lineupCtrl.postDownvoteComments);
+
+
+//////////////////////////////
 // * PUT /:lineupId/featured- Feature Lineup
 //////////////////////////////
 router.put("/:lineupId/edit/featured", lineupCtrl.putFeatureLineup);
