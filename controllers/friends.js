@@ -106,10 +106,27 @@ const getFriendLineups = async (req, res) => {
   res.render("friends/lineups.ejs", { lineups });
 };
 
+const getFriendRequests = async (req, res) => {
+    try {
+         const friendRequestDocs = await FriendModel.aggregate([
+    {
+      $match: { recipient: req.session.user._id, status: "pending" },
+    },
+  ]);
+  console.log(friendRequestDocs); 
+    } catch (err) {
+        console.error(err)
+      return  res.status(404).send('unable to find document')
+    }
+
+  res.send("got pending requests");
+};
+
 module.exports = {
   getSearchFriends,
   postAddFriend,
   getFriendLineups,
   postAcceptFriendReq,
   deleteRejectFriendReq,
+  getFriendRequests,
 };

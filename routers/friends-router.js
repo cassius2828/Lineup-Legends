@@ -17,6 +17,11 @@ router.get('/lineups/:friendId', friendsCtrl.getFriendLineups)
 // ///////////////////////////
 // ? POST -- add friend
 // ///////////////////////////
-router.post('/:otherUserId/add-friend', friendsCtrl.postAddFriend)
+router.post('/:targetedUserId/add-friend', friendsCtrl.postAddFriend)
+
+// ///////////////////////////
+// GET -- friend reqs
+// ///////////////////////////
+router.get('/:ownerId/friend-requests', friendsCtrl.getFriendRequests)
 
 module.exports = router;
