@@ -14,6 +14,7 @@ const path = require("path");
 
 const pathname = path.join(__dirname, "public");
 app.use(express.static(pathname));
+
 ///////////////////////////
 // Set Up Port
 ///////////////////////////
@@ -54,6 +55,7 @@ const authRouter = require("./routers/auth-router.js");
 const isSignedIn = require("./middleware/is-signed-in.js");
 
 const lineupsRouter = require("./routers/lineups-router.js");
+const friendsRouter = require("./routers/friends-router.js");
 
 // Landing Page
 app.get("/", (req, res) => {
@@ -75,6 +77,7 @@ app.get("/vip-lounge", isSignedIn, (req, res) => {
 
 app.use("/auth", authRouter);
 app.use("/lineups", isSignedIn, lineupsRouter);
+app.use("/friends", isSignedIn, friendsRouter);
 
 ///////////////////////////
 // Start Server

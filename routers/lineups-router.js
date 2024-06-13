@@ -18,7 +18,7 @@ router.post("/new", lineupCtrl.postNewLineup);
 router.post("/new/reorder", lineupCtrl.postNewLineupRedirectToReorderLineup);
 
 
-
+router.get('/addplayers', lineupCtrl.addPlayers)
 //////////////////////////////
 // GET /explore - Explore Lineup Page
 //////////////////////////////
@@ -102,7 +102,6 @@ router.get("/:lineupId/comment", lineupCtrl.getLineupComment);
 // POST /:lineupId/comment
 //////////////////////////////
 router.post("/:lineupId/comment/new", lineupCtrl.postLineupComment);
-
 
 
 //////////////////////////////
