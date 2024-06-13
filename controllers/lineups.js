@@ -110,12 +110,26 @@ const putGamblePlayer = async (req, res) => {
         ]);
       } else if (playerToGambleValue === 5) {
         return await PlayerModel.aggregate([
-          { $match: { value: { $lte: playerToGambleValue } } },
+          {
+            $match: {
+              value: { $in: [playerToGambleValue, playerToGambleValue - 1] },
+            },
+          },
           { $sample: { size: 1 } },
         ]);
       } else {
         return await PlayerModel.aggregate([
-          { $match: { value: { $lte: playerToGambleValue + 1 } } },
+          {
+            $match: {
+              value: {
+                $in: [
+                  playerToGamble + 1,
+                  playerToGambleValue,
+                  playerToGambleValue - 1,
+                ],
+              },
+            },
+          },
           { $sample: { size: 1 } },
         ]);
       }
@@ -333,7 +347,7 @@ const postUpvoteLineup = async (req, res) => {
     res.status(500).send(`Unable to add upvote to the lineup`);
   }
 
-res.redirect("/lineups/explore");
+  res.redirect("/lineups/explore");
 };
 
 //////////////////////////////
@@ -349,7 +363,7 @@ const postDownvoteLineup = async (req, res) => {
     res.status(500).send(`Unable to add downvote to the lineup`);
   }
 
-res.redirect("/lineups/explore");
+  res.redirect("/lineups/explore");
 };
 
 //////////////////////////////
@@ -370,8 +384,6 @@ const putFeatureLineup = async (req, res) => {
   );
   res.redirect(`/lineups/${userId}`);
 };
-
-
 
 module.exports = {
   getNewLineup,
@@ -517,14 +529,11 @@ async function handleVotes(
   await lineup.save();
   lineup.totalVotes = await calculateTotalVotes(lineup);
   await lineup.save();
-
 }
 
 async function calculateTotalVotes(lineup) {
   let upvotes = lineup.votes.filter((vote) => vote.upvote === true).length;
-  let downvotes = lineup.votes.filter(
-    (vote) => vote.downvote === true
-  ).length;
+  let downvotes = lineup.votes.filter((vote) => vote.downvote === true).length;
   downvotes = downvotes * -1;
   return upvotes + downvotes;
 }
