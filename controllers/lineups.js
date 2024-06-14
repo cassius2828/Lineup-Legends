@@ -218,7 +218,7 @@ const getSortUserLineups = async (req, res) => {
   const { sort } = req.query;
   const userId = req.session.user._id;
   let userLineups = await sortUserLineups(sort, userId);
- 
+
   // for each lineup, I will iterate over it and add my timestamp to the res.locals
   userLineups = await getRelativeTime(userLineups);
 
@@ -232,7 +232,7 @@ const getSortExploreLineups = async (req, res) => {
   const { sort } = req.query;
 
   let userLineups = await sortExploreLineups(sort);
- 
+
   // for each lineup, I will iterate over it and add my timestamp to the res.locals
   userLineups = await getRelativeTime(userLineups);
 
@@ -525,6 +525,55 @@ const postLineupComment = async (req, res) => {
 
   res.redirect(`/lineups/${lineupId}/comment`);
 };
+//////////////////////////////
+// ? POST  thread new
+//////////////////////////////
+const postNewThread = async (req, res) => {
+  const { lineupId } = req.params;
+  const { text, commentId } = req.body;
+  const userId = req.session.user._id;
+  console.log(commentId, " <-- comment Id")
+  try {
+    const lineup = await LineupModel.findById(lineupId)
+      .populate({
+        path: "comments",
+        populate: {
+          path: "user",
+          select: "username",
+        },
+      })
+      .populate({
+        path: "comments.thread",
+        populate: {
+          path: "user",
+        },
+      });
+
+     // Ensure commentId is an ObjectId
+     const mongooseCommentId = new mongoose.Types.ObjectId(commentId);
+    
+     const targetedComment = lineup.comments.find(comment => comment._id.equals(mongooseCommentId));
+ 
+     if (!targetedComment) {
+       return res.status(404).send("Comment not found");
+     }
+ 
+     if (!targetedComment.thread) {
+       targetedComment.thread = [];
+     }
+ 
+     targetedComment.thread.push({
+       user: userId,
+       text,
+     });
+ 
+     await lineup.save(); 
+    return res.redirect(`/lineups/${lineupId}/comment`);
+  } catch (err) {
+    console.error(err)
+    return res.status(500).send("Could not add thread to comment");
+  }
+};
 
 module.exports = {
   getNewLineup,
@@ -548,7 +597,9 @@ module.exports = {
   postDownvoteComments,
   addPlayers,
   getRelativeTime,
-  getSortUserLineups,getSortExploreLineups
+  getSortUserLineups,
+  getSortExploreLineups,
+  postNewThread,
 };
 
 ///////////////////////////
@@ -734,7 +785,7 @@ async function calculateTotalVotes(lineup) {
   downvotes = downvotes * -1;
   return upvotes + downvotes;
 }
-const players = require("../public/js/add-players.js");
+// const players = require("../public/js/add-players.js");
 
 async function addPlayers() {
   try {

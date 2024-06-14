@@ -9,7 +9,7 @@
     <h1>Comment Page</h1>
 
     <div class="lineup-container comments">
-      <div class="lineup-card <% if (user._id.toString()===lineup.owner._id.toString()) { %> owner <% } %>">
+      <div data-lineup-id="<%= lineup._id %>" class="lineup-card <% if (user._id.toString()===lineup.owner._id.toString()) { %> owner <% } %>">
         <header class="lineup-header">
           <% if (user._id.toString() === lineup.owner._id.toString()) { %>
           <!-- Edit button for lineup owner -->
@@ -101,7 +101,7 @@
 
         <form id="comment-input-form" action="/lineups/<%= lineup._id %>/comment/new" method="POST">
           <input id="comment-input" type="textarea" cols="20" rows="100" name="text" placeholder="comment on this lineup...">
-       
+
           <div class="btn-container">
             <button><a href="/lineups/<%= lineup._id %>/comment">cancel</a></button><button type="submit">comment</button>
           </div>
@@ -121,9 +121,9 @@
             <h3>View featured comments only</h3>
           </div>
           <div class="all-comments hide">
-        
+
             <% lineup.comments.forEach(comment => { %>
-            <div class="comment">
+            <div data-comment-id="<%= comment._id %>" class="comment">
               <header>
                 <div class="img-container">
                   <img src="/images/misc/default-user.jpg" alt="user-profile">
@@ -142,7 +142,7 @@
                     <!-- upvote -->
                     <form class="vote-form <% if (user._id.toString() === comment.user._id.toString()) { %> disabled-btn <% } %>" action="/lineups/<%= lineup._id %>/comment/upvote" method="POST">
                       <input type="hidden" id="upvote" name="upvote" value="upvote">
-         <input id="commentIdUp" name="commentId" type="hidden" value="<%= comment._id %>">
+                      <input id="commentIdUp" name="commentId" type="hidden" value="<%= comment._id %>">
 
                       <button <% if (user._id.toString() === comment.user._id.toString()) { %> disabled <% } %> type="submit" class="lineup-btn up-vote <% if (user._id.toString() === comment.user._id.toString()) { %> disabled-btn <% } %>"><i class="fa-solid fa-circle-arrow-up"></i></button>
                     </form>
@@ -152,7 +152,7 @@
                     <form class="vote-form <% if (user._id.toString() === comment.user._id.toString()) { %> disabled-btn <% } %>" action="/lineups/<%= lineup._id %>/comment/downvote" method="POST">
                       <button <% if (user._id.toString() === comment.user._id.toString()) { %> disabled <% } %> type="submit" class="lineup-btn down-vote <% if (user._id.toString() === comment.user._id.toString()) { %> disabled-btn <% } %>">
                         <input type="hidden" id="downvote" name="downvote" value="downvote">
-         <input id="commentIdDown" name="commentId" type="hidden" value="<%= comment._id %>">
+                        <input id="commentIdDown" name="commentId" type="hidden" value="<%= comment._id %>">
 
                         <i class="fa-solid fa-circle-arrow-down"></i>
                       </button>
@@ -161,6 +161,7 @@
                   <!-- Comment button and form -->
                   <div class="comment-btn-container">
                     <form action="" method="">
+                      <!-- thread btn -->
                       <button type="submit" class="lineup-btn comment-btn"><i class="fa-brands fa-threads"></i>
 
                       </button>
@@ -179,7 +180,7 @@
             <% }); %>
           </div>
           <div class="featured-comments">
-       
+
 
             <% lineup.comments.forEach(comment => { %>
             <div class="comment">
@@ -189,7 +190,7 @@
                 </div>
                 <span class="comment-username"><%= comment.user.username %></span>
                 <span class="comment-timestamp"> <%=  comment.relativeTime %>
-                 </span>
+                </span>
               </header>
               <div class="comment-text">
                 <p><%= comment.text %></p>
@@ -202,7 +203,7 @@
                     <!-- upvote -->
                     <form class="vote-form <% if (user._id.toString() === comment.user._id.toString()) { %> disabled-btn <% } %>" action="/lineups/<%= lineup._id %>/comment/upvote" method="POST">
                       <input type="hidden" id="upvote" name="upvote" value="upvote">
-         <input id="commentIdUp" name="commentId" type="hidden" value="<%= comment._id %>">
+                      <input id="commentIdUp" name="commentId" type="hidden" value="<%= comment._id %>">
 
                       <button <% if (user._id.toString() === comment.user._id.toString()) { %> disabled <% } %> type="submit" class="lineup-btn up-vote <% if (user._id.toString() === comment.user._id.toString()) { %> disabled-btn <% } %>"><i class="fa-solid fa-circle-arrow-up"></i></button>
                     </form>
@@ -219,11 +220,11 @@
                   </div>
                   <!-- Comment button and form -->
                   <div class="comment-btn-container">
-                    <form action="" method="">
+                   
                       <button type="submit" class="lineup-btn comment-btn"><i class="fa-brands fa-threads"></i>
 
                       </button>
-                    </form>
+                 
                   </div>
                   <!-- Share button and form -->
                   <div class="share-btn-container">
@@ -241,7 +242,7 @@
         </div>
       </div>
     </div>
-    
+
 
   </section>
   <script src="/js/rating-color.js"></script>
@@ -250,6 +251,32 @@
     const viewFeaturedBtn = document.querySelector('.view-featured');
     const allComments = document.querySelector('.all-comments');
     const featuredComments = document.querySelector('.featured-comments')
+    const threadBtn = document.querySelectorAll('.lineup-btn.comment-btn');
+    const threadCommentInputContainer = document.createElement('div');
+    const lineupId = document.querySelector('.lineup-card').getAttribute('data-lineup-id')
+const section = document.querySelector('section')
+    //////////////////////////////
+    // Form HTML
+    //////////////////////////////
+
+
+
+    threadBtn.forEach(btn => btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      console.log('clicked')
+      const commentId = document.querySelector('.comment').getAttribute('data-comment-id');
+      const threadCommentForm = `
+<form action="/lineups/${lineupId}/comment/${commentId}/thread/new" method="POST">
+  <input name="text" id="thread-input" type="text" placeholder="reply here..."/>
+  <input name="commentId" value="${commentId}" type="hidden"/>
+  <div>
+    <a href="/lineups/${lineupId}/comment">cancel</a>
+    <button type="submit">comment</button>
+  </div>
+</form>
+`;
+      showModal(threadCommentInputContainer, threadCommentForm, "gamble");
+    }))
 
     viewAllBtn.addEventListener('click', (e) => {
       allComments.classList.toggle('hide')
@@ -264,6 +291,19 @@
       viewAllBtn.classList.toggle('hide')
       viewFeaturedBtn.classList.toggle('hide')
     })
+
+    //////////////////////////////
+    // Modal utility function
+    //////////////////////////////
+    function showModal(modal, form, selector) {
+      if (modal) {
+        modal.innerHTML = "";
+      }
+   
+      modal.innerHTML = form;
+      section.appendChild(modal);
+      modal.classList.add("thread-modals", selector);
+    }
   </script>
 </body>
 

@@ -776,7 +776,7 @@ button,
 }
 
 #edit-lineup .lineup-card {
-  background-color: #444;
+  background-color: #bababa28;
   border-radius: 10px;
   padding: 35px 15px 15px 15px;
 
@@ -827,11 +827,8 @@ button,
 .lineup-btn.share span {
   margin: 0 1rem;
 }
-.edit-modals {
-  position: absolute;
-  top: 70%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+.edit-modals,
+.thread-modals {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -843,9 +840,25 @@ button,
   color: #f2f2f2;
   border-radius: 4px;
 }
+.edit-modals {
+  position: absolute;
+  top: 70%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
 .edit-modals a,
 .edit-modals button {
   margin: 2rem;
+}
+
+.thread-modals {
+  margin: auto;
+  padding: 1rem;
+  width: auto;
+
+}
+.thread-modals a {
+ margin-right: 1rem;
 }
 /* ////////////////// */
 /* gamble section */

@@ -94,6 +94,11 @@ router.get("/:lineupId/comment", lineupCtrl.getLineupComment);
 router.post("/:lineupId/comment/new", lineupCtrl.postLineupComment);
 
 //////////////////////////////
+// POST /:lineupId/comment/:commentId/thread/new
+//////////////////////////////
+router.post("/:lineupId/comment/:commentId/thread/new", lineupCtrl.postNewThread);
+
+//////////////////////////////
 // GET /:ownerId - View User Lineups
 //////////////////////////////
 router.get("/:ownerId", lineupCtrl.getUserLineups);
