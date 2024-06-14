@@ -1,19 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
-  <%- include('./partials/head.ejs') %>
-  <body>
+<%- include('./partials/head.ejs') %>
+
+<body>
   <%- include('./partials/_nav.ejs') %>
-<section id="index"></section>
-    <% if (user) { %>
-    <h1>Welcome to the app, <%= user.username %>!</h1>
+  <%- include('./landing/index.ejs') %>
+  <%- include('./landing/welcome.ejs') %>
+  <%- include('./landing/rating.ejs') %>
+  <%- include('./landing/commenting.ejs') %>
+  <%- include('./landing/add-friends.ejs') %>
+  <%- include('./landing/gamble.ejs') %>
+  <%- include('./landing/share.ejs') %>
+  <%- include('./landing/featured.ejs') %>
+  <%- include('./landing/footer.ejs') %>
+</body>
 
-    <% } else { %>
-    <h1>Welcome to the app, guest.</h1>
-    <p>
-      <a href="/auth/sign-up">Sign up</a> or
-      <a href="/auth/sign-in">Sign in</a>.
-    </p>
-    <% } %>
-
-  </body>
 </html>

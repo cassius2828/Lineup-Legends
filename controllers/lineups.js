@@ -198,6 +198,7 @@ const deleteLineup = async (req, res) => {
 //////////////////////////////
 const getUserLineups = async (req, res) => {
   let userLineups = await LineupModel.find({ owner: req.session.user._id })
+    .sort({ createdAt: -1 })
     .populate("pg")
     .populate("sg")
     .populate("sf")
@@ -518,7 +519,8 @@ module.exports = {
   postLineupComment,
   postUpvoteComments,
   postDownvoteComments,
-  addPlayers,getRelativeTime
+  addPlayers,
+  getRelativeTime,
 };
 
 ///////////////////////////

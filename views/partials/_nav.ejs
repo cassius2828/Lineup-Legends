@@ -15,10 +15,19 @@
         <img id="profile-img" src="/images/misc/default-user.jpg" alt="" />
       </div>
     </li>
+    <% } else { %>
+    <li><a href="/lineups/new">create a lineup</a></li>
+    <li><a href="/auth/sign-up"> Sign up </a></li>
+    <li>
+  
+      <button >
+        <a href="/auth/sign-in"> Sign in </a>
+      </button>
+    </li>
     <% } %>
   </ul>
   <% if (user) { %>
-    <div class="hide" id="profile-dropdown">
+  <div class="hide" id="profile-dropdown">
     <ul>
       <li>
         <a href="">edit profile</a>
@@ -32,5 +41,4 @@
     </ul>
   </div>
   <% } %>
- 
 </nav>

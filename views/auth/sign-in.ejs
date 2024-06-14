@@ -1,18 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
-  <%- include('../partials/head.ejs') %>
-<body>
-  <%- include('../partials/_nav.ejs') %>
-<section id="sign-in">
-    <h1>Sign in</h1>
-  <form action="/auth/sign-in" method="POST">
-    <label for="username">Username:</label>
-    <input type="text" name="username" id="username" required />
-    <label for="password">Password:</label>
-    <input type="password" name="password" id="password" required />
-    <button type="submit">Sign in</button>
-  </form>
-</section>
-
-</body>
+  <head>
+    <%- include('../partials/head.ejs') %>
+  </head>
+  <body>
+    <%- include('../partials/_nav.ejs') %>
+    <section id="sign-in">
+      <h1>Sign in</h1>
+      <form id="sign-in-form" action="/auth/sign-in" method="POST">
+        <label for="username">Username:</label>
+        <input type="text" name="username" id="username" required />
+        <label for="password">Password:</label>
+        <input type="password" name="password" id="password" required />
+        <div class="btn-container">
+          <button type="submit">Sign in</button>
+        </div>
+      </form>
+      <a id="sign-up-link" href="/auth/sign-up">
+     
+          Sign up
+    
+      </a>
+    </section>
+  </body>
 </html>
