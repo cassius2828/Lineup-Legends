@@ -221,7 +221,6 @@ section.section-landing .right img {
   margin-left: 15rem;
 }
 
-
 #rating-landing .left {
   width: 40%;
 }
@@ -404,13 +403,13 @@ h2 {
 /* Links */
 /* ///////////////// */
 a {
-  color: #28a745;
+  color: #dfa315;
   text-decoration: none;
   font-size: 1.6rem;
 }
 
 a:hover {
-  color: #218838;
+  color: #dfa315;
 }
 
 /* ///////////////// */
@@ -594,10 +593,9 @@ button,
   transition: 0.3s all ease;
   width: 90%;
   margin: auto;
- 
 }
 .title-info {
-   margin: auto;
+  margin: auto;
 }
 .lineup-card {
   background-color: #bababa28;
@@ -1320,7 +1318,7 @@ button,
   appearance: none;
   width: 25px;
   height: 25px;
-  background: #4caf50;
+  background: #4f4b3a;
   cursor: pointer;
   border-radius: 50%;
 }
@@ -1328,7 +1326,7 @@ button,
 .slider::-moz-range-thumb {
   width: 25px;
   height: 25px;
-  background: #4caf50;
+  background: #4f4b3a;
   cursor: pointer;
   border-radius: 50%;
 }
@@ -1358,6 +1356,45 @@ button,
   filter: brightness(50%);
   height: 100svh;
   width: 100vw;
+}
+
+/* SORT LINEUPS */
+#sort-lineups-container {
+  position: absolute;
+  top: 10rem;
+  right: 0;
+}
+#sort-lineups-container form {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin: 2rem;
+  font-family: Arial, sans-serif;
+}
+
+#sort-lineups-container label {
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+}
+
+#sort-lineups-container select {
+  padding: 1rem;
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 20rem;
+}
+
+#sort-lineups-container button {
+  padding: 1rem 2rem;
+  font-size: 1.5rem;
+  margin: 1.25rem auto;
+  transition: background-color 0.3s ease;
+}
+
+#sort-lineups-container button:hover {
+  background-color: #4f4b3a;
 }
 
 /* ANIMATIONS */

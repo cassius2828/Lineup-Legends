@@ -206,11 +206,24 @@ const getUserLineups = async (req, res) => {
     .populate("c");
 
   // for each lineup, I will iterate over it and add my timestamp to the res.locals
-  userLineups = getRelativeTime(userLineups);
+  userLineups = await getRelativeTime(userLineups);
 
   res.render("lineups/index.ejs", { lineups: userLineups });
 };
 
+//////////////////////////////
+//  Get User Lineups
+//////////////////////////////
+const getSortUserLineups = async (req, res) => {
+  const { sort } = req.query;
+  const userId = req.session.user._id;
+  let userLineups = await sortUserLineups(sort, userId);
+ 
+  // for each lineup, I will iterate over it and add my timestamp to the res.locals
+  userLineups = await getRelativeTime(userLineups);
+
+  res.render("lineups/index.ejs", { lineups: userLineups });
+};
 //////////////////////////////
 // * PUT reorder lineup
 //////////////////////////////
@@ -521,6 +534,7 @@ module.exports = {
   postDownvoteComments,
   addPlayers,
   getRelativeTime,
+  getSortUserLineups,
 };
 
 ///////////////////////////
@@ -716,5 +730,56 @@ async function addPlayers() {
     console.error("Error adding players:", error);
   } finally {
     mongoose.connection.close();
+  }
+}
+
+async function sortUserLineups(sort, userId) {
+  if (sort === "newest") {
+    return await LineupModel.find({ owner: userId })
+      .sort({ createdAt: -1 })
+      .populate("pg")
+      .populate("sg")
+      .populate("sf")
+      .populate("pf")
+      .populate("c");
+  } else if (sort === "oldest") {
+    return await LineupModel.find({ owner: userId })
+      .populate("pg")
+      .populate("sg")
+      .populate("sf")
+      .populate("pf")
+      .populate("c");
+  } else if (sort === "highest-rated") {
+    return await LineupModel.find({ owner: userId })
+      .sort({ avgRating: -1 })
+      .populate("pg")
+      .populate("sg")
+      .populate("sf")
+      .populate("pf")
+      .populate("c");
+  } else if (sort === "lowest-rated") {
+    return await LineupModel.find({ owner: userId })
+      .sort({ avgRating: 1 })
+      .populate("pg")
+      .populate("sg")
+      .populate("sf")
+      .populate("pf")
+      .populate("c");
+  } else if (sort === "most-votes") {
+    return await LineupModel.find({ owner: userId })
+      .sort({ totalVotes: -1 })
+      .populate("pg")
+      .populate("sg")
+      .populate("sf")
+      .populate("pf")
+      .populate("c");
+  } else if (sort === "least-votes") {
+    return await LineupModel.find({ owner: userId })
+      .sort({ totalVotes: 1 })
+      .populate("pg")
+      .populate("sg")
+      .populate("sf")
+      .populate("pf")
+      .populate("c");
   }
 }

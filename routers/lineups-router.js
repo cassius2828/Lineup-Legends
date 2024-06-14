@@ -109,4 +109,9 @@ router.post("/:lineupId/comment/new", lineupCtrl.postLineupComment);
 //////////////////////////////
 router.get("/:ownerId", lineupCtrl.getUserLineups);
 
+//////////////////////////////
+// GET /:ownerId - View User Lineups
+//////////////////////////////
+router.get("/:ownerId/sort-lineups", lineupCtrl.getSortUserLineups);
+
 module.exports = router;
