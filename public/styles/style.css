@@ -1018,24 +1018,24 @@ button,
   margin-bottom: 16px;
 }
 
-.comment header {
+.comment header, .thread-comment header {
   display: flex;
   align-items: center;
   margin-bottom: 6px !important;
 }
 
-.comment .img-container {
+.comment .img-container, .thread-comment .img-container {
   width: 40px;
   height: 40px;
   margin-right: 8px;
 }
 
-.comment .img-container img {
+.comment .img-container img, .thread-comment .img-container img {
   width: 100%;
   border-radius: 50%;
 }
 
-.comment-username {
+.comment-username{
   font-size: 14px;
   color: #d7dadc;
   margin-right: 8px;
@@ -1046,7 +1046,7 @@ button,
   color: #818384;
 }
 
-.comment-text p {
+.comment-text p, .thread-text p {
   font-size: 1.4rem;
   color: #d7dadc;
   margin: 0;
@@ -1062,6 +1062,24 @@ button,
   display: flex;
   align-items: center;
 }
+
+/* thread section */
+.thread-container {
+ position: relative;
+ left: 10rem;
+ top: 5rem;
+ border-left: solid 2px #f2f2f23a;
+ padding-left: 3rem;
+ margin-bottom: 15rem;
+}
+
+.show-replies {
+  cursor: pointer;
+  font-size: 1.25rem;
+  margin-bottom: 3rem;
+  padding-bottom: 3rem;
+}
+
 
 /* Friends */
 

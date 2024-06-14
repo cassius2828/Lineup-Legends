@@ -115,7 +115,14 @@
 
         <div class="comments-container">
           <div class="view-all">
-            <h3>View all <span><%= lineup.comments.length %> </span>comments</h3>
+            <h3> <% if (lineup.comments.length === 0) { %>
+             Be the first to comment!
+            <% } else if (lineup.comments.length === 1) { %>
+              View <span><%= lineup.comments.length %> </span>comment</h3>
+              <% } else { %>
+              View <span><%= lineup.comments.length %> </span>comment</h3>
+               
+                <% } %>
           </div>
           <div class="view-featured hide">
             <h3>View featured comments only</h3>
@@ -173,10 +180,69 @@
                       <button type="submit" class="lineup-btn share"><i class="fa-solid fa-share"></i><span>Share</span></button>
                     </form>
                   </div>
+                 
                 </div>
 
               </footer>
-            </div>
+            </div> 
+            <span class="show-replies">show replies</span>
+            <!-- thread comments || some names have been left as comment for styles-->
+             <div class="thread-container hide">
+              <% comment.thread.forEach(threadComment => { %>
+                 <div class="thread-comment">
+                <header class="thread-header">
+                  <div class="img-container">
+                    <img src="/images/misc/default-user.jpg" alt="user-profile">
+                  </div>
+                  <span class="comment-username"><%= threadComment.user.username %></span>
+                  <span class="comment-timestamp"><%= threadComment.relativeTime %></span>
+                </header>
+                <div class="thread-text"><p><%= threadComment.text %></p></div>
+                <footer class="thread-footer">
+                  <div class="lineup-actions">
+                    <!-- Vote buttons and form -->
+                    <div class="vote-btn-container">
+                      <!-- upvote -->
+                      <form class="vote-form <% if (user._id.toString() === threadComment.user._id.toString()) { %> disabled-btn <% } %>" action="/lineups/<%= lineup._id %>/comment/upvote" method="POST">
+                        <input type="hidden" id="upvote" name="upvote" value="upvote">
+                        <input id="commentIdUp" name="commentId" type="hidden" value="<%= threadComment._id %>">
+  
+                        <button <% if (user._id.toString() === threadComment.user._id.toString()) { %> disabled <% } %> type="submit" class="lineup-btn up-vote <% if (user._id.toString() === threadComment.user._id.toString()) { %> disabled-btn <% } %>"><i class="fa-solid fa-circle-arrow-up"></i></button>
+                      </form>
+                      <!-- display votes -->
+                      <span class="num-of-votes"> <%= threadComment?.totalVotes %></span>
+                      <!-- down votes -->
+                      <form class="vote-form <% if (user._id.toString() === threadComment.user._id.toString()) { %> disabled-btn <% } %>" action="/lineups/<%= lineup._id %>/comment/downvote" method="POST">
+                        <button <% if (user._id.toString() === threadComment.user._id.toString()) { %> disabled <% } %> type="submit" class="lineup-btn down-vote <% if (user._id.toString() === threadComment.user._id.toString()) { %> disabled-btn <% } %>">
+                          <input type="hidden" id="downvote" name="downvote" value="downvote">
+                          <input id="commentIdDown" name="commentId" type="hidden" value="<%= threadComment._id %>">
+  
+                          <i class="fa-solid fa-circle-arrow-down"></i>
+                        </button>
+                      </form>
+                    </div>
+                    <!-- Comment button and form -->
+                    <div class="comment-btn-container">
+                      <form action="" method="">
+                        <!-- thread btn -->
+                        <button type="submit" class="lineup-btn comment-btn"><i class="fa-brands fa-threads"></i>
+  
+                        </button>
+                      </form>
+                    </div>
+                    <!-- Share button and form -->
+                    <div class="share-btn-container">
+                      <form action="/lineups/<%= lineup._id %>/share" method="GET">
+                        <button type="submit" class="lineup-btn share"><i class="fa-solid fa-share"></i><span>Share</span></button>
+                      </form>
+                    </div>
+                   
+                  </div>
+                </footer>
+              </div>
+            <%  }) %> 
+             
+             </div>
             <% }); %>
           </div>
           <div class="featured-comments">
@@ -255,12 +321,25 @@
     const threadCommentInputContainer = document.createElement('div');
     const lineupId = document.querySelector('.lineup-card').getAttribute('data-lineup-id')
 const section = document.querySelector('section')
+const showRepliesBtn = document.querySelector('.show-replies');
+
     //////////////////////////////
     // Form HTML
     //////////////////////////////
 
+// show thread comments 
+showRepliesBtn.addEventListener('click', () => {
+  const threadContainer = document.querySelector('.thread-container');
+  if(threadContainer.classList.contains('hide')){
+  showRepliesBtn.innerText = 'hide replies'
+} else {
+  showRepliesBtn.innerText = 'show replies'
+
+}
+threadContainer.classList.toggle('hide');
 
 
+})
     threadBtn.forEach(btn => btn.addEventListener('click', (e) => {
       e.preventDefault();
       console.log('clicked')

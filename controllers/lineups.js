@@ -532,7 +532,7 @@ const postNewThread = async (req, res) => {
   const { lineupId } = req.params;
   const { text, commentId } = req.body;
   const userId = req.session.user._id;
-  console.log(commentId, " <-- comment Id")
+
   try {
     const lineup = await LineupModel.findById(lineupId)
       .populate({
@@ -575,6 +575,12 @@ const postNewThread = async (req, res) => {
   }
 };
 
+//////////////////////////////
+//  GET  latest threads
+//////////////////////////////
+const getThreads = async (req,res) => {
+
+}
 module.exports = {
   getNewLineup,
   postNewLineup,
