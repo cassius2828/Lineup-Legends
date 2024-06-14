@@ -7,7 +7,7 @@ Welcome to **Lineup Legends**, the ultimate fantasy basketball lineup creation a
 > 
 > [Lineup Legends | Heroku](https://lineup-legends-5bdbc4813272.herokuapp.com/)
 
-
+> [Trello Planning Cards](https://trello.com/invite/b/ETupbtT7/ATTId7a643c8af3fdca2e1479938238e31ceAAA891AD/lineup-legends)
 ## Features
 
 ### Lineup Creation
