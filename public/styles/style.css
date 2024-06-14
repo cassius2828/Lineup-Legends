@@ -278,6 +278,10 @@ section.section-landing .right img {
 #commenting .text-container {
   left: 5%;
 }
+
+#gamble-landing {
+  margin-bottom: 15rem;
+}
 #share .text-container {
   right: 5%;
 }
