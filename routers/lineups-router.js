@@ -44,14 +44,25 @@ router.post("/:lineupId/upvote", lineupCtrl.postUpvoteLineup);
 router.post("/:lineupId/downvote", lineupCtrl.postDownvoteLineup);
 
 //////////////////////////////
-// ? POST /vote - upvote Lineup
+// ? POST /vote - upvote comment
 //////////////////////////////
 router.post("/:lineupId/comment/upvote", lineupCtrl.postUpvoteComments);
 
 //////////////////////////////
-// ? POST /vote - downvote Lineup
+// ? POST /vote - downvote comment
 //////////////////////////////
 router.post("/:lineupId/comment/downvote", lineupCtrl.postDownvoteComments);
+
+//////////////////////////////
+// ? POST /vote - upvote thread/:threadId
+//////////////////////////////
+router.post("/:lineupId/thread/:threadId/upvote", lineupCtrl.postUpvoteThread);
+
+//////////////////////////////
+// ? POST /vote - downvote thread/:threadId
+//////////////////////////////
+router.post("/:lineupId/thread/:threadId/downvote", lineupCtrl.postDownvoteThread);
+
 
 //////////////////////////////
 // * PUT /:lineupId/featured- Feature Lineup

@@ -447,6 +447,58 @@ const postDownvoteComments = async (req, res) => {
 };
 
 //////////////////////////////
+// ? POST upvote thread
+//////////////////////////////
+const postUpvoteThread = async (req, res) => {
+  const { lineupId } = req.params;
+  const userId = req.session.user._id;
+  const { threadId, commentId } = req.body;
+
+  try {
+    await handleThreadVotes(
+      lineupId,
+      userId,
+      commentId,
+      threadId,
+      "upvote",
+      "downvote"
+    );
+  } catch (err) {
+    console.error(`Error: ${err}`);
+    return res.status(500).send(`Unable to add upvote to the comment`);
+  }
+
+  res.redirect(`/lineups/${lineupId}/comment`);
+};
+
+//////////////////////////////
+// ? POST downvote thread
+//////////////////////////////
+const postDownvoteThread = async (req, res) => {
+  const { lineupId } = req.params;
+  const userId = req.session.user._id;
+  const { threadId, commentId } = req.body;
+  console.log(req.body, " <-- req.body");
+  console.log(commentId, " <-- COMMENT id");
+  console.log(threadId, " <-- THREAD id");
+
+  try {
+    await handleThreadVotes(
+      lineupId,
+      userId,
+      commentId,
+      threadId,
+      "downvote",
+      "upvote"
+    );
+  } catch (err) {
+    console.error(`Error: ${err}`);
+    return res.status(500).send(`Unable to add downvote to the comment`);
+  }
+
+  res.redirect(`/lineups/${lineupId}/comment`);
+};
+//////////////////////////////
 // * PUT feature lineup
 //////////////////////////////
 const putFeatureLineup = async (req, res) => {
@@ -549,28 +601,30 @@ const postNewThread = async (req, res) => {
         },
       });
 
-     // Ensure commentId is an ObjectId
-     const mongooseCommentId = new mongoose.Types.ObjectId(commentId);
-    
-     const targetedComment = lineup.comments.find(comment => comment._id.equals(mongooseCommentId));
- 
-     if (!targetedComment) {
-       return res.status(404).send("Comment not found");
-     }
- 
-     if (!targetedComment.thread) {
-       targetedComment.thread = [];
-     }
- 
-     targetedComment.thread.push({
-       user: userId,
-       text,
-     });
- 
-     await lineup.save(); 
+    // Ensure commentId is an ObjectId
+    const mongooseCommentId = new mongoose.Types.ObjectId(commentId);
+
+    const targetedComment = lineup.comments.find((comment) =>
+      comment._id.equals(mongooseCommentId)
+    );
+
+    if (!targetedComment) {
+      return res.status(404).send("Comment not found");
+    }
+
+    if (!targetedComment.thread) {
+      targetedComment.thread = [];
+    }
+
+    targetedComment.thread.push({
+      user: userId,
+      text,
+    });
+
+    await lineup.save();
     return res.redirect(`/lineups/${lineupId}/comment`);
   } catch (err) {
-    console.error(err)
+    console.error(err);
     return res.status(500).send("Could not add thread to comment");
   }
 };
@@ -578,9 +632,7 @@ const postNewThread = async (req, res) => {
 //////////////////////////////
 //  GET  latest threads
 //////////////////////////////
-const getThreads = async (req,res) => {
-
-}
+const getThreads = async (req, res) => {};
 module.exports = {
   getNewLineup,
   postNewLineup,
@@ -606,6 +658,8 @@ module.exports = {
   getSortUserLineups,
   getSortExploreLineups,
   postNewThread,
+  postUpvoteThread,
+  postDownvoteThread,
 };
 
 ///////////////////////////
@@ -782,6 +836,61 @@ async function handleCommentVotes(
   // save changes
   await lineup.save();
   targetedComment.totalVotes = await calculateTotalVotes(targetedComment);
+  await lineup.save();
+}
+
+// handles both upvotes and downvotes || Threads (nested two layers)
+async function handleThreadVotes(
+  lineupId,
+  userId,
+  commentId,
+  threadId,
+  targetVoteType,
+  secondaryVoteType
+) {
+  const lineup = await LineupModel.findById(lineupId);
+
+  if (!lineup) {
+    return res.status(404).send("Could not find lineup to vote on");
+  }
+  // console.log(commentId, ' <-- comment Id')
+  const targetedComment = lineup.comments.id(commentId);
+  // console.log(targetedComment, " <-- targeted comment");
+  const targetedThread = targetedComment.thread.id(threadId);
+  // console.log(targetedThread, " <-- targeted thread");
+
+  if (targetedThread.user.toString() === userId.toString()) {
+    return res.status(403).send("User cannot vote for their own comment");
+  }
+  if (!targetedThread)
+    return res.status(404).send("Could not find thread to vote on");
+
+  // Find existing vote
+  const existingVote = targetedThread.votes.find(
+    (vote) => vote.user.toString() === userId.toString()
+  );
+
+  console.log(existingVote, " <-- existing vote");
+  if (existingVote) {
+    if (existingVote[targetVoteType]) {
+      // if there is already an existing vote with [targetVoteType] then delete it
+      targetedThread.votes.id(existingVote._id).remove();
+      // if there is an existing vote with downvote then change the values of each
+    } else if (existingVote[secondaryVoteType]) {
+      existingVote[targetVoteType] = true;
+      existingVote[secondaryVoteType] = false;
+    }
+  } else {
+    // if there is not existing vote then create an [targetVoteType]
+    targetedThread.votes.push({
+      user: { _id: userId },
+      [targetVoteType]: true,
+      [secondaryVoteType]: false,
+    });
+  }
+  // save changes
+  await lineup.save();
+  targetedThread.totalVotes = await calculateTotalVotes(targetedThread);
   await lineup.save();
 }
 //   calculate the total votes
