@@ -10,9 +10,26 @@ const { getRelativeTime } = require("./lineups.js");
 // GET search friends
 //////////////////////////////
 const getSearchFriends = async (req, res) => {
-  const users = await UserModel.find({});
+  const friends = await findFriends(req, res);
+  const userId = req.session.user._id;
+  // Find users who are not your friends and are not you
+  const users = await UserModel.find({
+    _id: {
+      $nin: [...friends, userId],
+    },
+  });
   console.log(users);
   res.render("friends/index.ejs", { users });
+};
+
+//////////////////////////////
+// GET edit friends
+//////////////////////////////
+const getEditFriends = async (req, res) => {
+  const friends = await findFriends(req, res);
+
+  console.log(friends);
+  res.render("friends/edit.ejs", { friends });
 };
 
 //////////////////////////////
@@ -49,9 +66,9 @@ const postAddFriend = async (req, res) => {
 };
 
 //////////////////////////////
-// ? POST accept friend request
+// * PUT accept friend request
 //////////////////////////////
-const postAcceptFriendReq = async (req, res) => {
+const putAcceptFriendReq = async (req, res) => {
   const { targetedUserId } = req.params;
   const currentUserId = req.session.user._id;
   await FriendModel.findOneAndUpdate(
@@ -62,6 +79,16 @@ const postAcceptFriendReq = async (req, res) => {
     { recipient: currentUserId, requester: targetedUserId },
     { $set: { status: "accepted" } }
   );
+  await FriendModel.findOneAndDelete({
+    requester: currentUserId,
+    recipient: targetedUserId,
+    status: "pending",
+  });
+  await FriendModel.findOneAndDelete({
+    recipient: currentUserId,
+    requester: targetedUserId,
+    status: "requested",
+  });
   res.send("friend req accepted");
 };
 
@@ -107,26 +134,48 @@ const getFriendLineups = async (req, res) => {
 };
 
 const getFriendRequests = async (req, res) => {
-    try {
-         const friendRequestDocs = await FriendModel.aggregate([
-    {
-      $match: { recipient: req.session.user._id, status: "pending" },
-    },
-  ]);
-  console.log(friendRequestDocs); 
-    } catch (err) {
-        console.error(err)
-      return  res.status(404).send('unable to find document')
-    }
+  try {
+    //          const friendRequestDocs = await FriendModel.aggregate([
+    //     {
+    //       $match: { recipient: req.session.user._id, status: "pending" },
+    //     },
+    //   ]);
 
-  res.send("got pending requests");
+    const friendRequestDocs = await FriendModel.find({
+      recipient: req.session.user._id,
+      status: "pending",
+    }).populate("requester");
+    console.log(friendRequestDocs);
+    res.render("friends/handle-requests.ejs", {
+      friendRequests: friendRequestDocs,
+    });
+  } catch (err) {
+    console.error(err);
+    return res.status(404).send("unable to find document");
+  }
 };
 
 module.exports = {
   getSearchFriends,
   postAddFriend,
   getFriendLineups,
-  postAcceptFriendReq,
+  putAcceptFriendReq,
   deleteRejectFriendReq,
   getFriendRequests,
+  getEditFriends,
 };
+
+async function findFriends(req, res) {
+  const currentUserId = req.session.user._id;
+  const friends = await FriendModel.find({
+    requester: currentUserId,
+    status: "accepted",
+  });
+  let friendsIds = friends.map((friend) => friend.recipient);
+  const users = await UserModel.aggregate([
+    {
+      $match: { _id: { $in: friendsIds } },
+    },
+  ]);
+  return users;
+}

@@ -9,6 +9,9 @@ const friendsCtrl = require("../controllers/friends");
 // ///////////////////////////
 router.get('/', friendsCtrl.getSearchFriends);
 
+
+
+
 // ///////////////////////////
 // GET -- friend lineups
 // ///////////////////////////
@@ -23,5 +26,21 @@ router.post('/:targetedUserId/add-friend', friendsCtrl.postAddFriend)
 // GET -- friend reqs
 // ///////////////////////////
 router.get('/:ownerId/friend-requests', friendsCtrl.getFriendRequests)
+
+// ///////////////////////////
+// * PUT -- friend reqs
+// ///////////////////////////
+router.put('/:targetedUserId/accept-request', friendsCtrl.putAcceptFriendReq)
+
+// ///////////////////////////
+// GET -- edit friends
+// ///////////////////////////
+router.get('/:userId', friendsCtrl.getEditFriends);
+
+
+// ///////////////////////////
+// ! DELETE -- friend reqs
+// ///////////////////////////
+router.delete('/:targetedUserId/reject-request', friendsCtrl.deleteRejectFriendReq)
 
 module.exports = router;

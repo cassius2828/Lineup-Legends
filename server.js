@@ -79,6 +79,11 @@ app.use("/auth", authRouter);
 app.use("/lineups", isSignedIn, lineupsRouter);
 app.use("/friends", isSignedIn, friendsRouter);
 
+// Catch-all route for handling 404 errors
+app.use((req, res, next) => {
+  res.status(404).render('404/index.ejs');
+});
+
 ///////////////////////////
 // Start Server
 ///////////////////////////

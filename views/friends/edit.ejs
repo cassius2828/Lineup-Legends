@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+  <!-- Include head partial -->
+  <%- include('../partials/head.ejs') %>
+
+  <body>
+    <!-- Include navigation partial -->
+    <%- include('../partials/_nav.ejs') %>
+    <section id="search-friends">
+      <h1>You Have <%= friends.length %> <% if (friends.length === 1) { %>
+       Friend
+      <% } else {%> 
+Friends
+      <% } %></h1>
+      <input id="search-friends-input" type="text" placeholder="search friends...">
+      <div class="user-container">
+        <% friends.forEach(friend => { %>
+            <!-- this removes the current user from the list -->
+
+                       <div class="user-card">
+            <div class="user-info">
+                  <div class="user-profile"><img src="/images/misc/default-user.jpg" alt=""></div>
+            <h2><%= friend.username %></h2> 
+            </div>
+         
+           
+           <a href="/friends/lineups/<%= friend._id %>"><button type="button">view lineups</button></a>
+            <button data-current-user-id="<%= user._id %>" data-friend-username="<%= friend.username %>" data-friend-id="<%= friend._id %>" class="reject remove-friend" type="submit">Remove Friend<i style="margin-left: 1rem;"  class="fa-solid fa-ban"></i></button>
+         
+          </div>
+       
+
+        <% }) %>
+      </div>
+    <%- include('../partials/sidenav.ejs') %>
+
+    </section>
+  <script src="/js/sidenav.js"></script>
+<script>
+    const removeFriendBtn = document.querySelector('.reject.remove-friend');
+const deleteModal = document.createElement("div");
+const section = document.querySelector('section');
+
+
+//////////////////////////////
+// Form HTML
+//////////////////////////////
+
+    removeFriendBtn.addEventListener('click',() => {
+        const friendUsername = removeFriendBtn.getAttribute('data-friend-username');
+        const friendId = removeFriendBtn.getAttribute('data-friend-id');
+        const currentUserId = removeFriendBtn.getAttribute('data-current-user-id');
+        const deleteForm = `
+<form action="/friends/${friendId}?_method=DELETE"  method="POST">
+  <h2>Are you sure you want to remove ${friendUsername} as your friend?</h2>
+  <div>
+    <a href="/friends/${currentUserId}">Cancel</a>
+    <button type="submit">Delete</button>
+  </div>
+</form>
+`;
+        showModal(deleteModal, deleteForm, "delete");
+
+    })
+
+
+//////////////////////////////
+// Modal utility function
+//////////////////////////////
+function showModal(modal, form, selector) {
+  if (modal) {
+    modal.innerHTML = "";
+  }
+
+  modal.innerHTML = form;
+  section.appendChild(modal);
+  modal.classList.add("edit-modals", selector);
+}
+</script>
+  </body>
+</html>

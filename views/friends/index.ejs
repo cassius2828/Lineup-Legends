@@ -7,27 +7,31 @@
     <!-- Include navigation partial -->
     <%- include('../partials/_nav.ejs') %>
     <section id="search-friends">
-      <h1>Find Friends!</h1>
+      <h1>Add Friends!</h1>
       <input id="search-friends-input" type="text" placeholder="search for friends...">
       <div class="user-container">
         <% users.forEach(otherUser => { %>
             <!-- this removes the current user from the list -->
-            <% if (otherUser._id.toString()!==user._id.toString()) { %>
+
                        <div class="user-card">
             <div class="user-info">
                   <div class="user-profile"><img src="/images/misc/default-user.jpg" alt=""></div>
             <h2><%= otherUser.username %></h2> 
             </div>
          
-            <form action="/friends/<%= otherUser._id %>/add-friend" method="POST">
+            <form class="search-friends-form" action="/friends/<%= otherUser._id %>/add-friend" method="POST">
               <a href="/friends/lineups/<%= otherUser._id %>"><button type="button">view lineups</button></a>
               <button type="submit">add as friend</button>
             </form>
           </div>
-            <% } %>
+       
 
         <% }) %>
       </div>
+    <%- include('../partials/sidenav.ejs') %>
+
     </section>
+  <script src="/js/sidenav.js"></script>
+
   </body>
 </html>

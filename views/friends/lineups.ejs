@@ -18,7 +18,7 @@
         <input type="text"> <button class="message-btn">Message</button>
       </form>
       <% } %>
-      <div class="lineup-container">
+      <div class="lineup-container full">
         <% lineups.forEach(lineup => { %>
         <!-- Lineup card with conditional class for owner -->
         <div class="lineup-card <% if (user._id.toString() === lineup.owner._id.toString()) { %> owner <% } %>">
@@ -111,9 +111,13 @@
         </div>
         <% }); %>
       </div>
+    <%- include('../partials/sidenav.ejs') %>
+
     </section>
 
     <!-- External JavaScript for rating color -->
+  <script src="/js/sidenav.js"></script>
+
     <script src="/js/rating-color.js"></script>
   </body>
 </html>

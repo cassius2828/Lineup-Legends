@@ -5,29 +5,33 @@
   <!-- style -->
   <nav>
     <ul>
-      <a href="#your-lineups"><li>Your Lineups</li></a>
+      <a href="/lineups/<%= user._id %>"><li>My Lineups</li></a>
       <hr>
-      <a href="#featured-lineups"><li>Featured Lineups</li></a>
+      <a href="/lineups/<%= user._id %>/featured"><li>Featured Lineups</li></a>
       <hr>
-      <a href="#card-collection"><li>Card Collection</li></a>
+      <a href="/card-collection"><li>Card Collection</li></a>
       <hr>
-      <a href="#direct-messages"><li>Direct Messages</li></a>
+      <a href="/profile/<%= user._id %>/messages"><li>Direct Messages</li></a>
       <hr>
-      <a href="#friends"><li>Friends</li></a>
+      <a href="/friends/<%= user._id %>"><li>My Friends</li></a>
       <hr>
-      <a href="#explore"><li>Explore</li></a>
+      <a href="/friends"><li>Add Friends</li></a>
       <hr>
-      <a href="#notifications"><li>Notifications</li></a>
+      <a href="/lineups/explore"><li>Explore</li></a>
+      <hr>
+      <a href="/store"><li>Store</li></a>
+      <hr>
+      <li style="cursor: pointer;" id="notifications">Notifications</li>
    
     </ul>
   </nav>
-  <ul id="notifications-modal">
-    <a href="#messages"><li>Messages: 2</li></a>
+  <ul class="hide" id="notifications-modal">
+    <a href="/profile/<%= user._id %>/messages"><li>Messages: 2</li></a>
     <hr>
-    <a href="#votes"><li>Votes: 3</li></a>
+    <a href="/lineups/<%= user._id %>"><li>Votes: 3</li></a>
     <hr>
     <a href="/friends/<%= user._id %>/friend-requests"><li>Friend Requests: 4</li></a>
     <hr>
-    <a href="#achievements"><li>Achievements: 0</li></a>
+    <a href="/profile/<%= user._id %>/achievements"><li>Achievements: 0</li></a>
   </ul>
 </aside>

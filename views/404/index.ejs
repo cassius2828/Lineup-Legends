@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- Include head partial -->
+<%- include('../partials/head.ejs') %>
+
+<body>
+  <!-- Include navigation partial -->
+  <%- include('../partials/_nav.ejs') %>
+
+  <section id="error-404">
+    <%- include('../partials/sidenav.ejs') %>
+    <div class="text-container">
+      <h1>404</h1>
+      <p>Where are you going? This page is either under construction or does not exist. Please visit another page</p>
+    </div>
+    <div id="error-404-bg"></div>
+  </section>
+
+  <!-- External JavaScript -->
+  <script src="/js/sidenav.js"></script>
+
+
+</body>
+
+</html>

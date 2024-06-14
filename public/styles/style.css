@@ -15,7 +15,7 @@ html {
 
 body {
   font-family: Arial, sans-serif;
-  background-color: #222;
+  background-color: #171717;
   color: #fff;
   text-align: center;
   padding: 2rem;
@@ -812,7 +812,8 @@ button,
 
 /* Friends */
 
-#search-friends {
+#search-friends,
+#handle-requests {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -824,7 +825,8 @@ button,
   color: #333;
   border-radius: 8px;
 }
-#search-friends .user-card {
+#search-friends .user-card,
+#handle-requests .user-card {
   margin: 3rem 0;
   background-color: #444;
   display: flex;
@@ -861,11 +863,34 @@ button,
   position: absolute;
   right: 4rem;
 }
+
 .user-card form button {
   margin: 0;
 }
+
 .user-card form * {
   margin-right: 4px;
+}
+
+.user-card form {
+  position: absolute;
+  right: 4rem;
+}
+
+.user-card .form-container {
+  display: flex;
+  justify-content: space-between;
+  gap: 4rem;
+}
+
+.user-container p {
+  font-size: 2rem;
+  width: 50%;
+  margin: 2rem auto;
+  line-height: 3.5rem;
+}
+.user-container button {
+  margin: 2rem;
 }
 /* icons */
 
@@ -926,6 +951,7 @@ button,
   text-align: center;
   border: none;
   font-size: 1.25rem;
+  color: #f2f2f2;
   width: 100%;
 }
 .sidebar ul li:hover {
@@ -945,23 +971,18 @@ button,
 
 #notifications-modal {
   position: relative;
-  top: 43%;
+  top: 55%;
   justify-content: start;
-  left: 8rem;
+  left: 12rem;
   height: auto;
   animation: fade-in-from-left 0.75s ease forwards;
   border-radius: 8px;
-  /* bottom: 30%;
-  left: 50%;
-  transform: translateX(-50%);
-  height: 10%; */
   list-style: none;
   background-color: #4a4a4c;
 }
 #notifications-modal hr {
   margin: 0 auto;
 }
-
 
 .hamburger-container {
   position: absolute;
@@ -1068,6 +1089,35 @@ button,
   background: #4caf50;
   cursor: pointer;
   border-radius: 50%;
+}
+#error-404 .text-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+#error-404 .text-container h1 {
+    font-size: 6rem;
+}
+
+#error-404 .text-container p {
+    font-size: 3rem;
+}
+
+
+#error-404-bg {
+    position: absolute;
+    top:0;
+    left:0;
+    z-index: -1;
+  background: url('/images/misc/chef-harden-bazemore.jpeg');
+    background-size: cover;
+    background-position: 0%;
+    filter: brightness(50%);
+  height: 100svh;
+  width: 100vw;
+
 }
 
 /* ANIMATIONS */
@@ -1180,5 +1230,13 @@ button,
 }
 
 .hide {
-  display: none;
+  display: none !important;
+}
+
+.static {
+  position: static !important;
+}
+
+.reject {
+  background-color: rgb(215, 66, 66);
 }

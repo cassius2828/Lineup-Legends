@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- Include head partial -->
+<%- include('../partials/head.ejs') %>
+
+<body>
+  <!-- Include navigation partial -->
+  <%- include('../partials/_nav.ejs') %>
+  <section id="handle-requests">
+    <h1> <%= friendRequests.length %> Friend <% if (friendRequests.length === 1) { %>
+      Request
+      <% } else { %>
+      Requests
+      <% } %></h1>
+    <div class="user-container">
+      <% if (friendRequests.length === 0) { %>
+      <p>The best way to make friends is to interact with other player's lineups and invite your own friends outside the app!</p>
+      <div class="btn-container"><a href="/lineups/<%= user._id %>"><button>share your lineups</button></a><a href="/lineups/explore"><button>explore lineups</button></a></div>
+      <% } %>
+      <% friendRequests.forEach(request => { %>
+      <!-- this removes the current user from the list -->
+
+      <div class="user-card">
+        <div class="user-info">
+          <div class="user-profile"><img src="/images/misc/default-user.jpg" alt=""></div>
+          <h2><%= request.requester.username %></h2>
+        </div>
+
+        <form class="static" action="/friends/<%= request.requester._id %>/reject-request?_method=DELETE" method="POST">
+
+          <button class="reject" type="submit">Reject Request<i style="margin-left: 1rem;" class="fa-solid fa-ban"></i></button>
+        </form>
+        <form class="static" action="/friends/<%= request.requester._id %>/accept-request?_method=PUT" method="POST">
+
+          <button type="submit">Accept Request <i style="margin-left: 1rem;" class="fa-solid fa-check"></i></button>
+        </form>
+      </div>
+
+      <% }) %>
+    </div>
+    <%- include('../partials/sidenav.ejs') %>
+
+  </section>
+  <script src="/js/sidenav.js"></script>
+
+</body>
+
+</html>
