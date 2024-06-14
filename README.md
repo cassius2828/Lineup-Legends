@@ -66,7 +66,11 @@ Welcome to **Lineup Legends**, the ultimate fantasy basketball lineup creation a
 ## External Library Used
 - **date-fns**: Used to generate the timestamps based of the time created at
 
+## Inspiration
 
+- **Friend Schema Inspiration**: [Ashh
+Full Stack Developer | StackOverflow](https://stackoverflow.com/questions/50363220/modelling-for-friends-schema-in-mongoose)
+- **Embedded tips**: [Mongo DB Forums](https://www.mongodb.com/community/forums/t/adding-into-embedded-document/7898)
 ## More Future Aspirations
 I had a great time creating this application for my project and would love to collaborate with others one day to make this an open source project. I would like to turn this into a React Native app and use React for a web facing application. Although, I am open to staying with EJS. For styles I would like to move to sass, as you see everything is jumbled into one large stylesheet which would make maintanence a bit tougher. 
 
