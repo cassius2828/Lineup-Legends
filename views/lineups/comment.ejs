@@ -112,8 +112,9 @@
           <input name="comment-search" id="comment-search" type="text" value="" placeholder="Search Comments">
           <i class="fa-solid fa-magnifying-glass"></i>
         </div>
-
-        <div class="comments-container">
+     
+        <div class="comments-container"> 
+            <!-- all comments -->
           <div class="view-all">
             <h3> <% if (lineup.comments.length === 0) { %>
               Be the first to comment!
@@ -136,6 +137,9 @@
                   <img src="/images/misc/default-user.jpg" alt="user-profile">
                 </div>
                 <span class="comment-username"><%= comment.user.username %></span>
+                <% if (lineup.owner._id.toString()=== comment.user._id.toString()) { %>
+                 <span class="original-poster">OP</span>
+                <% } %>
                 <span class="comment-timestamp"><%= comment.relativeTime %></span>
               </header>
               <div class="comment-text">
@@ -180,12 +184,13 @@
                       <button type="submit" class="lineup-btn share"><i class="fa-solid fa-share"></i><span>Share</span></button>
                     </form>
                   </div>
-
                 </div>
-
               </footer>
             </div>
-            <span class="show-replies">show replies</span>
+            <!-- toggle thread btn -->
+            <% if (comment.thread.length > 0) { %>
+              <span class="show-replies">show replies</span>
+            <% } %>
             <!-- thread comments || some names have been left as comment for styles-->
             <div class="thread-container hide">
               <% comment.thread.forEach(threadComment => { %>
@@ -195,6 +200,9 @@
                     <img src="/images/misc/default-user.jpg" alt="user-profile">
                   </div>
                   <span class="comment-username"><%= threadComment.user.username %></span>
+                  <% if (lineup.owner._id.toString()=== threadComment.user._id.toString()) { %>
+                    <span class="original-poster">OP</span>
+                   <% } %>
                   <span class="comment-timestamp"><%= threadComment.relativeTime %></span>
                 </header>
                 <div class="thread-text">
@@ -241,9 +249,8 @@
             </div>
             <% }); %>
           </div>
+          <!-- featured comments -->
           <div class="featured-comments">
-
-
             <% lineup.comments.forEach(comment => { %>
             <div class="comment">
               <header>
@@ -251,6 +258,9 @@
                   <img src="/images/misc/default-user.jpg" alt="user-profile">
                 </div>
                 <span class="comment-username"><%= comment.user.username %></span>
+                <% if (lineup.owner._id.toString()=== comment.user._id.toString()) { %>
+                  <span class="original-poster">OP</span>
+                 <% } %>
                 <span class="comment-timestamp"> <%=  comment.relativeTime %>
                 </span>
               </header>

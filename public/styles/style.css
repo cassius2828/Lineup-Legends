@@ -1073,6 +1073,10 @@ button,
  margin-bottom: 15rem;
 }
 
+.thread-comment {
+  margin: 3rem 0;
+}
+
 .show-replies {
   cursor: pointer;
   font-size: 1.25rem;
@@ -1080,6 +1084,11 @@ button,
   padding-bottom: 3rem;
 }
 
+.original-poster {
+  font-size: 1.25rem;
+  color: #d4b65c;
+  margin-right: 3px
+}
 
 /* Friends */
 
