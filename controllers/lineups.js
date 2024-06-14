@@ -212,7 +212,7 @@ const getUserLineups = async (req, res) => {
 };
 
 //////////////////////////////
-//  Get User Lineups
+//  Get Sort User Lineups
 //////////////////////////////
 const getSortUserLineups = async (req, res) => {
   const { sort } = req.query;
@@ -223,6 +223,20 @@ const getSortUserLineups = async (req, res) => {
   userLineups = await getRelativeTime(userLineups);
 
   res.render("lineups/index.ejs", { lineups: userLineups });
+};
+
+//////////////////////////////
+//  Get Sort Explore Lineups
+//////////////////////////////
+const getSortExploreLineups = async (req, res) => {
+  const { sort } = req.query;
+
+  let userLineups = await sortExploreLineups(sort);
+ 
+  // for each lineup, I will iterate over it and add my timestamp to the res.locals
+  userLineups = await getRelativeTime(userLineups);
+
+  res.render("lineups/explore.ejs", { lineups: userLineups });
 };
 //////////////////////////////
 // * PUT reorder lineup
@@ -534,7 +548,7 @@ module.exports = {
   postDownvoteComments,
   addPlayers,
   getRelativeTime,
-  getSortUserLineups,
+  getSortUserLineups,getSortExploreLineups
 };
 
 ///////////////////////////
@@ -733,6 +747,7 @@ async function addPlayers() {
   }
 }
 
+// sort user lineups
 async function sortUserLineups(sort, userId) {
   if (sort === "newest") {
     return await LineupModel.find({ owner: userId })
@@ -775,6 +790,57 @@ async function sortUserLineups(sort, userId) {
       .populate("c");
   } else if (sort === "least-votes") {
     return await LineupModel.find({ owner: userId })
+      .sort({ totalVotes: 1 })
+      .populate("pg")
+      .populate("sg")
+      .populate("sf")
+      .populate("pf")
+      .populate("c");
+  }
+}
+// sort explore lineups
+async function sortExploreLineups(sort) {
+  if (sort === "newest") {
+    return await LineupModel.find({})
+      .sort({ createdAt: -1 })
+      .populate("pg")
+      .populate("sg")
+      .populate("sf")
+      .populate("pf")
+      .populate("c");
+  } else if (sort === "oldest") {
+    return await LineupModel.find({})
+      .populate("pg")
+      .populate("sg")
+      .populate("sf")
+      .populate("pf")
+      .populate("c");
+  } else if (sort === "highest-rated") {
+    return await LineupModel.find({})
+      .sort({ avgRating: -1 })
+      .populate("pg")
+      .populate("sg")
+      .populate("sf")
+      .populate("pf")
+      .populate("c");
+  } else if (sort === "lowest-rated") {
+    return await LineupModel.find({})
+      .sort({ avgRating: 1 })
+      .populate("pg")
+      .populate("sg")
+      .populate("sf")
+      .populate("pf")
+      .populate("c");
+  } else if (sort === "most-votes") {
+    return await LineupModel.find({})
+      .sort({ totalVotes: -1 })
+      .populate("pg")
+      .populate("sg")
+      .populate("sf")
+      .populate("pf")
+      .populate("c");
+  } else if (sort === "least-votes") {
+    return await LineupModel.find({})
       .sort({ totalVotes: 1 })
       .populate("pg")
       .populate("sg")
