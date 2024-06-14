@@ -2,6 +2,11 @@
 
 Welcome to **Lineup Legends**, the ultimate fantasy basketball lineup creation and management platform. Build your dream team, engage with the community, and showcase your strategic prowess!
 
+> *production version of app below*
+> 
+> [Lineup Legends | Heroku](https://lineup-legends-5bdbc4813272.herokuapp.com/)
+
+
 ## Features
 
 ### Lineup Creation
