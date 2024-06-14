@@ -112,7 +112,7 @@
           <input name="comment-search" id="comment-search" type="text" value="" placeholder="Search Comments">
           <i class="fa-solid fa-magnifying-glass"></i>
         </div>
-     
+     <!-- general comments container -->
         <div class="comments-container"> 
             <!-- all comments -->
           <div class="view-all">
@@ -125,11 +125,12 @@
 
             <% } %>
           </div>
+          <!-- view featured title -->
           <div class="view-featured hide">
             <h3>View featured comments only</h3>
           </div>
+          <!-- all comments container -->
           <div class="all-comments hide">
-
             <% lineup.comments.forEach(comment => { %>
             <div data-comment-id="<%= comment._id %>" class="comment">
               <header>

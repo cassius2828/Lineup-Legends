@@ -534,14 +534,14 @@ const getLineupComment = async (req, res) => {
       path: "comments",
       populate: {
         path: "user",
-        select: "username",
+        
       },
     })
     .populate({
       path: "comments.thread",
       populate: {
         path: "user",
-        select: "username",
+        
       },
     });
   // allows me to use my fucntion to add the relative time to the locals obj
@@ -549,6 +549,10 @@ const getLineupComment = async (req, res) => {
   lineupArr.push(lineup);
   lineupArr = await getRelativeTime(lineupArr);
   lineup.comments = await getRelativeTime(lineup.comments);
+  for (let comment of lineup.comments) {
+     comment = await getRelativeTime(comment.thread);
+  }
+
   await lineup.save();
   //   console.log(lineup);
   res.render(`lineups/comment.ejs`, { lineup: lineupArr[0] });
@@ -620,6 +624,7 @@ const postNewThread = async (req, res) => {
       user: userId,
       text,
     });
+    targetedComment.thread = await getRelativeTime(targetedComment.thread);
 
     await lineup.save();
     return res.redirect(`/lineups/${lineupId}/comment`);
@@ -629,10 +634,7 @@ const postNewThread = async (req, res) => {
   }
 };
 
-//////////////////////////////
-//  GET  latest threads
-//////////////////////////////
-const getThreads = async (req, res) => {};
+
 module.exports = {
   getNewLineup,
   postNewLineup,
