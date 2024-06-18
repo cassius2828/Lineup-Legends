@@ -1,0 +1,62 @@
+
+.hamburger-container {
+    position: absolute;
+    width: 25px;
+    height: 25px;
+  
+    right: -14rem;
+    top: 1rem;
+    cursor: pointer;
+  }
+  .bar {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #f2f2f2;
+    width: 25px;
+    height: 2px;
+    transition: 0.3s all ease;
+  }
+  .bar::before,
+  .bar::after {
+    content: "";
+    position: absolute;
+    background-color: #f2f2f2;
+    width: 25px;
+    height: 2px;
+    transition: 0.3s all ease;
+    left: 0;
+  }
+  
+  .bar::before {
+    top: -6px;
+  }
+  .bar::after {
+    top: 6px;
+  }
+  
+  /* Rotate bars when .close class is added */
+  .bar.close::before {
+    transform: rotate(45deg);
+    top: 0;
+  }
+  
+  .bar.close::after {
+    transform: rotate(-45deg);
+    top: 0;
+  }
+  
+  .bar.close {
+    background-color: transparent; /* Hide the middle bar */
+  }
+  
+  .title-info {
+    width: 90%;
+  }
+  
+  .lineup-container.full,
+  .title-info.full {
+    width: 100%;
+    transition: 0.2s ease all;
+  }

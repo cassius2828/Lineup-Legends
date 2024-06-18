@@ -1,0 +1,54 @@
+/* ///////////////// */
+/* Forms */
+/* ///////////////// */
+#create-lineup form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    background-color: #333;
+    padding: 1rem;
+    border-radius: 0.5rem;
+  }
+  
+  #sign-up-form,
+  #sign-in-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  #sign-up-form input,
+  #sign-in-form input {
+    margin: 8px 0 2rem 0;
+  }
+  
+  #sign-in-link,
+  #sign-up-link {
+    position: relative;
+    top: 5rem;
+    color: #f2f2f2;
+  }
+  label {
+    font-size: 1.4rem;
+  }
+  
+  input {
+    font-size: 1.4rem;
+    padding: 0.5rem;
+    border: 0.1rem solid #555;
+    border-radius: 0.5rem;
+    max-width: 30rem;
+  }
+  
+  button,
+  .vote-form {
+    background-color: #8c8258;
+    color: #fff;
+    border: none;
+    padding: 1rem 2rem;
+    font-size: 1.6rem;
+    cursor: pointer;
+    margin-top: 2rem;
+    border-radius: 0.5rem;
+  }

@@ -1,0 +1,113 @@
+/* ///////////////// */
+/* Landing Page */
+/* ///////////////// */
+
+#landing {
+    position: relative;
+    background: url("/images/landing/jordan-vs-lebron.png");
+    background-size: cover;
+    height: 100svh;
+    width: 100vw;
+    padding: 0;
+    margin-top: 8rem;
+  }
+  #landing > div {
+    position: absolute;
+    top: 47.5%;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  #landing h1 {
+    font-size: 12rem;
+  }
+  #landing h2 {
+    font-size: 5rem;
+  }
+  #landing button {
+    background-color: rgba(0, 0, 0, 0.45);
+    outline: #f2f2f2 1px solid;
+    padding: 2rem;
+    border-radius: 0;
+  }
+  
+  section.section-landing {
+    margin: 0;
+    padding: 5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    background-color: #010109;
+    height: 100svh;
+    width: 100vw;
+  }
+  section.section-landing h1 {
+    font-size: 8rem;
+  }
+  section.section-landing p {
+    font-size: 1.75rem;
+    line-height: 3rem;
+  }
+  section.section-landing .left,
+  section.section-landing .right {
+    width: 40%;
+  }
+  section.section-landing .left img,
+  section.section-landing .right img {
+    width: 100%;
+  }
+
+  /* general landing sections */
+#commenting,
+#share,
+#featured-landing {
+  position: relative;
+  height: 100svh;
+  width: 100vw;
+}
+#commenting .bg,
+#share .bg,
+#featured-landing .bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  background-size: cover;
+  height: 100svh;
+  width: 100vw;
+  /* z-index: -1; */
+}
+#commenting .bg {
+  background: url("/images/landing/inside-the-nba.jpg");
+  filter: brightness(50%);
+}
+#share .bg {
+  background: url("/images/landing/kd-twitter-perl.png");
+  background-size: cover;
+  filter: brightness(30%);
+  background-repeat: no-repeat;
+}
+
+#featured-landing .bg {
+  background: linear-gradient(
+      rgba(0, 0, 0, 0.9) 20%,
+      rgba(0, 0, 0, 0.6) 50%,
+      rgba(0, 0, 0, 0.2) 80%,
+      rgba(0, 0, 0, 0) 100%
+    ),
+    url("/images/landing/olympic-paris-nba.jpeg");
+  background-size: 90%;
+  /* filter: brightness(30%); */
+  background-repeat: no-repeat;
+  background-position: bottom;
+}
+#commenting .text-container,
+#share .text-container {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 40%;
+  z-index: 1;
+}

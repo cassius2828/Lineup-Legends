@@ -1,0 +1,53 @@
+.user-card .user-info {
+    display: flex;
+    align-items: center;
+    gap: 4rem;
+  }
+  .user-card .user-profile {
+    width: 8rem;
+    height: 8rem;
+    border-radius: 50%;
+    overflow: hidden;
+  }
+  .user-card .user-profile img {
+    object-fit: cover;
+    width: 8rem;
+    height: 8rem;
+  }
+  .user-card h2 {
+    margin: 0;
+  }
+  
+  .user-card form {
+    position: absolute;
+    right: 4rem;
+  }
+  
+  .user-card form button {
+    margin: 0;
+  }
+  
+  .user-card form * {
+    margin-right: 4px;
+  }
+  
+  .user-card form {
+    position: absolute;
+    right: 4rem;
+  }
+  
+  .user-card .form-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 4rem;
+  }
+  
+  .user-container p {
+    font-size: 2rem;
+    width: 50%;
+    margin: 2rem auto;
+    line-height: 3.5rem;
+  }
+  .user-container button {
+    margin: 2rem;
+  }

@@ -1,0 +1,17 @@
+
+/* welcome */
+#welcome {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+  }
+  
+  #welcome .left img {
+    width: 55vw;
+  }
+  
+  #welcome .right {
+    width: 35%;
+    padding: 3rem;
+    margin-left: 15rem;
+  }

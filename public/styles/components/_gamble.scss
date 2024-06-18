@@ -1,0 +1,23 @@
+/* ////////////////// */
+/* gamble section */
+/* ////////////////// */
+.player-text.gamble {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.75rem;
+  }
+  .player-text.gamble span:first-child {
+    font-size: 2rem;
+    margin: 1rem 0;
+  }
+  
+  .lineup-players.gamble {
+    position: relative;
+  }
+  
+  .select-gamble {
+    outline: solid 5px gold;
+  }
+  

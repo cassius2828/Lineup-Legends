@@ -205,6 +205,7 @@ section.section-landing .right img {
   width: 100%;
 }
 
+/* welcome */
 #welcome {
   display: flex;
   align-items: center;
@@ -221,9 +222,11 @@ section.section-landing .right img {
   margin-left: 15rem;
 }
 
+/* rating */
 #rating-landing .left {
   width: 40%;
 }
+/* general landing sections */
 #commenting,
 #share,
 #featured-landing {
@@ -278,7 +281,7 @@ section.section-landing .right img {
 #commenting .text-container {
   left: 5%;
 }
-
+/* gamble */
 #gamble-landing {
   margin-bottom: 15rem;
 }

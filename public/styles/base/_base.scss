@@ -1,0 +1,45 @@
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+}
+
+html {
+  font-size: 62.5%;
+  box-sizing: border-box;
+}
+
+body {
+  overflow-x: hidden;
+}
+
+// section {
+//   animation: fadeIn 0.3s ease-out;
+// }
+
+a {
+  cursor: pointer;
+  text-decoration: none;
+  color: inherit;
+}
+
+ul {
+  list-style: none;
+}
+
+
+  
+  /* ///////////////// */
+  /* Links */
+  /* ///////////////// */
+  a {
+    color: #dfa315;
+    text-decoration: none;
+    font-size: 1.6rem;
+  }
+  
+  a:hover {
+    color: #dfa315;
+  }
