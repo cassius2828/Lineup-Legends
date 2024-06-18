@@ -1,38 +1,57 @@
 /* BTNS */
 #confirm-player-to-gamble a {
+  color: #f2f2f2;
+}
+
+.disabled-btn,
+.disabled-btn:hover {
+  cursor: not-allowed;
+  pointer-events: none;
+  background-color: #4f4b3a;
+}
+
+.cancel-btn {
+  color: #f2f2f2;
+
+  &:hover {
     color: #f2f2f2;
   }
-  
-  .disabled-btn,
-  .disabled-btn:hover {
-    cursor: not-allowed;
-    pointer-events: none;
-    background-color: #4f4b3a;
-  }
-  
-  .cancel-btn {
-    color: #f2f2f2;
-  }
-  .cancel-btn:hover {
-    color: #f2f2f2;
-  }
-  
-  .lineup-actions button:hover {
+}
+
+.lineup-actions {
+  button:hover {
     background-color: #c8af42;
   }
+
   .lineup-btn.share {
     background-color: #aaa95f;
   }
-  
-  .lineup-actions .award-btn-container .award-btn {
-    background-color: #968553;
+
+  .award-btn-container {
+    .award-btn {
+      background-color: #968553;
+    }
+
+    .award-btn.featured {
+      background-color: #ffc107;
+    }
   }
-  .lineup-actions .award-btn.featured {
-    background-color: #ffc107;
-  }
-  .lineup-actions .rate-btn-container .rate-btn {
-    background-color: #daa520;
-  }
-  .lineup-actions .comment-btn {
+
+
+
+  .comment-btn {
     background-color: #756b34;
   }
+}
+
+//   button,
+// .vote-form {
+//   background-color: #8c8258;
+//   color: #fff;
+//   border: none;
+//   padding: 1rem 2rem;
+//   font-size: 1.6rem;
+//   cursor: pointer;
+//   margin-top: 2rem;
+//   border-radius: 0.5rem;
+// }

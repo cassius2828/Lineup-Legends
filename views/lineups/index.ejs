@@ -6,7 +6,7 @@
   <%- include('../partials/_nav.ejs') %>
 
   <section id="user-lineups">
-    <div class="title-info full">
+    <div class="title-info ">
       <h1>My Lineups</h1>
       <% if (lineups.length === 0) { %>
       <p>
@@ -19,7 +19,7 @@
       <% } %>
     </div>
 
-    <div class="lineup-container full">
+    <div class="lineup-container ">
       <% lineups.forEach(lineup => { %>
       <div class="lineup-card">
         <header class="lineup-header">

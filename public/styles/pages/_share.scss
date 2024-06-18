@@ -1,12 +1,11 @@
-#share .text-container {
-    right: 5%;
-  }
-
-  #share .text-container {
+#share {
+  .text-container {
     position: absolute;
     width: 40%;
+    right: 5%;
   }
-  #share p {
+  p {
     font-size: 2.25rem;
     line-height: 3.75rem;
   }
+}

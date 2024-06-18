@@ -3,12 +3,13 @@
 /* ///////////////// */
 #user-lineups {
     padding: 2rem;
+  
+    p {
+      font-size: 1.5rem;
+      margin: 4rem 2rem 2rem 2rem;
+    }
   }
   
-  #user-lineups p {
-    font-size: 1.5rem;
-    margin: 4rem 2rem 2rem 2rem;
-  }
   .lineup-container {
     display: flex;
     flex-wrap: wrap;
@@ -18,9 +19,11 @@
     width: 90%;
     margin: auto;
   }
+  
   .title-info {
     margin: auto;
   }
+  
   .lineup-card {
     background-color: #bababa28;
     border-radius: 1rem;
@@ -28,40 +31,43 @@
     width: 40%;
     max-width: 60rem;
     box-shadow: 0px 0px 11px 3px rgba(0, 0, 0, 0.45);
-  }
-  .lineup-card.owner {
-    /* background-color: #636363; */
   
-    border: solid 3px #d4b65c;
+    &.owner {
+      border: solid 3px #d4b65c;
+    }
   }
+  
   .lineup-header {
     position: relative;
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 1rem;
+  
+    h2 {
+      position: absolute;
+      top: -1.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 2.5rem;
+      margin: 0;
+    }
   }
+  
   .ts-container {
     display: flex;
     flex-direction: column;
     align-items: center;
   }
+  
   .lineup-relativeTime {
     font-size: 1.25rem;
-  }
-  .lineup-relativeTime.other-user {
-    position: absolute;
-    right: 0;
-    top: 0;
-  }
   
-  .lineup-header h2 {
-    position: absolute;
-    top: -1.5rem;
-    left: 50%;
-    transform: translateX(-50%);
-    font-size: 2.5rem;
-    margin: 0;
+    &.other-user {
+      position: absolute;
+      right: 0;
+      top: 0;
+    }
   }
   
   .lineup-edit,
@@ -83,22 +89,21 @@
   
   .player {
     text-align: center;
-    /* fixes issue with long names on two lines, will need media queries */
     min-height: 15rem;
-  }
   
-  .player img {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    object-fit: cover;
-    margin-bottom: 5px;
-    background-color: #f2f2f2;
-    cursor: pointer;
-  }
+    img {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 5px;
+      background-color: #f2f2f2;
+      cursor: pointer;
+    }
   
-  .player-name {
-    font-size: 1.5rem;
+    .player-name {
+      font-size: 1.5rem;
+    }
   }
   
   .lineup-footer {
@@ -111,17 +116,17 @@
     display: flex;
     justify-content: space-evenly;
     width: 100%;
-  }
   
-  .lineup-actions span {
-    font-size: 1.4rem;
-  }
+    span {
+      font-size: 1.4rem;
+    }
   
-  .lineup-actions button {
-    border: none;
-    padding: 5px 10px;
-    cursor: pointer;
-    border-radius: 5px;
+    button {
+      border: none;
+      padding: 5px 10px;
+      cursor: pointer;
+      border-radius: 5px;
+    }
   }
   
   .vote-btn-container {
@@ -130,16 +135,17 @@
     gap: 3rem;
   }
   
-  .vote-form button {
-    padding: 0;
-    margin: 0 5px;
-    background-color: none;
-    color: #fff;
-    cursor: pointer;
-  }
-  
   .vote-form {
     padding: 0.5rem 1rem;
     font-size: 1.6rem;
     border-radius: 0.5rem;
+  
+    button {
+      padding: 0;
+      margin: 0 5px;
+      background-color: none;
+      color: #fff;
+      cursor: pointer;
+    }
   }
+  

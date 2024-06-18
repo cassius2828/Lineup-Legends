@@ -2,44 +2,43 @@
 /* Selected Players Row */
 /* ///////////////// */
 .selected-players {
-    display: flex;
-    justify-content: center;
-    margin: 2rem 0;
-    gap: 1rem;
-  }
-  
-  .selected-cell {
-    position: relative;
-    width: 8rem;
-    height: 8rem;
-    border-radius: 0.5rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .remove-player-btn {
-    border-radius: 50%;
-    padding: 3px;
-    cursor: pointer;
-    background-color: rgb(216, 38, 38);
-    color: #f2f2f2;
-    position: absolute;
-    top: -30%;
-    left: -10%;
-    z-index: 10;
-    font-size: 2rem;
-    width: 2.5rem;
-    height: 2.5rem;
-  }
-  
-  .remove-player-btn * {
+  display: flex;
+  justify-content: center;
+  margin: 2rem 0;
+  gap: 1rem;
+}
+
+.selected-cell {
+  position: relative;
+  width: 8rem;
+  height: 8rem;
+  border-radius: 0.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.remove-player-btn {
+  border-radius: 50%;
+  padding: 3px;
+  cursor: pointer;
+  background-color: rgb(216, 38, 38);
+  color: #f2f2f2;
+  position: absolute;
+  top: -30%;
+  left: -10%;
+  z-index: 10;
+  font-size: 2rem;
+  width: 2.5rem;
+  height: 2.5rem;
+  * {
     position: absolute;
     top: 47.5%;
     left: 50%;
     transform: translate(-50%, -50%);
   }
-  
-  .dim-player {
-    filter: brightness(50%) grayscale(100%);
-  }
+}
+
+.dim-player {
+  filter: brightness(50%) grayscale(100%);
+}

@@ -1,13 +1,16 @@
+@use "../abstracts/" as *;
+
 h1,
 h2 {
-  font-family: "Stick No Bills", sans-serif;
+  font-family: $sports-font;
   text-transform: uppercase;
-}h1 {
-    font-size: 3rem;
-    margin-bottom: 2rem;
-  }
-  
-  h2 {
-    font-size: 2.4rem;
-    margin: 1rem 0;
-  }
+}
+h1 {
+  font-size: 3rem;
+  margin-bottom: 2rem;
+}
+
+h2 {
+  font-size: 2.4rem;
+  margin: 1rem 0;
+}

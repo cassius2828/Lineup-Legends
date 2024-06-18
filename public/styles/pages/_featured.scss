@@ -1,4 +1,5 @@
-#featured-landing .text-container {
+#featured-landing {
+  .text-container {
     position: absolute;
     top: 10%;
     left: 50%;
@@ -6,3 +7,4 @@
     width: 40%;
     z-index: 1;
   }
+}

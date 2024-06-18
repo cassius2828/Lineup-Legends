@@ -1,21 +1,22 @@
 /* Comment section */
 #comment-section {
-    margin-top: 20px;
-  }
-  .lineup-container.comments {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  #comment-input-form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-bottom: 2rem;
-    width: 100%;
-  }
-  
-  #comment-input-form input[type="textarea"] {
+  margin-top: 20px;
+}
+
+.lineup-container.comments {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#comment-input-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 2rem;
+  width: 100%;
+
+  input[type="textarea"] {
     background-color: #272729;
     color: #d7dadc;
     border: 1px solid #343536;
@@ -24,8 +25,8 @@
     margin-bottom: 1rem;
     width: 100%;
   }
-  
-  #comment-input-form button {
+
+  button {
     background-color: #3a3a3c;
     color: #d7dadc;
     border: none;
@@ -33,113 +34,153 @@
     padding: 8px;
     cursor: pointer;
     margin-right: 5px;
+
+    &:hover {
+      background-color: #4a4a4c;
+    }
   }
-  
-  #comment-input-form button:hover {
-    background-color: #4a4a4c;
-  }
-  
-  #comment-search {
-    width: 100%;
-    background-color: #272729;
-    color: #d7dadc;
-    border: 1px solid #343536;
-    border-radius: 4px;
-    padding: 8px;
-    margin-bottom: 20px;
-  }
-  #comment-search + i {
+}
+
+#comment-search {
+  width: 100%;
+  background-color: #272729;
+  color: #d7dadc;
+  border: 1px solid #343536;
+  border-radius: 4px;
+  padding: 8px;
+  margin-bottom: 20px;
+
+  + i {
     position: relative;
     left: -3rem;
     color: #9f9f9f;
     font-size: 1.5rem;
   }
-  .comments-container {
-    display: flex;
-    flex-direction: column;
-  }
-  .view-all,
-  .view-featured {
-    margin: 2rem 0;
-    font-size: 1.33rem;
-    cursor: pointer;
-  }
-  .comment {
-    background-color: #272729;
-    border: 1px solid #343536;
-    border-radius: 8px;
-    padding: 16px;
-    margin-bottom: 16px;
-  }
-  
-  .comment header, .thread-comment header {
+}
+
+.comments-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.view-all,
+.view-featured {
+  margin: 2rem 0;
+  font-size: 1.33rem;
+  cursor: pointer;
+}
+
+.comment {
+  background-color: #272729;
+  border: 1px solid #343536;
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 16px;
+
+  header {
     display: flex;
     align-items: center;
     margin-bottom: 6px !important;
   }
-  
-  .comment .img-container, .thread-comment .img-container {
+
+  .img-container {
     width: 40px;
     height: 40px;
     margin-right: 8px;
+
+    img {
+      width: 100%;
+      border-radius: 50%;
+    }
   }
-  
-  .comment .img-container img, .thread-comment .img-container img {
-    width: 100%;
-    border-radius: 50%;
-  }
-  
-  .comment-username{
+
+  .comment-username {
     font-size: 14px;
     color: #d7dadc;
     margin-right: 8px;
   }
-  
+
   .comment-timestamp {
     font-size: 12px;
     color: #818384;
   }
-  
-  .comment-text p, .thread-text p {
+
+  .comment-text p {
     font-size: 1.4rem;
     color: #d7dadc;
     margin: 0;
   }
-  
+
   .comment-footer {
     display: flex;
     justify-content: space-between;
     margin-top: 12px;
+
+    .lineup-actions {
+      display: flex;
+      align-items: center;
+    }
   }
-  
-  .comment-footer .lineup-actions {
-    display: flex;
-    align-items: center;
-  }
-  
-  /* thread section */
-  .thread-container {
-   position: relative;
-   left: 10rem;
-   top: 5rem;
-   border-left: solid 2px #f2f2f23a;
-   padding-left: 3rem;
-   margin-bottom: 15rem;
-  }
-  
+}
+
+/* thread section */
+.thread-container {
+  position: relative;
+  left: 10rem;
+  top: 5rem;
+  border-left: solid 2px #f2f2f23a;
+  padding-left: 3rem;
+  margin-bottom: 15rem;
+
   .thread-comment {
     margin: 3rem 0;
+
+    header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 6px !important;
+    }
+
+    .img-container {
+      width: 40px;
+      height: 40px;
+      margin-right: 8px;
+
+      img {
+        width: 100%;
+        border-radius: 50%;
+      }
+    }
+
+    .comment-username {
+      font-size: 14px;
+      color: #d7dadc;
+      margin-right: 8px;
+    }
+
+    .comment-timestamp {
+      font-size: 12px;
+      color: #818384;
+    }
+
+    .thread-text p {
+      font-size: 1.4rem;
+      color: #d7dadc;
+      margin: 0;
+    }
   }
-  
+
   .show-replies {
     cursor: pointer;
     font-size: 1.25rem;
     margin-bottom: 3rem;
     padding-bottom: 3rem;
   }
-  
+
+
+}
   .original-poster {
     font-size: 1.25rem;
     color: #d4b65c;
-    margin-right: 6px
+    margin-right: 6px;
   }

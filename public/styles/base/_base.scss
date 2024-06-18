@@ -1,18 +1,26 @@
+@use '../abstracts/' as *;
+
 *,
 *::before,
 *::after {
   margin: 0;
   padding: 0;
-  box-sizing: inherit;
+  box-sizing: border-box;
 }
 
 html {
   font-size: 62.5%;
-  box-sizing: border-box;
 }
 
 body {
-  overflow-x: hidden;
+  font-family: Arial, sans-serif;
+  background-color: $theme-darkest;
+  color: $white;
+  text-align: center;
+}
+
+section {
+  margin-top: 10rem;
 }
 
 // section {
@@ -35,11 +43,12 @@ ul {
   /* Links */
   /* ///////////////// */
   a {
-    color: #dfa315;
+    color: $highlight-gold;
     text-decoration: none;
     font-size: 1.6rem;
+    &:hover {
+      color: $highlight-gold;
+    }
   }
   
-  a:hover {
-    color: #dfa315;
-  }
+  
