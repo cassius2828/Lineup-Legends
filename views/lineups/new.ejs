@@ -1,186 +1,180 @@
 <!DOCTYPE html>
 <html lang="en">
-  <%- include('../partials/head.ejs') %>
-  <body>
-    <%- include('../partials/_nav.ejs') %>
+<%- include('../partials/head.ejs') %>
 
-    <section id="create-lineup">
-      <div class="left-container">
-        <header id="lineup-header">
-          <h1>Build Your Starting 5</h1>
-          <span id="money-left" data-value="15">$15</span>
-        </header>
+<body>
+  <%- include('../partials/_nav.ejs') %>
 
-        <div class="grid">
-          <div class="row-container">
-            <h2>$5</h2>
-            <div class="row">
-              <% value5Players.forEach(player => { %>
-              <div class="player-container">
-                <div class="cell">
-                  <img
-                    src="<%= player.imgUrl %>"
-                    alt="Player"
-                    data-player-id="<%= player._id %>"
-                    data-value="5"
-                  />
-                </div>
-                <div class="player-name">
-                  <span><%= player.firstName %></span>
-                  <span><%= player.lastName %></span>
-                </div>
+  <section id="create-lineup">
+    <div class="left-container">
+      <header id="lineup-header">
+        <h1>Build Your Starting 5</h1>
+        <span id="money-left" data-value="15">$15</span>
+      </header>
+
+      <div class="grid">
+        <div class="row-container">
+          <h2>$5</h2>
+          <div class="row">
+            <% value5Players.forEach(player => { %>
+            <!-- Player row value: $5 -->
+            <div class="player-container">
+              <div class="cell">
+                <img src="<%= player.imgUrl %>" alt="Player" data-player-id="<%= player._id %>" data-value="5" />
               </div>
-              <% }); %>
+              <div class="player-name">
+                <span><% if (player.firstName.length < 9) { %>
+                  <%= player.firstName %>
+                <% } %></span>
+                <span><% if (player.lastName.length < 9) { %>
+                  <%= player.lastName %>
+                <% } %></span>
+              </div>
             </div>
+            <% }); %>
           </div>
+        </div>
 
-          <div class="row-container">
-            <h2>$4</h2>
-            <div class="row">
-              <% value4Players.forEach(player => { %>
-              <div class="player-container">
-                <div class="cell">
-                  <img
-                    src="<%= player.imgUrl %>"
-                    alt="Player"
-                    data-player-id="<%= player._id %>"
-                    data-value="4"
-                  />
-                </div>
-                <div class="player-name">
-                  <span><%= player.firstName %></span>
-                  <span><%= player.lastName %></span>
-                </div>
+        <div class="row-container">
+          <h2>$4</h2>
+          <div class="row">
+            <% value4Players.forEach(player => { %>
+            <!-- Player row value: $4 -->
+            <div class="player-container">
+              <div class="cell">
+                <img src="<%= player.imgUrl %>" alt="Player" data-player-id="<%= player._id %>" data-value="4" />
               </div>
-              <% }); %>
+              <div class="player-name">
+                <span><% if (player.firstName.length < 9) { %>
+                  <%= player.firstName %>
+                <% } %></span>
+                <span><% if (player.lastName.length < 9) { %>
+                  <%= player.lastName %>
+                <% } %></span>
+              </div>
             </div>
+            <% }); %>
           </div>
+        </div>
 
-          <div class="row-container">
-            <h2>$3</h2>
-            <div class="row">
-              <% value3Players.forEach(player => { %>
-              <div class="player-container">
-                <div class="cell">
-                  <img
-                    src="<%= player.imgUrl %>"
-                    alt="Player"
-                    data-player-id="<%= player._id %>"
-                    data-value="3"
-                  />
-                </div>
-                <div class="player-name">
-                  <span><%= player.firstName %></span>
-                  <span><%= player.lastName %></span>
-                </div>
+        <div class="row-container">
+          <h2>$3</h2>
+          <div class="row">
+            <% value3Players.forEach(player => { %>
+            <!-- Player row value: $3 -->
+            <div class="player-container">
+              <div class="cell">
+                <img src="<%= player.imgUrl %>" alt="Player" data-player-id="<%= player._id %>" data-value="3" />
               </div>
-              <% }); %>
+              <div class="player-name">
+                <span><% if (player.firstName.length < 9) { %>
+                  <%= player.firstName %>
+                <% } %></span>
+                <span><% if (player.lastName.length < 9) { %>
+                  <%= player.lastName %>
+                <% } %></span>
+              </div>
             </div>
+            <% }); %>
           </div>
+        </div>
 
-          <div class="row-container">
-            <h2>$2</h2>
-            <div class="row">
-              <% value2Players.forEach(player => { %>
-              <div class="player-container">
-                <div class="cell">
-                  <img
-                    src="<%= player.imgUrl %>"
-                    alt="Player"
-                    data-player-id="<%= player._id %>"
-                    data-value="2"
-                  />
-                </div>
-                <div class="player-name">
-                  <span><%= player.firstName %></span>
-                  <span><%= player.lastName %></span>
-                </div>
+        <div class="row-container">
+          <h2>$2</h2>
+          <div class="row">
+            <% value2Players.forEach(player => { %>
+            <!-- Player row value: $2 -->
+            <div class="player-container">
+              <div class="cell">
+                <img src="<%= player.imgUrl %>" alt="Player" data-player-id="<%= player._id %>" data-value="2" />
               </div>
-              <% }); %>
+              <div class="player-name">
+                <span><% if (player.firstName.length < 9) { %>
+                  <%= player.firstName %>
+                <% } %></span>
+                <span><% if (player.lastName.length < 9) { %>
+                  <%= player.lastName %>
+                <% } %></span>
+              </div>
             </div>
+            <% }); %>
           </div>
+        </div>
 
-          <div class="row-container">
-            <h2>$1</h2>
-            <div class="row">
-              <% value1Players.forEach(player => { %>
-              <div class="player-container">
-                <div class="cell">
-                  <img
-                    src="<%= player.imgUrl %>"
-                    alt="Player"
-                    data-player-id="<%= player._id %>"
-                    data-value="1"
-                  />
-                </div>
-                <div class="player-name">
-                  <span><%= player.firstName %></span>
-                  <span><%= player.lastName %></span>
-                </div>
+        <div class="row-container">
+          <h2>$1</h2>
+          <div class="row">
+            <% value1Players.forEach(player => { %>
+            <!-- Player row value: $1 -->
+            <div class="player-container">
+              <div class="cell">
+                <img src="<%= player.imgUrl %>" alt="Player" data-player-id="<%= player._id %>" data-value="1" />
               </div>
-              <% }); %>
+              <div class="player-name">
+                <span><% if (player.firstName.length < 9) { %>
+                  <%= player.firstName %>
+                <% } %></span>
+                <span><% if (player.lastName.length < 9) { %>
+                  <%= player.lastName %>
+                <% } %></span>
+              </div>
             </div>
+            <% }); %>
           </div>
         </div>
       </div>
+    </div>
 
-      <div class="right-container">
-        <!-- reorder form -->
+    <div class="right-container">
+      <!-- reorder form -->
 
-
-        <div class="selected-players">
-          <% for (let i = 0; i < 5; i++) { %>
-          <div class="selected-cell"></div>
-          <% } %>
-        </div>
-        <div style="display: flex;">
-           <form style="background-color: transparent;" id="lineupForm" action="/lineups/new" method="POST">
+      <div class="selected-players">
+        <% for (let i = 0; i < 5; i++) { %>
+        <div class="selected-cell"></div>
+        <% } %>
+      </div>
+      <div id="confirm-container">
+        <form style="background-color: transparent;" id="lineupForm" action="/lineups/new" method="POST">
           <button type="submit" class="confirm-button">Confirm Lineup</button>
-        </form> 
+        </form>
         <form style="background-color: transparent;" id="lineupFormReorder" action="/lineups/new/reorder" method="POST">
           <button type="submit" class="confirm-button">Confirm & Reorder</button>
         </form>
-        </div>
-       
       </div>
+    </div>
     <%- include('../partials/sidenav.ejs') %>
+  </section>
+  <!-- js file -->
+  <script src="/js/sidenav.js"></script>
 
-    </section>
-<!-- js file -->
-<script src="/js/sidenav.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", (e) => {
 
-    <script >
+      const playerImgs = document.querySelectorAll('.cell img')
+      const playerCells = document.querySelectorAll('.cell')
 
-document.addEventListener("DOMContentLoaded", (e) => {
+      //   PLAYER COLORS
+      playerImgs?.forEach((player) => {
+        const playerDataValue = Number(
+          player.getAttribute("data-value")
+        )
+        console.log(playerDataValue)
 
-const playerImgs = document.querySelectorAll('.cell img')
-const playerCells = document.querySelectorAll('.cell')
+        if (playerDataValue === 5) {
+          player.parentElement.style.boxShadow = "0px 0px 10px 3px #99fcff";
+        } else if (playerDataValue === 4) {
+          player.parentElement.style.boxShadow = "0px 0px 10px 3px #8317e8";
+        } else if (playerDataValue === 3) {
+          player.parentElement.style.boxShadow = "0px 0px 10px 3px #e3b920";
+        } else if (playerDataValue === 2) {
+          player.parentElement.style.boxShadow = "0px 0px 10px 3px #c0c0c0";
+        } else {
+          player.parentElement.style.boxShadow = "0px 0px 10px 3px #804a14";
+        }
+      });
+    });
+  </script>
+  <script src="/js/create-lineup.js"></script>
+</body>
 
-
-
-//   PLAYER COLORS
-playerImgs?.forEach((player) => {
-    const playerDataValue = Number(
-    player
-    .getAttribute("data-value")
- )
- console.log(playerDataValue)
-
-    if (playerDataValue === 5) {
-      player.parentElement.style.boxShadow = "0px 0px 10px 3px #99fcff";
-    } else if (playerDataValue === 4) {
-      player.parentElement.style.boxShadow = "0px 0px 10px 3px #8317e8";
-    } else if (playerDataValue === 3) {
-      player.parentElement.style.boxShadow = "0px 0px 10px 3px #e3b920";
-    } else if (playerDataValue === 2) {
-      player.parentElement.style.boxShadow = "0px 0px 10px 3px #c0c0c0";
-    }  else {
-      player.parentElement.style.boxShadow = "0px 0px 10px 3px #804a14";
-    }
-  });
-});
-
-    </script>
-    <script src="/js/create-lineup.js"></script>
-  </body>
 </html>
