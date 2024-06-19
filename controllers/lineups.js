@@ -655,7 +655,7 @@ module.exports = {
   postLineupComment,
   postUpvoteComments,
   postDownvoteComments,
-  addPlayers,
+  // addPlayers,
   getRelativeTime,
   getSortUserLineups,
   getSortExploreLineups,
@@ -904,16 +904,7 @@ async function calculateTotalVotes(lineup) {
 }
 // const players = require("../public/js/add-players.js");
 
-async function addPlayers() {
-  try {
-    await PlayerModel.insertMany(players);
-    console.log("Players added successfully");
-  } catch (error) {
-    console.error("Error adding players:", error);
-  } finally {
-    mongoose.connection.close();
-  }
-}
+
 
 // sort user lineups
 async function sortUserLineups(sort, userId) {
@@ -1017,3 +1008,15 @@ async function sortExploreLineups(sort) {
       .populate("c");
   }
 }
+
+// const players = require('../public/js/add-players.js')
+// async function addPlayers() {
+
+//   console.log('starting to add players')
+//   try {
+//     await PlayerModel.insertMany(players.players4);
+//     console.log("Players added successfully");
+//   } catch (error) {
+//     console.error("Error adding players:", error);
+//   } 
+// }
