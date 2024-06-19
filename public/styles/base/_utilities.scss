@@ -1,12 +1,33 @@
+@use "../abstracts/" as *;
+
 .hide {
-    display: none !important;
+  display: none !important;
+}
+
+.static {
+  position: static !important;
+}
+
+.reject {
+  background-color: rgb(215, 66, 66);
+}
+
+#back-to-top {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  border-radius: 50%;
+  width: 3rem;
+  height: 3rem;
+  background-color: $theme-dark;
+  transition: .2s all ease;
+  &:hover {
+    background-color: #cacaca5b;
   }
-  
-  .static {
-    position: static !important;
+  * {
+    font-size: 2rem;
   }
-  
-  .reject {
-    background-color: rgb(215, 66, 66);
-  }
-  
+}

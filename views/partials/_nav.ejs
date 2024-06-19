@@ -43,4 +43,37 @@
     </ul>
   </div>
   <% } %>
-</nav>
+
+
+</nav> <div id="nav-hamburger" class="hamburger-container"><div class="bar "></div></div>
+  <nav id="mobile-nav">
+  <ul class="mobile-nav-list">
+    <% if (user) { %>
+    <li><a href="/lineups/new">create a lineup</a></li>
+    <li><a href="/lineups/<%= user._id %>">your lineups</a></li>
+    <li><a href="/lineups/friends">friends' lineups</a></li>
+    <li><a href="/lineups/explore">explore lineups</a></li>
+    <li id="coins-container">
+      <img id="coins" src="/images/misc/coins.svg" alt="" />
+      <a id="coin-count" href="/lineups/explore">277</a>
+    </li>
+    <li>
+      <div class="profile-img-container">
+        <img id="profile-img" src="/images/misc/default-user.jpg" alt="" />
+      </div>
+    </li>
+    <% } else { %>
+    <li><a href="/lineups/new">create a lineup</a></li>
+    <li><a href="/auth/sign-up"> Sign up </a></li>
+    <li>
+  
+      <button >
+        <a href="/auth/sign-in"> Sign in </a>
+       
+      </button>
+    </li>
+    <% } %>
+  </ul>
+ 
+ 
+  </nav>

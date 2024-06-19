@@ -9,6 +9,8 @@
 
 html {
   font-size: 62.5%;
+  scroll-behavior: smooth;
+  overflow-x: hidden;
 }
 
 body {
@@ -175,6 +177,26 @@ h2 {
 
 .reject {
   background-color: rgb(215, 66, 66);
+}
+
+#back-to-top {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  border-radius: 50%;
+  width: 3rem;
+  height: 3rem;
+  background-color: rgba(186, 186, 186, 0.1568627451);
+  transition: 0.2s all ease;
+}
+#back-to-top:hover {
+  background-color: rgba(202, 202, 202, 0.3568627451);
+}
+#back-to-top * {
+  font-size: 2rem;
 }
 
 /* BTNS */
@@ -1256,7 +1278,8 @@ nav ul {
   display: flex;
   justify-content: space-evenly;
   align-items: center;
-  width: 40%;
+  width: 60%;
+  display: none;
 }
 nav ul a {
   text-decoration: none;
@@ -1264,6 +1287,43 @@ nav ul a {
 }
 nav ul a:hover {
   color: #dfa315;
+}
+nav #nav-hamburger {
+  z-index: 20;
+  right: 2rem;
+  top: 50%;
+  transform: translate(0, -50%);
+}
+
+#mobile-nav {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  position: absolute;
+  left: 50%;
+  top: 0;
+  width: 100vw;
+  height: 100svh;
+  transform: translate(-50%, -200%);
+  transition: 0.5s all ease;
+}
+#mobile-nav ul {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  height: 50%;
+}
+
+#mobile-nav.nav.move {
+  transition: 0.4s all ease;
+  transform: translate(-50%, 0);
+}
+
+#nav-hamburger {
+  position: absolute;
+  top: 2rem;
+  right: 3rem;
+  z-index: 30;
 }
 
 #logo {
@@ -1328,9 +1388,16 @@ nav ul a:hover {
 @media (min-width: 425px) {
   nav ul a {
     color: yellow;
+    font-size: 1.25rem;
   }
 }
 @media (min-width: 768px) {
+  #mobile-nav, #nav-hamburger {
+    display: none;
+  }
+  nav ul {
+    display: flex;
+  }
   nav ul a {
     color: blue;
   }
@@ -1338,10 +1405,12 @@ nav ul a:hover {
 @media (min-width: 992px) {
   nav ul a {
     color: orange;
+    font-size: 1.25rem;
   }
 }
 @media (min-width: 1440px) {
   nav ul a {
+    font-size: 1.5rem;
     color: red;
   }
 }
