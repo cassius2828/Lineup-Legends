@@ -512,13 +512,23 @@ button,
   color: #fff;
   border: none;
   padding: 1rem 2rem;
-  font-size: 1.6rem;
+  font-size: 1rem;
   cursor: pointer;
   margin-top: 2rem;
   border-radius: 0.5rem;
-  min-width: 8rem;
+  min-width: 6rem;
 }
 
+.vote-form {
+  gap: 2rem;
+}
+
+@media (min-width: 1440px) {
+  button,
+  .vote-form {
+    font-size: 1.6rem;
+  }
+}
 /* ///////////////// */
 /* Edit Lineup */
 /* ///////////////// */
@@ -1415,6 +1425,7 @@ section.section-landing .right img {
 
 .lineup-relativeTime {
   font-size: 1rem;
+  opacity: 0;
 }
 .lineup-relativeTime.other-user {
   position: absolute;
@@ -1452,9 +1463,11 @@ section.section-landing .right img {
   margin-bottom: 5px;
   background-color: #f2f2f2;
   cursor: pointer;
+  margin: auto;
 }
 .player .player-name {
   font-size: 1rem;
+  text-align: center;
 }
 
 .lineup-footer {
@@ -1471,20 +1484,28 @@ section.section-landing .right img {
   justify-content: space-evenly;
   width: 100%;
 }
+.lineup-actions .action-btn-container {
+  display: flex;
+  gap: 1rem;
+  margin: auto;
+}
 .lineup-actions span {
   font-size: 1rem;
 }
 .lineup-actions button {
   border: none;
-  padding: 2px 4px;
+  padding: 4px 8px;
   cursor: pointer;
   border-radius: 5px;
+  font-size: 1.25rem;
 }
 
 .vote-btn-container {
   display: flex;
+  align-items: center;
   position: relative;
   gap: 1rem;
+  justify-content: center;
 }
 
 .vote-form {
@@ -1501,6 +1522,46 @@ section.section-landing .right img {
   width: 20px;
 }
 
+@media (min-width: 425px) {
+  .lineup-actions span {
+    font-size: 1.25rem;
+  }
+  .lineup-actions button {
+    border: none;
+    padding: 8px 16px;
+    font-size: 1.5rem;
+    min-width: 10rem;
+  }
+  .player img {
+    margin: 2rem auto;
+  }
+}
+@media (min-width: 768px) {
+  .player {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+  }
+  .player img {
+    width: 100px;
+    height: 100px;
+  }
+  .player .player-name {
+    font-size: 1.25rem;
+  }
+  .lineup-actions {
+    flex-direction: row;
+  }
+  .lineup-actions span {
+    font-size: 1.5rem;
+  }
+  .lineup-actions button {
+    border: none;
+    padding: 8px 16px;
+    font-size: 1.5rem;
+    min-width: 10rem;
+  }
+}
 @media (min-width: 1600px) {
   /* ///////////////// */
   /* View User Lineups */
@@ -1560,6 +1621,7 @@ section.section-landing .right img {
   }
   .lineup-relativeTime {
     font-size: 1.25rem;
+    opacity: 1;
   }
   .lineup-relativeTime.other-user {
     position: absolute;
