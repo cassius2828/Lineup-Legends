@@ -73,6 +73,16 @@ a:hover {
     transform: translateY(0);
   }
 }
+@keyframes fade-in-from-top-positioning {
+  from {
+    transform: translate(-50%, -50%);
+    opacity: 0;
+  }
+  to {
+    transform: translate(-50%, 0);
+    opacity: 1;
+  }
+}
 @keyframes fade-in-from-left {
   0% {
     opacity: 0;
@@ -1140,6 +1150,7 @@ button,
   position: absolute;
   top: 10rem;
   right: 0;
+  display: none;
 }
 #sort-lineups-container form {
   display: flex;
@@ -1170,6 +1181,52 @@ button,
   background-color: #4f4b3a;
 }
 
+#sort-lineup-activator {
+  position: absolute;
+  font-size: 2rem;
+  top: 10rem;
+  right: 1rem;
+  cursor: pointer;
+}
+
+.sort-modal-container {
+  position: absolute;
+  top: 20rem;
+  width: 95vw;
+  height: 50svh;
+  max-height: 50rem;
+  max-width: 50rem;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #484848;
+  animation: fade-in-from-top-positioning 0.4s ease;
+  z-index: 40;
+  border-radius: 8px;
+}
+
+.bg-tint {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100svh;
+  width: 100vw;
+  z-index: 39;
+  background-color: rgba(0, 0, 0, 0.7725490196);
+}
+
+@media (min-width: 425px) {
+  #sort-lineup-activator {
+    right: 2rem;
+  }
+}
+@media (min-width: 1440px) {
+  #sort-lineups-container {
+    display: block;
+  }
+  #sort-lineup-activator {
+    display: none;
+  }
+}
 .user-card .user-info {
   display: flex;
   align-items: center;

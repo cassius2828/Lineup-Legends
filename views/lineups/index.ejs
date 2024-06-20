@@ -8,6 +8,8 @@
   <section id="user-lineups">
     <div class="title-info ">
       <h1>My Lineups</h1>
+    <span id="sort-lineup-activator">sort lineups<i style="margin-left: 5px;" class="fa-solid fa-sort"></i></span>
+
       <% if (lineups.length === 0) { %>
       <p>
         You don't have any lineups yet... let's fix that and create your first
@@ -118,6 +120,7 @@
     <%- include('../partials/sidenav.ejs') %>
   </section>
   <script src="/js/rating-color.js"></script>
+  <script src="/js/sort-lineups.js"></script>
   <script src="/js/sidenav.js"></script>
   <script>
     // controls the voting input values
