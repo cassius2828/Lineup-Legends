@@ -95,10 +95,12 @@
 }
 
 .player {
+  position: relative;
   text-align: center;
   // min-height: 15rem;
   display: flex;
   flex-direction: column;
+  top:-1rem;
 
   img {
     width: 60px;
@@ -114,6 +116,7 @@
   .player-name {
     font-size: 1rem;
     text-align: center;
+    bottom: -2.5rem;
   }
 }
 

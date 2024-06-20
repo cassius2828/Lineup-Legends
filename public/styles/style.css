@@ -1710,9 +1710,11 @@ section.section-landing .right img {
 }
 
 .player {
+  position: relative;
   text-align: center;
   display: flex;
   flex-direction: column;
+  top: -1rem;
 }
 .player img {
   width: 60px;
@@ -1727,6 +1729,7 @@ section.section-landing .right img {
 .player .player-name {
   font-size: 1rem;
   text-align: center;
+  bottom: -2.5rem;
 }
 
 .lineup-footer {
