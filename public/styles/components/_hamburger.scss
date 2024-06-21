@@ -4,6 +4,7 @@
   height: 25px;
   right: -14rem;
   top: 1rem;
+  font-size: 2rem;
   cursor: pointer;
 
   .bar {
@@ -40,7 +41,7 @@
 
       &::before {
         transform: rotate(45deg);
-      
+
         top: 0;
       }
 
@@ -51,7 +52,18 @@
     }
   }
 }
+#sidenav {
+  margin-left: 1rem;
+  font-size: 2rem;
+  cursor: pointer;
+}
 
+#sidenav.mobile {
+  position: fixed;
+  top: 2.25rem;
+  right: 8rem;
+  z-index: 40;
+}
 .title-info {
   width: 90%;
 
@@ -66,3 +78,8 @@
   transition: 0.2s ease all;
 }
 
+@media (min-width: 768px) {
+  #sidenav.mobile {
+    display: none;
+  }
+}

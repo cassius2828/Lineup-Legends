@@ -1,10 +1,13 @@
 <nav>
-  <a href="/"><img id="logo" src="/images/brand/logo.webp" alt="" /></a>
-
+  <a href="/">
+    <img id="logo" src="/images/brand/logo.webp" alt="" />
+  </a>
   <ul>
     <% if (user) { %>
+     
+    <li style="display: flex; align-items:center;">quick menu <i id="sidenav" class="fa-solid fa-bolt"></i></li>
     <li><a href="/lineups/new">create a lineup</a></li>
-    <li><a href="/lineups/<%= user._id %>">your lineups</a></li>
+    <li><a href="/lineups/<%= user._id %>">my lineups</a></li>
     <li><a href="/lineups/friends">friends' lineups</a></li>
     <li><a href="/lineups/explore">explore lineups</a></li>
     <li id="coins-container">
@@ -43,10 +46,14 @@
     </ul>
   </div>
   <% } %>
+</nav>
+<i id="sidenav" class="fa-solid fa-bolt mobile"></i>
+ <div id="nav-hamburger" class="hamburger-container">
+  <div class="bar "></div>
+</div>
 
-
-</nav> <div id="nav-hamburger" class="hamburger-container"><div class="bar "></div></div>
-  <nav id="mobile-nav">
+ 
+<nav id="mobile-nav">
   <ul class="mobile-nav-list">
     <% if (user) { %>
     <li><a href="/lineups/new">create a lineup</a></li>
@@ -74,6 +81,4 @@
     </li>
     <% } %>
   </ul>
- 
- 
-  </nav>
+</nav>

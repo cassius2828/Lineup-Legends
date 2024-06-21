@@ -79,7 +79,7 @@ nav {
 
 }
   #nav-hamburger {
-    position: absolute;
+    position: fixed;
     top:2rem;
     right:3rem;
     z-index: 30;
@@ -87,7 +87,7 @@ nav {
   }
 #logo {
   width: 8rem;
-  margin-left: 8rem;
+  margin-left: 2rem;
 }
 
 #coins-container {
@@ -179,14 +179,18 @@ nav {
       }
     }
   }
+  #logo {
+  
+    margin-left: 8rem;
+  }
 }
 
 @media (min-width: 992px) {
   nav {
     ul {
-      a {
+      a,li {
         color: orange;
-        font-size: 1.25rem;
+      
       }
     }
   }
@@ -195,7 +199,7 @@ nav {
 @media (min-width: 1440px) {
   nav {
     ul {
-      a {
+      a,li {
         font-size: 1.5rem;
         color: red;
       }
