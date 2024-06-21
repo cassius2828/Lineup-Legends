@@ -34,6 +34,7 @@
             <% if (user._id.toString()===lineup.owner._id.toString()) { %>
               My Lineup
             <% } else { %>
+              <!-- ! issue when sorting -- owner is NOT populating correctly on sort -->
               <%= lineup.owner.username %>
             <% } %>
           </h3>

@@ -217,12 +217,17 @@ const getUserLineups = async (req, res) => {
 const getSortUserLineups = async (req, res) => {
   const { sort } = req.query;
   const userId = req.session.user._id;
-  let userLineups = await sortUserLineups(sort, userId);
+  try {
+    let userLineups = await sortUserLineups(sort, userId);
 
-  // for each lineup, I will iterate over it and add my timestamp to the res.locals
-  userLineups = await getRelativeTime(userLineups);
+    // for each lineup, I will iterate over it and add my timestamp to the res.locals
+    userLineups = await getRelativeTime(userLineups);
 
-  res.render("lineups/index.ejs", { lineups: userLineups });
+    return res.render("lineups/index.ejs", { lineups: userLineups });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Error obtaining user lineups");
+  }
 };
 
 //////////////////////////////
@@ -230,13 +235,17 @@ const getSortUserLineups = async (req, res) => {
 //////////////////////////////
 const getSortExploreLineups = async (req, res) => {
   const { sort } = req.query;
+  try {
+    let userLineups = await sortExploreLineups(sort);
 
-  let userLineups = await sortExploreLineups(sort);
+    // for each lineup, I will iterate over it and add my timestamp to the res.locals
+    userLineups = await getRelativeTime(userLineups);
 
-  // for each lineup, I will iterate over it and add my timestamp to the res.locals
-  userLineups = await getRelativeTime(userLineups);
-
-  res.render("lineups/explore.ejs", { lineups: userLineups });
+    return res.render("lineups/explore.ejs", { lineups: userLineups });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Error obtaining explore lineups");
+  }
 };
 //////////////////////////////
 // * PUT reorder lineup
@@ -297,7 +306,9 @@ const getExploreLineups = async (req, res) => {
 
   // for each lineup, I will iterate over it and add my timestamp to the res.locals
   allLineups = getRelativeTime(allLineups);
+// if(!allLineups[0].owner.username) {
 
+// }
   res.render("lineups/explore.ejs", { lineups: allLineups });
 };
 
@@ -534,14 +545,12 @@ const getLineupComment = async (req, res) => {
       path: "comments",
       populate: {
         path: "user",
-        
       },
     })
     .populate({
       path: "comments.thread",
       populate: {
         path: "user",
-        
       },
     });
   // allows me to use my fucntion to add the relative time to the locals obj
@@ -550,7 +559,7 @@ const getLineupComment = async (req, res) => {
   lineupArr = await getRelativeTime(lineupArr);
   lineup.comments = await getRelativeTime(lineup.comments);
   for (let comment of lineup.comments) {
-     comment = await getRelativeTime(comment.thread);
+    comment = await getRelativeTime(comment.thread);
   }
 
   await lineup.save();
@@ -633,7 +642,6 @@ const postNewThread = async (req, res) => {
     return res.status(500).send("Could not add thread to comment");
   }
 };
-
 
 module.exports = {
   getNewLineup,
@@ -904,8 +912,6 @@ async function calculateTotalVotes(lineup) {
 }
 // const players = require("../public/js/add-players.js");
 
-
-
 // sort user lineups
 async function sortUserLineups(sort, userId) {
   if (sort === "newest") {
@@ -966,14 +972,14 @@ async function sortExploreLineups(sort) {
       .populate("sg")
       .populate("sf")
       .populate("pf")
-      .populate("c");
+      .populate("c").populate('owner');
   } else if (sort === "oldest") {
     return await LineupModel.find({})
       .populate("pg")
       .populate("sg")
       .populate("sf")
       .populate("pf")
-      .populate("c");
+      .populate("c").populate('owner');
   } else if (sort === "highest-rated") {
     return await LineupModel.find({})
       .sort({ avgRating: -1 })
@@ -981,7 +987,7 @@ async function sortExploreLineups(sort) {
       .populate("sg")
       .populate("sf")
       .populate("pf")
-      .populate("c");
+      .populate("c").populate('owner');
   } else if (sort === "lowest-rated") {
     return await LineupModel.find({})
       .sort({ avgRating: 1 })
@@ -989,7 +995,7 @@ async function sortExploreLineups(sort) {
       .populate("sg")
       .populate("sf")
       .populate("pf")
-      .populate("c");
+      .populate("c").populate('owner');
   } else if (sort === "most-votes") {
     return await LineupModel.find({})
       .sort({ totalVotes: -1 })
@@ -997,7 +1003,7 @@ async function sortExploreLineups(sort) {
       .populate("sg")
       .populate("sf")
       .populate("pf")
-      .populate("c");
+      .populate("c").populate('owner');
   } else if (sort === "least-votes") {
     return await LineupModel.find({})
       .sort({ totalVotes: 1 })
@@ -1005,7 +1011,7 @@ async function sortExploreLineups(sort) {
       .populate("sg")
       .populate("sf")
       .populate("pf")
-      .populate("c");
+      .populate("c").populate('owner');
   }
 }
 
@@ -1018,5 +1024,5 @@ async function sortExploreLineups(sort) {
 //     console.log("Players added successfully");
 //   } catch (error) {
 //     console.error("Error adding players:", error);
-//   } 
+//   }
 // }
