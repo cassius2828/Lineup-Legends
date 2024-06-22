@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- Include head partial -->
+<%- include('../partials/head.ejs') %>
+
+<body>
+  <!-- Include navigation partial -->
+  <%- include('../partials/_nav.ejs') %>
+
+<section id="profile">
+    <h1>Edit Profile</h1>
+    <div class="form-container">
+          <!-- img section -->
+    <div class="profile-img-edit-container">
+      <img src="/images/misc/default-user.jpg" alt="">
+      <div class="profile-img-btns">
+        <button>upload photo</button>
+        <button>remove photo</button>
+
+     <p>recommended img size is 250px by 250px</p>  </div>
+     
+    </div>
+    <form action="">
+      <label for="">update bio</label>
+  <input type="textarea" rows="4" cols="50" name="bio" id="bio">
+  <button>update bio</button>
+</form>
+    <!-- form -->
+ <!-- Name + email -->
+  <form action="">
+    <label for="">update username</label>
+    <input type="text">
+
+    <button>update username</button>
+
+  </form>
+  <form action="">
+        <label for="">update email</label>
+    <input type="email" name="" id="">
+    <button>update email</button>
+  </form>
+  <!-- password  -->
+  <form action="">
+    <legend>update Password</legend>
+    <label for="">Current Password</label>
+    <input type="password" name="currentPassword" id="currentPassword">
+    <label for="">New Password</label>
+    <input type="password" name="newPassword" id="newPassword">
+    <label for="">Confirm New Password</label>
+    <input type="password" name="confirmNewPassword" id="confirmNewPassword">
+    <button>update password</button>
+
+  </form>
+    </div>
+
+</section>
+
+  <!-- External JavaScript for rating color -->
+  <script src="/js/sidenav.js"></script>
+  <script src="/js/sort-lineups.js"></script>
+
+  <script src="/js/rating-color.js"></script>
+</body>
+
+</html>

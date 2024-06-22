@@ -2079,6 +2079,61 @@ section.section-landing .right img {
     cursor: pointer;
   }
 }
+#profile .form-container {
+  padding: 1.5rem;
+  border-radius: 8px;
+  background-color: rgba(186, 186, 186, 0.1568627451);
+  width: 90vw;
+  max-width: 50rem;
+  margin: auto;
+}
+#profile form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 4rem auto;
+}
+#profile input {
+  margin: 1rem 0;
+  width: 80%;
+}
+#profile label {
+  text-transform: capitalize;
+  margin-top: 2rem;
+  font-size: 1.75rem;
+}
+#profile legend {
+  font-size: 2rem;
+  margin: 2rem 0;
+}
+#profile button {
+  margin-top: 1rem;
+}
+
+.profile-img-edit-container {
+  display: flex;
+  justify-content: center;
+  margin: 4rem 0 2rem 0;
+}
+.profile-img-edit-container img {
+  border-radius: 50%;
+  width: 150px;
+  height: 150px;
+}
+.profile-img-edit-container .profile-img-btns {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 2rem;
+}
+.profile-img-edit-container .profile-img-btns button {
+  margin: 2rem 0;
+}
+.profile-img-edit-container .profile-img-btns p {
+  margin: 2rem 0;
+}
+
 /* welcome */
 #welcome {
   display: flex;
