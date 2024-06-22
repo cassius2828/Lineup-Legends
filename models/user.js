@@ -22,7 +22,7 @@ const userSchema = new mongoose.Schema({
   bannerImg: {
     type: String,
   },  bio: {
-    type: String,
+    type: String, maxlength: 250, 
   },
 });
 

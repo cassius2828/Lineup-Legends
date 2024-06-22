@@ -22,7 +22,7 @@
     </div>
     <form action="/profiles/<%= user._id %>/bio?_method=PUT" method="POST">
       <label for="bio">update bio</label>
-  <input type="textarea" rows="4" cols="50" name="bio" id="bio">
+  <input type="textarea" maxlength="250" rows="4" cols="50" name="bio" id="bio">
   <button type="submit">update bio</button>
 </form>
     <!-- form -->

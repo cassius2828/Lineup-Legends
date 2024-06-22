@@ -9,11 +9,15 @@ const getUserProfile = async (req, res) => {
 };
 
 const updateBio = async (req, res) => {
+  const { bio } = req.body;
+  if (bio.length > 250) {
+    return res.status(500).send("Character limit exceeded");
+  }
   try {
     const userId = req.session.user._id;
     const currentUser = await UserModel.findByIdAndUpdate(
       userId,
-      { bio: req.body.bio }, // Ensure `req.body.bio` contains the bio text
+      { bio }, // Ensure `req.body.bio` contains the bio text
       { new: true }
     );
 
