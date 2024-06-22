@@ -20,10 +20,10 @@
      <p>recommended img size is 250px by 250px</p>  </div>
      
     </div>
-    <form action="">
-      <label for="">update bio</label>
+    <form action="/profiles/<%= user._id %>/bio?_method=PUT" method="POST">
+      <label for="bio">update bio</label>
   <input type="textarea" rows="4" cols="50" name="bio" id="bio">
-  <button>update bio</button>
+  <button type="submit">update bio</button>
 </form>
     <!-- form -->
  <!-- Name + email -->
