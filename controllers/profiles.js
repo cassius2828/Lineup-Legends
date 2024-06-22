@@ -28,6 +28,29 @@ const updateBio = async (req, res) => {
   }
 };
 
+const updateUsername = async (req, res) => {
+  const { username } = req.body;
+
+  try {
+    const usersWithCurrentUsername = await UserModel.find({ username });
+    if (usersWithCurrentUsername.length > 0) {
+      return res.status(500).send("username is already taken");
+    } else {
+      const userId = req.session.user._id;
+      const currentUser = await UserModel.findByIdAndUpdate(
+        userId,
+        { username }, // Ensure `req.body.bio` contains the bio text
+        { new: true }
+      );
+console.log(`Updated username to ${username}`)
+      return res.redirect(`/profiles/${userId}`);
+    }
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Unable to update username");
+  }
+};
+
 // const addNewFieldsToUsers = async () => {
 //   try {
 //     const result = await UserModel.updateMany(
@@ -47,4 +70,5 @@ const updateBio = async (req, res) => {
 module.exports = {
   getUserProfile,
   updateBio,
+  updateUsername,
 };
