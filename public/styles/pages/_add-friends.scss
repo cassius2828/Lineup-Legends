@@ -1,5 +1,16 @@
 #add-friends-landing{
+  flex-direction: column-reverse;
+    .left {
+        width: 110%;
+      }
+}
+
+@media (min-width:1440px){
+  #add-friends-landing{
+  flex-direction: row;
+
     .left {
         width: 50%;
       }
+}
 }

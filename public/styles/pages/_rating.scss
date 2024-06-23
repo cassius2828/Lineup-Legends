@@ -1,4 +1,11 @@
 /* rating */
 #rating-landing .left {
-    width: 40%;
+    width: 100%;
+  }
+
+  @media (min-width: 1440px){
+    #rating-landing .left {
+      width: 40%;
+    }
+  
   }

@@ -3,6 +3,163 @@
 /* ///////////////// */
 
 #landing {
+  position: relative;
+  background: url("https://s22928.pcdn.co/wp-content/uploads/2018/11/Kobe-Bryant-Dwight-Howard.jpg");
+  background-size: cover;
+  background-position: center;
+  height: 100svh;
+  width: 100vw;
+  padding: 0;
+  margin-top: 8rem;
+
+  > div {
+    position: absolute;
+    top: 47.5%;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  h1 {
+    font-size: 6rem;
+  }
+
+  h2 {
+    font-size: 2rem;
+  }
+
+  button {
+    background-color: rgba(0, 0, 0, 0.45);
+    outline: #f2f2f2 1px solid;
+    padding: 2rem;
+    border-radius: 0;
+  }
+}
+
+section.section-landing {
+  margin: 8rem 0;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  background-color: #010109;
+
+  h1 {
+    font-size: 3rem;
+  }
+
+  p {
+    font-size: 1.5rem;
+    line-height: 2rem;
+    text-align: start;
+  }
+
+  .left,
+  .right {
+    width: 100%;
+    margin-top: 3rem;
+
+    img {
+      width: 90%;
+    }
+  }
+}
+
+/* general landing sections */
+
+#share,
+#featured-landing {
+  position: relative;
+  height: 100svh;
+  width: 100vw;
+
+  .bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-size: cover;
+    height: 70svh;
+    width: 100vw;
+    /* z-index: -1; */
+  }
+}
+
+#commenting {
+  position: relative;
+
+  width: 100vw;
+
+  .bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-size: cover;
+    height: 70svh;
+    width: 100vw;
+    background: url("https://www.interbasket.net/wp-content/uploads/Reggie-Miller-and-Chris-Webber-are-two-of-the-NBAs-worst-broadcasters.png");
+    background-position: 15% 40%;
+    // background-position: center;
+    filter: brightness(50%);
+  }
+
+  .text-container {
+    position: absolute;
+    top: 30rem;
+    transform: translateY(-50%);
+    width: 90%;
+    z-index: 1;
+  }
+}
+
+#share {
+  .bg {
+    background: url("https://media.bleacherreport.com/image/upload/x_0,y_0,w_2000,h_1335,c_crop/c_fill,g_faces,w_1600,h_1600,q_95/v1625592987/vgg1quininemywtx1axm.jpg");
+    background-size: cover;
+    background-position: center;
+    filter: brightness(30%);
+    background-repeat: no-repeat;
+  }
+
+  .text-container {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 40%;
+    z-index: 1;
+  }
+}
+
+#featured-landing {
+  height: 70svh;
+
+  .bg {
+    background: linear-gradient(
+        rgba(0, 0, 0, 0.9) 20%,
+        rgba(0, 0, 0, 0.6) 50%,
+        rgba(0, 0, 0, 0.2) 80%,
+        rgba(0, 0, 0, 0) 100%
+      ),
+      url("/images/landing/olympic-paris-nba.jpeg");
+
+    /* filter: brightness(30%); */
+    background-repeat: no-repeat;
+    background-position: 30% 50%;
+  }
+}
+
+@media (min-width: 425px) {
+}
+@media (min-width: 768px) {
+}
+@media (min-width: 992px) {
+}
+@media (min-width: 1024px) {
+}
+@media (min-width: 1440px) {
+  #landing {
     position: relative;
     background: url("/images/landing/jordan-vs-lebron.png");
     background-size: cover;
@@ -10,7 +167,7 @@
     width: 100vw;
     padding: 0;
     margin-top: 8rem;
-  
+
     > div {
       position: absolute;
       top: 47.5%;
@@ -20,15 +177,15 @@
       flex-direction: column;
       align-items: center;
     }
-  
+
     h1 {
       font-size: 12rem;
     }
-  
+
     h2 {
       font-size: 5rem;
     }
-  
+
     button {
       background-color: rgba(0, 0, 0, 0.45);
       outline: #f2f2f2 1px solid;
@@ -36,36 +193,37 @@
       border-radius: 0;
     }
   }
-  
+
   section.section-landing {
     margin: 0;
     padding: 5rem;
     display: flex;
+    flex-direction: row;
     align-items: center;
     justify-content: space-around;
     background-color: #010109;
     height: 100svh;
     width: 100vw;
-  
+
     h1 {
       font-size: 8rem;
     }
-  
+
     p {
       font-size: 1.75rem;
       line-height: 3rem;
     }
-  
+
     .left,
     .right {
       width: 40%;
-  
+
       img {
         width: 100%;
       }
     }
   }
-  
+
   /* general landing sections */
   #commenting,
   #share,
@@ -73,7 +231,7 @@
     position: relative;
     height: 100svh;
     width: 100vw;
-  
+
     .bg {
       position: absolute;
       top: 0;
@@ -84,13 +242,13 @@
       /* z-index: -1; */
     }
   }
-  
+
   #commenting {
     .bg {
       background: url("/images/landing/inside-the-nba.jpg");
       filter: brightness(50%);
     }
-  
+
     .text-container {
       position: absolute;
       top: 50%;
@@ -99,7 +257,7 @@
       z-index: 1;
     }
   }
-  
+
   #share {
     .bg {
       background: url("/images/landing/kd-twitter-perl.png");
@@ -107,7 +265,7 @@
       filter: brightness(30%);
       background-repeat: no-repeat;
     }
-  
+
     .text-container {
       position: absolute;
       top: 50%;
@@ -116,7 +274,7 @@
       z-index: 1;
     }
   }
-  
+
   #featured-landing {
     .bg {
       background: linear-gradient(
@@ -132,4 +290,6 @@
       background-position: bottom;
     }
   }
-  
+}
+@media (min-width: 2500px) {
+}

@@ -1,11 +1,26 @@
 #share {
   .text-container {
     position: absolute;
-    width: 40%;
-    right: 5%;
+    width: 100%;
+    right: 0%;
+    padding: 5px
   }
   p {
-    font-size: 2.25rem;
-    line-height: 3.75rem;
+    font-size: 1.5rem;
+    line-height: 3.25rem;
+  }
+}
+
+@media (min-width: 1440px){
+  #share {
+    .text-container {
+      position: absolute;
+      width: 40%;
+      right: 5%;
+    }
+    p {
+      font-size: 2.25rem;
+      line-height: 3.75rem;
+    }
   }
 }

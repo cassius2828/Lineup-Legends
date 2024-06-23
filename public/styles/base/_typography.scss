@@ -6,11 +6,39 @@ h2 {
   text-transform: uppercase;
 }
 h1 {
-  font-size: 3rem;
+  font-size: 2rem;
   margin-bottom: 2rem;
 }
 
 h2 {
-  font-size: 2.4rem;
+  font-size: 1.4rem;
   margin: 1rem 0;
+}
+
+
+@media (min-width:425px){
+
+} 
+ @media (min-width:768px){
+  
+}
+@media (min-width:992px){
+  
+}
+@media (min-width:1024px){
+  
+}
+@media (min-width:1440px){
+  h1 {
+    font-size: 3rem;
+    margin-bottom: 2rem;
+  }
+  
+  h2 {
+    font-size: 2.4rem;
+    margin: 1rem 0;
+  }
+}
+@media (min-width:2500px){
+  
 }

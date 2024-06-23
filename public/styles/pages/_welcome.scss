@@ -1,14 +1,46 @@
 /* welcome */
 #welcome {
   display: flex;
+  flex-direction: column-reverse;
   align-items: center;
   justify-content: space-around;
-  .left img {
-    width: 55vw;
-  }
+  // .left img {
+  //   width: 90vw;
+  // }
   .right {
-    width: 35%;
-    padding: 3rem;
-    margin-left: 15rem;
+    width: 100%;
+    padding: 1rem;
+    // margin-left: 15rem;
   }
+}
+
+@media (min-width:425px){
+
+} 
+ @media (min-width:768px){
+  
+}
+@media (min-width:992px){
+  
+}
+@media (min-width:1024px){
+  
+}
+@media (min-width:1440px){
+  #welcome {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    .left img {
+      width: 55vw;
+    }
+    .right {
+      width: 35%;
+      padding: 3rem;
+      margin-left: 15rem;
+    }
+  }
+}
+@media (min-width:2500px){
+  
 }

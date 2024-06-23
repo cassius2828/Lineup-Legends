@@ -1,10 +1,18 @@
 #featured-landing {
   .text-container {
     position: absolute;
-    top: 10%;
+    top: -40%;
     left: 50%;
     transform: translateX(-50%);
-    width: 40%;
+    width: 90%;
     z-index: 1;
+  }
+}
+
+@media (min-width: 1440px) {
+  #featured-landing {
+    .text-container {
+      width: 40%;
+    }
   }
 }

@@ -168,15 +168,25 @@ h2 {
 }
 
 h1 {
-  font-size: 3rem;
+  font-size: 2rem;
   margin-bottom: 2rem;
 }
 
 h2 {
-  font-size: 2.4rem;
+  font-size: 1.4rem;
   margin: 1rem 0;
 }
 
+@media (min-width: 1440px) {
+  h1 {
+    font-size: 3rem;
+    margin-bottom: 2rem;
+  }
+  h2 {
+    font-size: 2.4rem;
+    margin: 1rem 0;
+  }
+}
 .hide {
   display: none !important;
 }
@@ -1296,17 +1306,17 @@ button,
   background-color: #010109;
   color: #fff;
   text-align: center;
-  padding: 2rem;
-  padding-top: 10rem;
+  padding: 1rem;
 }
 #footer .text-container {
   display: flex;
+  flex-direction: column;
   justify-content: space-around;
 }
 #footer h2 {
-  font-size: 2.4rem;
+  font-size: 2rem;
   margin: 0 0 1rem;
-  width: 30%;
+  width: 100%;
 }
 #footer p {
   font-size: 1.4rem;
@@ -1319,14 +1329,14 @@ button,
 }
 
 .social-media-icon-container {
-  margin: 8rem auto;
-  width: 75%;
+  margin: 4rem auto;
+  width: 100%;
   text-align: start;
 }
 .social-media-icon-container i {
   color: #fff;
-  margin: 0 2rem;
-  font-size: 4rem;
+  margin: 0 1rem;
+  font-size: 3rem;
   transition: color 0.3s;
   cursor: pointer;
 }
@@ -1334,6 +1344,28 @@ button,
   color: #dfa315;
 }
 
+@media (min-width: 1440px) {
+  /* FOOTER */
+  #footer {
+    padding: 2rem;
+    padding-top: 10rem;
+  }
+  #footer .text-container {
+    flex-direction: row;
+  }
+  #footer h2 {
+    font-size: 2.4rem;
+    width: 30%;
+  }
+  .social-media-icon-container {
+    margin: 8rem auto;
+    width: 75%;
+  }
+  .social-media-icon-container i {
+    margin: 0 2rem;
+    font-size: 4rem;
+  }
+}
 /* ///////////////// */
 /* Navigation */
 /* ///////////////// */
@@ -1520,10 +1552,21 @@ nav #nav-hamburger {
     color: silver;
   }
 }
+#add-friends-landing {
+  flex-direction: column-reverse;
+}
 #add-friends-landing .left {
-  width: 50%;
+  width: 110%;
 }
 
+@media (min-width: 1440px) {
+  #add-friends-landing {
+    flex-direction: row;
+  }
+  #add-friends-landing .left {
+    width: 50%;
+  }
+}
 #commenting .text-container {
   left: 5%;
 }
@@ -1556,13 +1599,18 @@ nav #nav-hamburger {
 
 #featured-landing .text-container {
   position: absolute;
-  top: 10%;
+  top: -40%;
   left: 50%;
   transform: translateX(-50%);
-  width: 40%;
+  width: 90%;
   z-index: 1;
 }
 
+@media (min-width: 1440px) {
+  #featured-landing .text-container {
+    width: 40%;
+  }
+}
 /* gamble */
 #gamble-landing {
   margin-bottom: 15rem;
@@ -1573,8 +1621,9 @@ nav #nav-hamburger {
 /* ///////////////// */
 #landing {
   position: relative;
-  background: url("/images/landing/jordan-vs-lebron.png");
+  background: url("https://s22928.pcdn.co/wp-content/uploads/2018/11/Kobe-Bryant-Dwight-Howard.jpg");
   background-size: cover;
+  background-position: center;
   height: 100svh;
   width: 100vw;
   padding: 0;
@@ -1590,10 +1639,10 @@ nav #nav-hamburger {
   align-items: center;
 }
 #landing h1 {
-  font-size: 12rem;
+  font-size: 6rem;
 }
 #landing h2 {
-  font-size: 5rem;
+  font-size: 2rem;
 }
 #landing button {
   background-color: rgba(0, 0, 0, 0.45);
@@ -1603,66 +1652,77 @@ nav #nav-hamburger {
 }
 
 section.section-landing {
-  margin: 0;
-  padding: 5rem;
+  margin: 8rem 0;
+  padding: 1rem;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: space-around;
   background-color: #010109;
-  height: 100svh;
-  width: 100vw;
 }
 section.section-landing h1 {
-  font-size: 8rem;
+  font-size: 3rem;
 }
 section.section-landing p {
-  font-size: 1.75rem;
-  line-height: 3rem;
+  font-size: 1.5rem;
+  line-height: 2rem;
+  text-align: start;
 }
 section.section-landing .left,
 section.section-landing .right {
-  width: 40%;
+  width: 100%;
+  margin-top: 3rem;
 }
 section.section-landing .left img,
 section.section-landing .right img {
-  width: 100%;
+  width: 90%;
 }
 
 /* general landing sections */
-#commenting,
 #share,
 #featured-landing {
   position: relative;
   height: 100svh;
   width: 100vw;
 }
-#commenting .bg,
 #share .bg,
 #featured-landing .bg {
   position: absolute;
   top: 0;
   left: 0;
   background-size: cover;
-  height: 100svh;
+  height: 70svh;
   width: 100vw;
   /* z-index: -1; */
 }
 
+#commenting {
+  position: relative;
+  width: 100vw;
+}
 #commenting .bg {
-  background: url("/images/landing/inside-the-nba.jpg");
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-size: cover;
+  height: 70svh;
+  width: 100vw;
+  background: url("https://www.interbasket.net/wp-content/uploads/Reggie-Miller-and-Chris-Webber-are-two-of-the-NBAs-worst-broadcasters.png");
+  background-position: 15% 40%;
   filter: brightness(50%);
 }
 #commenting .text-container {
   position: absolute;
-  top: 50%;
+  top: 30rem;
   transform: translateY(-50%);
-  width: 40%;
+  width: 90%;
   z-index: 1;
 }
 
 #share .bg {
-  background: url("/images/landing/kd-twitter-perl.png");
+  background: url("https://media.bleacherreport.com/image/upload/x_0,y_0,w_2000,h_1335,c_crop/c_fill,g_faces,w_1600,h_1600,q_95/v1625592987/vgg1quininemywtx1axm.jpg");
   background-size: cover;
+  background-position: center;
   filter: brightness(30%);
   background-repeat: no-repeat;
 }
@@ -1674,29 +1734,156 @@ section.section-landing .right img {
   z-index: 1;
 }
 
+#featured-landing {
+  height: 70svh;
+}
 #featured-landing .bg {
   background: linear-gradient(rgba(0, 0, 0, 0.9) 20%, rgba(0, 0, 0, 0.6) 50%, rgba(0, 0, 0, 0.2) 80%, rgba(0, 0, 0, 0) 100%), url("/images/landing/olympic-paris-nba.jpeg");
-  background-size: 90%;
   /* filter: brightness(30%); */
   background-repeat: no-repeat;
-  background-position: bottom;
+  background-position: 30% 50%;
 }
 
+@media (min-width: 1440px) {
+  #landing {
+    position: relative;
+    background: url("/images/landing/jordan-vs-lebron.png");
+    background-size: cover;
+    height: 100svh;
+    width: 100vw;
+    padding: 0;
+    margin-top: 8rem;
+  }
+  #landing > div {
+    position: absolute;
+    top: 47.5%;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  #landing h1 {
+    font-size: 12rem;
+  }
+  #landing h2 {
+    font-size: 5rem;
+  }
+  #landing button {
+    background-color: rgba(0, 0, 0, 0.45);
+    outline: #f2f2f2 1px solid;
+    padding: 2rem;
+    border-radius: 0;
+  }
+  section.section-landing {
+    margin: 0;
+    padding: 5rem;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    background-color: #010109;
+    height: 100svh;
+    width: 100vw;
+  }
+  section.section-landing h1 {
+    font-size: 8rem;
+  }
+  section.section-landing p {
+    font-size: 1.75rem;
+    line-height: 3rem;
+  }
+  section.section-landing .left,
+  section.section-landing .right {
+    width: 40%;
+  }
+  section.section-landing .left img,
+  section.section-landing .right img {
+    width: 100%;
+  }
+  /* general landing sections */
+  #commenting,
+  #share,
+  #featured-landing {
+    position: relative;
+    height: 100svh;
+    width: 100vw;
+  }
+  #commenting .bg,
+  #share .bg,
+  #featured-landing .bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-size: cover;
+    height: 100svh;
+    width: 100vw;
+    /* z-index: -1; */
+  }
+  #commenting .bg {
+    background: url("/images/landing/inside-the-nba.jpg");
+    filter: brightness(50%);
+  }
+  #commenting .text-container {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 40%;
+    z-index: 1;
+  }
+  #share .bg {
+    background: url("/images/landing/kd-twitter-perl.png");
+    background-size: cover;
+    filter: brightness(30%);
+    background-repeat: no-repeat;
+  }
+  #share .text-container {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 40%;
+    z-index: 1;
+  }
+  #featured-landing .bg {
+    background: linear-gradient(rgba(0, 0, 0, 0.9) 20%, rgba(0, 0, 0, 0.6) 50%, rgba(0, 0, 0, 0.2) 80%, rgba(0, 0, 0, 0) 100%), url("/images/landing/olympic-paris-nba.jpeg");
+    background-size: 90%;
+    /* filter: brightness(30%); */
+    background-repeat: no-repeat;
+    background-position: bottom;
+  }
+}
 /* rating */
 #rating-landing .left {
-  width: 40%;
+  width: 100%;
 }
 
+@media (min-width: 1440px) {
+  #rating-landing .left {
+    width: 40%;
+  }
+}
 #share .text-container {
   position: absolute;
-  width: 40%;
-  right: 5%;
+  width: 100%;
+  right: 0%;
+  padding: 5px;
 }
 #share p {
-  font-size: 2.25rem;
-  line-height: 3.75rem;
+  font-size: 1.5rem;
+  line-height: 3.25rem;
 }
 
+@media (min-width: 1440px) {
+  #share .text-container {
+    position: absolute;
+    width: 40%;
+    right: 5%;
+  }
+  #share p {
+    font-size: 2.25rem;
+    line-height: 3.75rem;
+  }
+}
 /* ///////////////// */
 /* View User Lineups */
 /* ///////////////// */
@@ -2137,18 +2324,30 @@ section.section-landing .right img {
 /* welcome */
 #welcome {
   display: flex;
+  flex-direction: column-reverse;
   align-items: center;
   justify-content: space-around;
 }
-#welcome .left img {
-  width: 55vw;
-}
 #welcome .right {
-  width: 35%;
-  padding: 3rem;
-  margin-left: 15rem;
+  width: 100%;
+  padding: 1rem;
 }
 
+@media (min-width: 1440px) {
+  #welcome {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+  }
+  #welcome .left img {
+    width: 55vw;
+  }
+  #welcome .right {
+    width: 35%;
+    padding: 3rem;
+    margin-left: 15rem;
+  }
+}
 .fa-angles-right {
   font-size: 7rem;
   position: absolute;
