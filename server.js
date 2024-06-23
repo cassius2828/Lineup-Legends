@@ -88,6 +88,8 @@ app.use((req, res, next) => {
 
 
 
+console.log(process.env.EMAIL)
+console.log(process.env.EMAIL_PASSWORD)
 ///////////////////////////
 // Start Server
 ///////////////////////////

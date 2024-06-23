@@ -15,14 +15,23 @@ const userSchema = new mongoose.Schema({
     required: true,
     trim: true,
   },
-  friends: [{ type: mongoose.Schema.Types.ObjectId, ref:'Friend' }],
+  friends: [{ type: mongoose.Schema.Types.ObjectId, ref: "Friend" }],
   profileImg: {
     type: String,
   },
   bannerImg: {
     type: String,
-  },  bio: {
-    type: String, maxlength: 250, 
+  },
+  bio: {
+    type: String,
+    maxlength: 250,
+  },
+
+  newEmail: {
+    type: String,
+  },
+  emailConfirmationToken: {
+    type: String,
   },
 });
 

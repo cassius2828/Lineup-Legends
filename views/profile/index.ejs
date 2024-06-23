@@ -34,9 +34,9 @@
     <button>update username</button>
 
   </form>
-  <form action="">
-        <label for="">update email</label>
-    <input type="email" name="" id="">
+  <form action="/profiles/<%= user._id %>/send-confirm-email?_method=PUT" method="POST">
+        <label for="email">update email</label>
+    <input type="email" name="email" id="email">
     <button>update email</button>
   </form>
   <!-- password  -->
