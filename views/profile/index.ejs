@@ -7,53 +7,221 @@
   <!-- Include navigation partial -->
   <%- include('../partials/_nav.ejs') %>
 
-<section id="profile">
-    <h1>Edit Profile</h1>
-    <div class="form-container">
-          <!-- img section -->
-    <div class="profile-img-edit-container">
-      <img src="/images/misc/default-user.jpg" alt="">
-      <div class="profile-img-btns">
-        <button>upload photo</button>
-        <button>remove photo</button>
+  <section id="profile">
+    <header class="banner">
 
-     <p>recommended img size is 250px by 250px</p>  </div>
+      <img id="profile-img" src="/images/misc/default-user.jpg" alt="">
+      <div class="profile-details">
+        <% if (user._id.toString()=== lineups[0].owner._id.toString()) { %>
+                 <div class="row row-1">
+          <p id="username-p"><%= user.username %></p>
+          <div class="btn-container">
+              <a href="/profiles/<%= user._id %>/edit"> <button>edit profile</button></a>  
+        <a href="/lineups/<%= user._id %>">
+           <button>view all lineups</button>    
+        </a>  
+          <i id="gear" class="fa-solid fa-gear"></i>
+          </div>
+
+        </div>
+        <% } else {%>
+          <div class="row row-1">
+            NOT THE OWNER
+            <p id="username-p"><%= user.username %></p>
+            <div class="btn-container">
+                <a href="/profiles/<%= user._id %>/edit"> <button>edit profile</button></a>  
+          <a href="/lineups/<%= user._id %>">
+             <button>view all lineups</button>    
+          </a>  
+            <i id="gear" class="fa-solid fa-gear"></i>
+            </div>
+  
+          </div>
+          <% } %>
+        <div class="row row-2">
+          <p><%= lineups.length %> lineups</p>
+          <p>
+            <% if (user.friends.length === 1) { %>
+              <%= user.friends.length %> friend</p>
+            <% } else {%>
+              <%= user.friends.length %> friends</p>
+           <% } %>
+<p>14 cards</p>
+        </div>
+        <div class="row row-3">
+          <p>friends with (up to 3 friends here w/ links)</p>
+
+        </div>
+      </div>
+
+      <div class="bg"></div>
+    </header>
+    <div>
+      <p id="bio">Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima, iure ut dicta sequi corrupti asperiores impedit est quam eveniet esse laboriosam veniam eos voluptates modi, sit inventore voluptas perspiciatis repellat.</p>
+    </div>
+    <!-- profile features -->
+    <div class="pf">
+      <div class="pf-head">
+<div id="pf-lineups-icon" class="pf-icon" <% if (showLineups) { %>
      
+      style=" border-top: solid 1px #f2f2f2;"
+<% } %>>
+  <a href="/profiles/<%= user._id %>">
+      <i class="fa-solid fa-list"></i><span>lineups</span></div>
+  </a>
+
+<div id="pf-card-collection-icon" class="pf-icon" <% if (showCollection) { %>
+     
+  style=" border-top: solid 1px #f2f2f2;"
+<% } %>>
+  <a href="/profiles/<%= user._id %>/card-collection">
+     <i class="fa-solid fa-database"></i><span>card collection</span>
+  </a>
+ 
+</div>
+<div id="pf-social-media-icon" class="pf-icon" <% if (showSocials) { %>
+     
+  style=" border-top: solid 1px #f2f2f2;"
+<% } %>>
+  <a href="/profiles/<%= user._id %>/social-media">
+      <i class="fa-solid fa-hashtag"></i><span>social media</span>
+  </a>
+
+
+</div>
+      </div>
+      <div class="pf-body">
+        <% if (showLineups) { %> <h1>Featured Lineups</h1>
+                 <div class="lineup-container ">   
+          <% lineups?.forEach(lineup => { %>
+        
+          <div class="lineup-card">
+            <header class="lineup-header">
+              <a href="/lineups/<%= lineup._id %>/edit"><span class="lineup-edit">...</span></a>
+    
+              <% if (lineup?.avgRating) { %>
+              <h2 class="lineup-rating"><%= lineup?.avgRating.toFixed(2); %></h2>
+              <% } else { %>
+              <h2 class="lineup-rating">Rating: N/A</h2>
+              <% } %>
+              <% if (lineup?.relativeTime) { %>
+              <span class="lineup-relativeTime">est. <%= lineup?.relativeTime %></span>
+              <% } else { %>
+              <span class="lineup-relativeTime">4 hr ago</span>
+              <% } %>
+    
+            </header>
+            <div class="lineup-players">
+              <% ['pg', 'sg', 'sf', 'pf', 'c'].forEach(position => { %>
+              <% if (lineup[position]) { %>
+              <div class="player">
+                <img data-value="<%= lineup[position].value %>" src="<%= lineup[position].imgUrl %>" alt="<%= lineup[position].firstName %> <%= lineup[position].lastName %>" />
+                <span class="player-name">
+                  <%= lineup[position].firstName %> <%= lineup[position].lastName %>
+                </span>
+              </div>
+              <% } %>
+              <% }); %>
+            </div>
+            <footer class="lineup-footer">
+              <div class="lineup-actions">
+                
+                <div class="vote-btn-container ">
+                  <form class="vote-form <% if (user._id.toString() === lineup.owner._id.toString()) { %>
+                        disabled-btn
+                       <% } %> " action="/lineups/<%= lineup._id %>/vote" method="POST">
+                    <input type="hidden" id="up-vote" name="up-vote" value="" onclick="setVoteValue('up')">
+                    <button <% if (user._id.toString() === lineup.owner._id.toString()) { %> disabled <% } %> type="submit" class="lineup-btn up-vote <% if (user._id.toString() === lineup.owner._id.toString()) { %>
+                            disabled-btn
+                           <% } %> ">
+                      <i class="fa-solid fa-circle-arrow-up"></i>
+                    </button>
+    
+                    <span class="num-of-votes"> <% if (lineup?.comments) { %>
+                      <%= lineup?.comments.length %>
+                      <% } else { %>
+                      4
+                      <% } %></span>
+    
+                    <button <% if (user._id.toString() === lineup.owner._id.toString()) { %> disabled <% } %> type="submit" class="lineup-btn down-vote <% if (user._id.toString() === lineup.owner._id.toString()) { %>
+                        disabled-btn
+                       <% } %> ">
+                      <input type="hidden" id="down-vote" name="down-vote" value="" onclick="setVoteValue('down')">
+                      <i class="fa-solid fa-circle-arrow-down"></i>
+                    </button>
+                  </form>
+                </div>
+                <div class="comment-btn-container">
+                  <form action="/lineups/<%= lineup._id %>/comment" method="GET">
+                    <button type="submit" class="lineup-btn">
+                      <i class="fa-regular fa-comment"></i>
+                      <span class="comment-num">
+                        <% if (lineup?.comments) { %>
+                        <%= lineup?.comments.length %>
+                        <% } else { %>
+                        4
+                        <% } %>
+                      </span>
+                    </button>
+                  </form>
+                </div>
+                <div class="award-btn-container">
+                  <form action="/lineups/<%= lineup._id %>/edit/featured?_method=PUT" method="POST">
+                    <button type="submit" class="award-btn <% if (lineup.featured) { %>
+                         featured
+                        <% } %>">
+                      <i class="fa-solid fa-award"></i>
+                    </button>
+                  </form>
+    
+                </div>
+                <div class="share-btn-container">
+                  <form action="/lineups/<%= lineup._id %>/share" method="GET">
+                    <button type="submit" class="lineup-btn">
+                      <i class="fa-solid fa-share"></i>
+                      <span>Share</span>
+                    </button>
+                  </form>
+                </div>
+              </div>
+            </footer>
+          </div>
+          <% }); %>
+        </div>
+        <% } %>
+<% if (showCollection) { %>
+    <div class="card-collection">
+          <!-- card collection here -->
+           <h1>
+              card collection coming soon!
+           </h1>
+        
+        </div>
+<% } %>
+     <% if (showSocials) { %>
+             <div class="social-media">
+        <ul>
+          <li>
+
+            <span><i class="fa-brands fa-x-twitter"></i> Twitter: @handle </span><button>Follow</button>
+          </li>
+          <li>
+
+            <span><i class="fa-brands fa-instagram"></i> Instagram: @handle </span><button>Follow</button>
+          </li>
+          <li>
+
+            <span><i class="fa-brands fa-facebook"></i> Facebook: name</span> <button>Add</button>
+          </li>
+        </ul>
+        </div>
+     <% } %>
+ 
+      </div>
+
     </div>
-    <form action="/profiles/<%= user._id %>/bio?_method=PUT" method="POST">
-      <label for="bio">update bio</label>
-  <input type="textarea" maxlength="250" rows="4" cols="50" name="bio" id="bio">
-  <button >update bio</button>
-</form>
-    <!-- form -->
- <!-- Name + email -->
- <form action="/profiles/<%= user._id %>/username?_method=PUT" method="POST">
 
-    <label for="username">update username</label>
-    <input name="username" id="username" type="text">
-    <button>update username</button>
-
-  </form>
-  <form action="/profiles/<%= user._id %>/send-confirm-email?_method=PUT" method="POST">
-        <label for="email">update email</label>
-    <input type="email" name="email" id="email">
-    <button>update email</button>
-  </form>
-  <!-- password  -->
-  <form action="/profiles/<%= user._id %>/password?_method=PUT" method="POST">
-    <legend>update Password</legend>
-    <label for="currentPassword">Current Password</label>
-    <input type="password" name="currentPassword" id="currentPassword">
-    <label for="newPassword">New Password</label>
-    <input type="password" name="newPassword" id="newPassword">
-    <label for="confirmNewPassword">Confirm New Password</label>
-    <input type="password" name="confirmNewPassword" id="confirmNewPassword">
-    <button>update password</button>
-
-  </form>
-    </div>
-
-</section>
+  </section>
 
   <!-- External JavaScript for rating color -->
   <script src="/js/sidenav.js"></script>

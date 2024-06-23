@@ -2240,7 +2240,87 @@ section.section-landing .right img {
     cursor: pointer;
   }
 }
-#profile .form-container {
+#profile .banner {
+  display: flex;
+  justify-content: space-between;
+  width: 100vw;
+  max-width: 80rem;
+  margin: auto;
+  border: solid;
+}
+#profile .banner > div {
+  width: 100%;
+}
+#profile .banner .bg {
+  position: absolute;
+}
+
+#profile-img {
+  border-radius: 50%;
+}
+
+#username-p {
+  margin: 0 2rem;
+  width: auto;
+}
+
+#gear {
+  font-size: 2rem;
+}
+
+.row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1.5rem;
+}
+.row button {
+  margin: 0 1rem;
+}
+
+#bio {
+  margin: 4rem auto;
+}
+
+.pf {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-top: solid 1px rgba(242, 242, 242, 0.5647058824);
+  width: 90%;
+  margin: 1rem auto;
+}
+.pf-head {
+  display: flex;
+  justify-content: center;
+  font-size: 2rem;
+}
+.pf-head div {
+  padding: 1.5rem 2rem;
+  cursor: pointer;
+}
+.pf-head div span {
+  margin-left: 1rem;
+  text-transform: capitalize;
+}
+.pf-body .social-media li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem;
+  background-color: rgba(79, 79, 79, 0.5647058824);
+  margin: 1.5rem 0;
+  border-radius: 8px;
+}
+.pf-body .social-media li span {
+  font-size: 2rem;
+}
+.pf-body .social-media li button {
+  margin: 0 0 0 2rem;
+  min-width: 8rem;
+}
+
+#edit-profile .form-container {
   padding: 1.5rem;
   border-radius: 8px;
   background-color: rgba(186, 186, 186, 0.1568627451);
@@ -2248,27 +2328,27 @@ section.section-landing .right img {
   max-width: 50rem;
   margin: auto;
 }
-#profile form {
+#edit-profile form {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   margin: 4rem auto;
 }
-#profile input {
+#edit-profile input {
   margin: 1rem 0;
   width: 80%;
 }
-#profile label {
+#edit-profile label {
   text-transform: capitalize;
   margin-top: 2rem;
   font-size: 1.75rem;
 }
-#profile legend {
+#edit-profile legend {
   font-size: 2rem;
   margin: 2rem 0;
 }
-#profile button {
+#edit-profile button {
   margin-top: 1rem;
 }
 

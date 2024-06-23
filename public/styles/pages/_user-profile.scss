@@ -1,62 +1,86 @@
-@use "../abstracts/" as *;
-
 #profile {
-
-    .form-container {
-        padding: 1.5rem;
-        border-radius: 8px; background-color: $theme-dark;   width: 90vw;
-    max-width: 50rem;
-    margin: auto;
-    }
-  form {
+  .banner {
     display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    margin: 4rem auto;
-  
- 
-
-   
-  }
-  input {
-    margin: 1rem 0;
-    width: 80%;
-  }
-  label {
-    text-transform: capitalize;
-    margin-top: 2rem;
-    font-size: 1.75rem;
-
-  }
-  legend {
-    font-size: 2rem;
-    margin: 2rem 0;
-  }
-  button {
-    margin-top: 1rem;
+    justify-content: space-between;
+    width: 100vw;
+    max-width: 80rem;
+    margin: auto;
+    border: solid;
+    > div {
+      width: 100%;
+    }
+    .bg {
+      position: absolute;
+    }
   }
 }
-.profile-img-edit-container {
+
+#profile-img {
+  border-radius: 50%;
+}
+#username-p {
+  margin: 0 2rem;
+  width: auto;
+}
+
+#gear {
+  font-size: 2rem;
+}
+.row {
   display: flex;
   justify-content: center;
-  margin: 4rem 0 2rem 0;
-  img {
-    border-radius: 50%;
-    width: 150px;
-    height: 150px;
+  align-items: center;
+  padding: 1.5rem;
+  button {
+    margin: 0 1rem;
   }
-
-  .profile-img-btns {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin: 0 2rem;
-button {
-    margin: 2rem 0;
 }
-    p {
-      margin: 2rem 0;
+
+#bio {
+  margin: 4rem auto;
+}
+.pf {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-top: solid 1px #f2f2f290;
+  width: 90%;
+  margin: 1rem auto;
+  &-head {
+    display: flex;
+    justify-content: center;
+    font-size: 2rem;
+    div {
+      padding: 1.5rem 2rem;
+      cursor: pointer;
+    
+
+      span {
+        margin-left: 1rem;
+        text-transform: capitalize;
+      }
+    }
+  }
+  &-body {
+    .social-media {
+      ul {
+      }
+      li {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1.5rem;
+        background-color: #4f4f4f90;
+        margin: 1.5rem 0;
+        border-radius: 8px;
+        span {
+          font-size: 2rem;
+        }
+        button {
+          margin: 0 0 0 2rem;
+          min-width: 8rem;
+        }
+      }
     }
   }
 }
