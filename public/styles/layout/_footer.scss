@@ -21,6 +21,7 @@
     font-size: 1.4rem;
     margin: 0.5rem 0;
     line-height: 1.5;
+    margin: 2rem auto;
   }
 
   h3 {
@@ -47,7 +48,7 @@
   }
 }
 
-@media (min-width: 1440px) {
+@media (min-width: 1024px) {
   /* FOOTER */
   #footer {
     padding: 2rem;

@@ -177,7 +177,7 @@ h2 {
   margin: 1rem 0;
 }
 
-@media (min-width: 1440px) {
+@media (min-width: 1024px) {
   h1 {
     font-size: 3rem;
     margin-bottom: 2rem;
@@ -577,7 +577,7 @@ h2 {
     gap: 2.5%;
   }
 }
-@media (min-width: 768px) {
+@media (min-width: 825px) {
   .cell {
     width: 8rem;
     height: 8rem;
@@ -627,7 +627,7 @@ h2 {
     margin: 0 0.5rem;
   }
 }
-@media (min-width: 1440px) {
+@media (min-width: 1024px) {
   #create-lineup {
     display: flex;
     align-items: center;
@@ -784,7 +784,7 @@ button,
   gap: 2rem;
 }
 
-@media (min-width: 1440px) {
+@media (min-width: 1024px) {
   button,
   .vote-form {
     font-size: 1.6rem;
@@ -1010,7 +1010,7 @@ button,
   transition: 0.2s ease all;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 825px) {
   #sidenav.mobile {
     display: none;
   }
@@ -1122,12 +1122,12 @@ button,
   margin: 0 auto;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 825px) {
   .sidebar {
     width: 20%;
   }
 }
-@media (min-width: 1440px) {
+@media (min-width: 1024px) {
   .sidebar {
     width: 10%;
   }
@@ -1248,7 +1248,7 @@ button,
     right: 2rem;
   }
 }
-@media (min-width: 1440px) {
+@media (min-width: 1024px) {
   #sort-lineups-container {
     display: block;
   }
@@ -1322,6 +1322,7 @@ button,
   font-size: 1.4rem;
   margin: 0.5rem 0;
   line-height: 1.5;
+  margin: 2rem auto;
 }
 #footer h3 {
   font-size: 1.8rem;
@@ -1344,7 +1345,7 @@ button,
   color: #dfa315;
 }
 
-@media (min-width: 1440px) {
+@media (min-width: 1024px) {
   /* FOOTER */
   #footer {
     padding: 2rem;
@@ -1512,7 +1513,7 @@ nav #nav-hamburger {
     font-size: 1.25rem;
   }
 }
-@media (min-width: 768px) {
+@media (min-width: 825px) {
   #mobile-nav, #nav-hamburger {
     display: none;
   }
@@ -1531,7 +1532,7 @@ nav #nav-hamburger {
     color: orange;
   }
 }
-@media (min-width: 1440px) {
+@media (min-width: 1024px) {
   nav ul a, nav ul li {
     font-size: 1.5rem;
     color: red;
@@ -1559,7 +1560,7 @@ nav #nav-hamburger {
   width: 110%;
 }
 
-@media (min-width: 1440px) {
+@media (min-width: 1024px) {
   #add-friends-landing {
     flex-direction: row;
   }
@@ -1597,6 +1598,9 @@ nav #nav-hamburger {
   width: 100vw;
 }
 
+#featured-landing {
+  margin-top: 8rem;
+}
 #featured-landing .text-container {
   position: absolute;
   top: -40%;
@@ -1606,9 +1610,10 @@ nav #nav-hamburger {
   z-index: 1;
 }
 
-@media (min-width: 1440px) {
+@media (min-width: 1024px) {
   #featured-landing .text-container {
-    width: 40%;
+    top: 0;
+    width: 70%;
   }
 }
 /* gamble */
@@ -1690,7 +1695,6 @@ section.section-landing .right img {
   position: absolute;
   top: 0;
   left: 0;
-  background-size: cover;
   height: 70svh;
   width: 100vw;
   /* z-index: -1; */
@@ -1698,6 +1702,7 @@ section.section-landing .right img {
 
 #commenting {
   position: relative;
+  height: 70svh;
   width: 100vw;
 }
 #commenting .bg {
@@ -1721,10 +1726,8 @@ section.section-landing .right img {
 
 #share .bg {
   background: url("https://media.bleacherreport.com/image/upload/x_0,y_0,w_2000,h_1335,c_crop/c_fill,g_faces,w_1600,h_1600,q_95/v1625592987/vgg1quininemywtx1axm.jpg");
-  background-size: cover;
-  background-position: center;
+  background-size: cover !important;
   filter: brightness(30%);
-  background-repeat: no-repeat;
 }
 #share .text-container {
   position: absolute;
@@ -1744,24 +1747,18 @@ section.section-landing .right img {
   background-position: 30% 50%;
 }
 
-@media (min-width: 1440px) {
+@media (min-width: 825px) {
+  p {
+    width: 60%;
+    margin: auto;
+    font-size: 1.75rem !important;
+    line-height: 3.25rem !important;
+  }
+}
+@media (min-width: 1024px) {
   #landing {
-    position: relative;
     background: url("/images/landing/jordan-vs-lebron.png");
     background-size: cover;
-    height: 100svh;
-    width: 100vw;
-    padding: 0;
-    margin-top: 8rem;
-  }
-  #landing > div {
-    position: absolute;
-    top: 47.5%;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
   }
   #landing h1 {
     font-size: 12rem;
@@ -1769,20 +1766,10 @@ section.section-landing .right img {
   #landing h2 {
     font-size: 5rem;
   }
-  #landing button {
-    background-color: rgba(0, 0, 0, 0.45);
-    outline: #f2f2f2 1px solid;
-    padding: 2rem;
-    border-radius: 0;
-  }
   section.section-landing {
     margin: 0;
     padding: 5rem;
-    display: flex;
     flex-direction: row;
-    align-items: center;
-    justify-content: space-around;
-    background-color: #010109;
     height: 100svh;
     width: 100vw;
   }
@@ -1825,24 +1812,11 @@ section.section-landing .right img {
     filter: brightness(50%);
   }
   #commenting .text-container {
-    position: absolute;
     top: 50%;
-    transform: translateY(-50%);
     width: 40%;
-    z-index: 1;
   }
   #share .bg {
     background: url("/images/landing/kd-twitter-perl.png");
-    background-size: cover;
-    filter: brightness(30%);
-    background-repeat: no-repeat;
-  }
-  #share .text-container {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 40%;
-    z-index: 1;
   }
   #featured-landing .bg {
     background: linear-gradient(rgba(0, 0, 0, 0.9) 20%, rgba(0, 0, 0, 0.6) 50%, rgba(0, 0, 0, 0.2) 80%, rgba(0, 0, 0, 0) 100%), url("/images/landing/olympic-paris-nba.jpeg");
@@ -1857,7 +1831,7 @@ section.section-landing .right img {
   width: 100%;
 }
 
-@media (min-width: 1440px) {
+@media (min-width: 1024px) {
   #rating-landing .left {
     width: 40%;
   }
@@ -1873,7 +1847,7 @@ section.section-landing .right img {
   line-height: 3.25rem;
 }
 
-@media (min-width: 1440px) {
+@media (min-width: 1024px) {
   #share .text-container {
     position: absolute;
     width: 40%;
@@ -2074,7 +2048,7 @@ section.section-landing .right img {
     bottom: -2.5rem;
   }
 }
-@media (min-width: 768px) {
+@media (min-width: 825px) {
   .player {
     text-align: center;
     display: flex;
@@ -2125,7 +2099,7 @@ section.section-landing .right img {
     min-width: 6rem;
   }
 }
-@media (min-width: 1440px) {
+@media (min-width: 1024px) {
   .lineup-actions button {
     padding: 6px 12px;
     font-size: 1.5rem;
@@ -2333,9 +2307,10 @@ section.section-landing .right img {
   padding: 1rem;
 }
 
-@media (min-width: 1440px) {
+@media (min-width: 1024px) {
   #welcome {
     display: flex;
+    flex-direction: row;
     align-items: center;
     justify-content: space-around;
   }

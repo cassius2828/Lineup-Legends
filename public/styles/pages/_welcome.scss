@@ -17,7 +17,7 @@
 @media (min-width:425px){
 
 } 
- @media (min-width:768px){
+ @media (min-width:770px){
   
 }
 @media (min-width:992px){
@@ -26,9 +26,10 @@
 @media (min-width:1024px){
   
 }
-@media (min-width:1440px){
+@media (min-width:1024px){
   #welcome {
     display: flex;
+    flex-direction: row;
     align-items: center;
     justify-content: space-around;
     .left img {

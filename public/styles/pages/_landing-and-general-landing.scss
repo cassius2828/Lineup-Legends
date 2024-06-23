@@ -80,7 +80,8 @@ section.section-landing {
     position: absolute;
     top: 0;
     left: 0;
-    background-size: cover;
+    // background-size: cover;
+  
     height: 70svh;
     width: 100vw;
     /* z-index: -1; */
@@ -89,6 +90,7 @@ section.section-landing {
 
 #commenting {
   position: relative;
+  height: 70svh;
 
   width: 100vw;
 
@@ -117,10 +119,10 @@ section.section-landing {
 #share {
   .bg {
     background: url("https://media.bleacherreport.com/image/upload/x_0,y_0,w_2000,h_1335,c_crop/c_fill,g_faces,w_1600,h_1600,q_95/v1625592987/vgg1quininemywtx1axm.jpg");
-    background-size: cover;
-    background-position: center;
+    background-size: cover !important;
+    // background-position: center;
     filter: brightness(30%);
-    background-repeat: no-repeat;
+
   }
 
   .text-container {
@@ -152,31 +154,22 @@ section.section-landing {
 
 @media (min-width: 425px) {
 }
-@media (min-width: 768px) {
+@media (min-width: 825px) {
+  p {
+    width: 60%;
+    margin: auto;
+    font-size: 1.75rem !important;
+    line-height: 3.25rem !important;
+  }
 }
 @media (min-width: 992px) {
 }
-@media (min-width: 1024px) {
-}
-@media (min-width: 1440px) {
-  #landing {
-    position: relative;
-    background: url("/images/landing/jordan-vs-lebron.png");
-    background-size: cover;
-    height: 100svh;
-    width: 100vw;
-    padding: 0;
-    margin-top: 8rem;
 
-    > div {
-      position: absolute;
-      top: 47.5%;
-      left: 50%;
-      transform: translateX(-50%);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
+@media (min-width: 1024px) {
+  #landing {
+    background: url("/images/landing/jordan-vs-lebron.png");
+  background-size: cover;
+
 
     h1 {
       font-size: 12rem;
@@ -185,23 +178,14 @@ section.section-landing {
     h2 {
       font-size: 5rem;
     }
-
-    button {
-      background-color: rgba(0, 0, 0, 0.45);
-      outline: #f2f2f2 1px solid;
-      padding: 2rem;
-      border-radius: 0;
-    }
   }
 
   section.section-landing {
     margin: 0;
     padding: 5rem;
-    display: flex;
+
     flex-direction: row;
-    align-items: center;
-    justify-content: space-around;
-    background-color: #010109;
+
     height: 100svh;
     width: 100vw;
 
@@ -232,6 +216,7 @@ section.section-landing {
     height: 100svh;
     width: 100vw;
 
+    // may have to keep duplicates bc of #commenting
     .bg {
       position: absolute;
       top: 0;
@@ -247,31 +232,22 @@ section.section-landing {
     .bg {
       background: url("/images/landing/inside-the-nba.jpg");
       filter: brightness(50%);
+
+
     }
 
     .text-container {
-      position: absolute;
       top: 50%;
-      transform: translateY(-50%);
+
       width: 40%;
-      z-index: 1;
     }
   }
 
   #share {
     .bg {
-      background: url("/images/landing/kd-twitter-perl.png");
-      background-size: cover;
-      filter: brightness(30%);
-      background-repeat: no-repeat;
-    }
+  // background-size: cover;
+  background: url("/images/landing/kd-twitter-perl.png");
 
-    .text-container {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 40%;
-      z-index: 1;
     }
   }
 
@@ -290,6 +266,4 @@ section.section-landing {
       background-position: bottom;
     }
   }
-}
-@media (min-width: 2500px) {
 }
