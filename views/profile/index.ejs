@@ -13,45 +13,67 @@
       <img id="profile-img" src="/images/misc/default-user.jpg" alt="">
       <div class="profile-details">
         <% if (user._id.toString()=== lineups[0].owner._id.toString()) { %>
-                 <div class="row row-1">
+        <div class="row row-1">
           <p id="username-p"><%= user.username %></p>
           <div class="btn-container">
-              <a href="/profiles/<%= user._id %>/edit"> <button>edit profile</button></a>  
-        <a href="/lineups/<%= user._id %>">
-           <button>view all lineups</button>    
-        </a>  
-          <i id="gear" class="fa-solid fa-gear"></i>
+            <a href="/profiles/<%= user._id %>/edit"> <button>edit profile</button></a>
+            <a href="/lineups/<%= user._id %>">
+              <button>view all lineups</button>
+            </a>
+            <i id="gear" class="fa-solid fa-gear"></i>
           </div>
 
         </div>
-        <% } else {%>
-          <div class="row row-1">
-            NOT THE OWNER
-            <p id="username-p"><%= user.username %></p>
-            <div class="btn-container">
-                <a href="/profiles/<%= user._id %>/edit"> <button>edit profile</button></a>  
-          <a href="/lineups/<%= user._id %>">
-             <button>view all lineups</button>    
-          </a>  
-            <i id="gear" class="fa-solid fa-gear"></i>
-            </div>
-  
-          </div>
-          <% } %>
         <div class="row row-2">
           <p><%= lineups.length %> lineups</p>
           <p>
             <% if (user.friends.length === 1) { %>
-              <%= user.friends.length %> friend</p>
-            <% } else {%>
-              <%= user.friends.length %> friends</p>
-           <% } %>
-<p>14 cards</p>
+            <%= user.friends.length %> friend</p>
+          <% } else {%>
+          <%= user.friends.length %> friends</p>
+          <% } %>
+          <p>14 cards</p>
         </div>
         <div class="row row-3">
           <p>friends with (up to 3 friends here w/ links)</p>
 
         </div>
+        <% } else {%>
+        <div class="row row-1">
+
+          <p id="username-p"><%= lineups[0].owner.username %></p>
+          <div class="btn-container">
+            <a href="/profiles/<%= lineups[0].owner._id %>/"> <button>add friend</button></a>
+            <a href="/lineups/<%= lineups[0].owner._id %>">
+              <button>view all lineups</button>
+            </a> <a href="/lineups/<%= lineups[0].owner._id %>">
+              <button>message</button>
+            </a>
+            <i id="gear" class="fa-solid fa-gear"></i>
+          </div>
+
+        </div>
+        <div class="row row-2">
+
+          <p> <% if (lineups.length === 1) { %>
+            <%= lineups.length %> lineup
+            <% } else {%>
+            <%= lineups.length %> lineups
+            <% } %> </p>
+          <p>
+            <% if (lineups[0].owner.friends.length === 1) { %>
+            <%= lineups[0].owner.friends.length %> friend</p>
+          <% } else {%>
+          <%= lineups[0].owner.friends.length %> friends</p>
+          <% } %>
+          <p>14 cards</p>
+        </div>
+        <div class="row row-3">
+          <p>friends with (up to 3 friends here w/ links)</p>
+
+        </div>
+        <% } %>
+
       </div>
 
       <div class="bg"></div>
@@ -62,43 +84,39 @@
     <!-- profile features -->
     <div class="pf">
       <div class="pf-head">
-<div id="pf-lineups-icon" class="pf-icon" <% if (showLineups) { %>
-     
-      style=" border-top: solid 1px #f2f2f2;"
-<% } %>>
-  <a href="/profiles/<%= user._id %>">
-      <i class="fa-solid fa-list"></i><span>lineups</span></div>
-  </a>
+        <div id="pf-lineups-icon" class="pf-icon" <% if (showLineups) { %> style=" border-top: solid 1px #f2f2f2;" <% } %>>
+          <a href="/profiles/<%= user._id %>">
+            <i class="fa-solid fa-list"></i><span>lineups</span>
+        </div>
+        </a>
 
-<div id="pf-card-collection-icon" class="pf-icon" <% if (showCollection) { %>
-     
-  style=" border-top: solid 1px #f2f2f2;"
-<% } %>>
-  <a href="/profiles/<%= user._id %>/card-collection">
-     <i class="fa-solid fa-database"></i><span>card collection</span>
-  </a>
- 
-</div>
-<div id="pf-social-media-icon" class="pf-icon" <% if (showSocials) { %>
-     
-  style=" border-top: solid 1px #f2f2f2;"
-<% } %>>
-  <a href="/profiles/<%= user._id %>/social-media">
-      <i class="fa-solid fa-hashtag"></i><span>social media</span>
-  </a>
+        <div id="pf-card-collection-icon" class="pf-icon" <% if (showCollection) { %> style=" border-top: solid 1px #f2f2f2;" <% } %>>
+          <a href="/profiles/<%= user._id %>/card-collection">
+            <i class="fa-solid fa-database"></i><span>card collection</span>
+          </a>
+
+        </div>
+        <div id="pf-social-media-icon" class="pf-icon" <% if (showSocials) { %> style=" border-top: solid 1px #f2f2f2;" <% } %>>
+          <a href="/profiles/<%= user._id %>/social-media">
+            <i class="fa-solid fa-hashtag"></i><span>social media</span>
+          </a>
 
 
-</div>
+        </div>
       </div>
       <div class="pf-body">
         <% if (showLineups) { %> <h1>Featured Lineups</h1>
-                 <div class="lineup-container ">   
+        <div class="lineup-container ">
           <% lineups?.forEach(lineup => { %>
-        
+
           <div class="lineup-card">
             <header class="lineup-header">
-              <a href="/lineups/<%= lineup._id %>/edit"><span class="lineup-edit">...</span></a>
-    
+              <% if (user._id.toString()=== lineups[0].owner._id.toString()) { %>
+                <a href="/lineups/<%= lineup._id %>/edit"><span class="lineup-edit">...</span></a>
+              <% } else {%>
+                <a style="opacity: 0;pointer-events: none;" href=""><span class="lineup-edit">...</span></a>
+             <% } %>
+
               <% if (lineup?.avgRating) { %>
               <h2 class="lineup-rating"><%= lineup?.avgRating.toFixed(2); %></h2>
               <% } else { %>
@@ -109,7 +127,7 @@
               <% } else { %>
               <span class="lineup-relativeTime">4 hr ago</span>
               <% } %>
-    
+
             </header>
             <div class="lineup-players">
               <% ['pg', 'sg', 'sf', 'pf', 'c'].forEach(position => { %>
@@ -125,7 +143,7 @@
             </div>
             <footer class="lineup-footer">
               <div class="lineup-actions">
-                
+
                 <div class="vote-btn-container ">
                   <form class="vote-form <% if (user._id.toString() === lineup.owner._id.toString()) { %>
                         disabled-btn
@@ -136,13 +154,13 @@
                            <% } %> ">
                       <i class="fa-solid fa-circle-arrow-up"></i>
                     </button>
-    
+
                     <span class="num-of-votes"> <% if (lineup?.comments) { %>
                       <%= lineup?.comments.length %>
                       <% } else { %>
                       4
                       <% } %></span>
-    
+
                     <button <% if (user._id.toString() === lineup.owner._id.toString()) { %> disabled <% } %> type="submit" class="lineup-btn down-vote <% if (user._id.toString() === lineup.owner._id.toString()) { %>
                         disabled-btn
                        <% } %> ">
@@ -165,16 +183,20 @@
                     </button>
                   </form>
                 </div>
+                <!-- Feature or Rate button based on ownership -->
+                <% if (user._id.toString() === lineup.owner._id.toString()) { %>
                 <div class="award-btn-container">
-                  <form action="/lineups/<%= lineup._id %>/edit/featured?_method=PUT" method="POST">
-                    <button type="submit" class="award-btn <% if (lineup.featured) { %>
-                         featured
-                        <% } %>">
-                      <i class="fa-solid fa-award"></i>
-                    </button>
+                  <form action="">
+                    <button class="award-btn"><i class="fa-solid fa-award"></i></button>
                   </form>
-    
                 </div>
+                <% } else { %>
+                <div class="rate-btn-container">
+                  <a href="/lineups/<%= lineup._id %>/rate">
+                    <button class="rate-btn">Rate <i class="fa-solid fa-gavel"></i></button>
+                  </a>
+                </div>
+                <% } %>
                 <div class="share-btn-container">
                   <form action="/lineups/<%= lineup._id %>/share" method="GET">
                     <button type="submit" class="lineup-btn">
@@ -189,34 +211,34 @@
           <% }); %>
         </div>
         <% } %>
-<% if (showCollection) { %>
-    <div class="card-collection">
+        <% if (showCollection) { %>
+        <div class="card-collection">
           <!-- card collection here -->
-           <h1>
-              card collection coming soon!
-           </h1>
-        
+          <h1>
+            card collection coming soon!
+          </h1>
+
         </div>
-<% } %>
-     <% if (showSocials) { %>
-             <div class="social-media">
-        <ul>
-          <li>
+        <% } %>
+        <% if (showSocials) { %>
+        <div class="social-media">
+          <ul>
+            <li>
 
-            <span><i class="fa-brands fa-x-twitter"></i> Twitter: @handle </span><button>Follow</button>
-          </li>
-          <li>
+              <span><i class="fa-brands fa-x-twitter"></i> Twitter: @handle </span><button>Follow</button>
+            </li>
+            <li>
 
-            <span><i class="fa-brands fa-instagram"></i> Instagram: @handle </span><button>Follow</button>
-          </li>
-          <li>
+              <span><i class="fa-brands fa-instagram"></i> Instagram: @handle </span><button>Follow</button>
+            </li>
+            <li>
 
-            <span><i class="fa-brands fa-facebook"></i> Facebook: name</span> <button>Add</button>
-          </li>
-        </ul>
+              <span><i class="fa-brands fa-facebook"></i> Facebook: name</span> <button>Add</button>
+            </li>
+          </ul>
         </div>
-     <% } %>
- 
+        <% } %>
+
       </div>
 
     </div>

@@ -33,6 +33,17 @@ const userSchema = new mongoose.Schema({
   emailConfirmationToken: {
     type: String,
   },
+  socialMedia: {
+    twitter: {
+      type: String,
+    },
+    instagram: {
+      type: String,
+    },
+    facebook: {
+      type: String,
+    },
+  },
 });
 
 // event listener for the populate

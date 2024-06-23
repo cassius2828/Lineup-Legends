@@ -4,31 +4,34 @@ const bcrypt = require("bcrypt");
 const crypto = require("crypto");
 const nodemailer = require("nodemailer");
 const dotenv = require("dotenv");
+const { getRelativeTime } = require("./lineups");
 dotenv.config();
 ///////////////////////////
 // GET | get user profile | lineups default
 ///////////////////////////
 const getUserProfile = async (req, res) => {
-  const userId = req.session.user._id;
-  let userLineups = await LineupModel.find({ owner: req.session.user._id })
+  const {userId} = req.params;
+
+  let userLineups = await LineupModel.find({ owner: userId})
     .sort({ createdAt: -1 })
     .populate("pg")
     .populate("sg")
     .populate("sf")
     .populate("pf")
-    .populate("c");
-  const currentUser = await UserModel.findById(userId);
-
+    .populate("c").populate('owner');
+  const currentUser = await UserModel.findById(req.session.user._id);
+userLineups = await getRelativeTime(userLineups)
   res.render("profile/index.ejs", { user: currentUser, showLineups: true, showCollection: false, showSocials:false, lineups: userLineups });
 };
 ///////////////////////////
 // GET | get user profile | card collection
 ///////////////////////////
 const getUserProfileCardCollection = async (req, res) => {
-  const userId = req.session.user._id;
-  let userLineups = await LineupModel.find({ owner: req.session.user._id })
+  // const userId = req.session.user._id;
+  const {userId} = req.params;
+  let userLineups = await LineupModel.find({ owner: userId}).populate('owner')
 
-  const currentUser = await UserModel.findById(userId);
+  const currentUser = await UserModel.findById(req.session.user._id);
 
   res.render("profile/index.ejs", { user: currentUser, showLineups: false, showCollection: true, showSocials:false, lineups:userLineups});
 };
@@ -37,10 +40,11 @@ const getUserProfileCardCollection = async (req, res) => {
 // GET | get user profile | social media
 ///////////////////////////
 const getUserProfileSocialMedia = async (req, res) => {
-  const userId = req.session.user._id;
-  let userLineups = await LineupModel.find({ owner: req.session.user._id })
+  const {userId} = req.params;
 
-  const currentUser = await UserModel.findById(userId);
+  let userLineups = await LineupModel.find({ owner: userId}).populate('owner')
+
+  const currentUser = await UserModel.findById(req.session.user._id);
 
   res.render("profile/index.ejs", { user: currentUser, showLineups: false, showCollection: false, showSocials:true,  lineups:userLineups});
 };

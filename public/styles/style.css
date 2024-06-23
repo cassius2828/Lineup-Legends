@@ -2254,6 +2254,9 @@ section.section-landing .right img {
 #profile .banner .bg {
   position: absolute;
 }
+#profile .lineup-container {
+  width: 100vw;
+}
 
 #profile-img {
   border-radius: 50%;
@@ -2266,16 +2269,23 @@ section.section-landing .right img {
 
 #gear {
   font-size: 2rem;
+  position: absolute;
+  top: 2.5rem;
+  right: 0;
 }
 
 .row {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 1.5rem;
+  padding: 2rem;
 }
 .row button {
   margin: 0 1rem;
+}
+
+.row-1 {
+  position: relative;
 }
 
 #bio {
