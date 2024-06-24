@@ -10,43 +10,62 @@ dotenv.config();
 // GET | get user profile | lineups default
 ///////////////////////////
 const getUserProfile = async (req, res) => {
-  const {userId} = req.params;
-
-  let userLineups = await LineupModel.find({ owner: userId})
+  const { userId } = req.params;
+  const signedInUserId = req.session.user._id;
+  let userLineups = await LineupModel.find({ owner: userId })
     .sort({ createdAt: -1 })
     .populate("pg")
     .populate("sg")
     .populate("sf")
     .populate("pf")
-    .populate("c").populate('owner');
-  const currentUser = await UserModel.findById(req.session.user._id);
-userLineups = await getRelativeTime(userLineups)
-  res.render("profile/index.ejs", { user: currentUser, showLineups: true, showCollection: false, showSocials:false, lineups: userLineups });
+    .populate("c")
+    .populate("owner");
+  const currentUser = await UserModel.findById(signedInUserId);
+  userLineups = await getRelativeTime(userLineups);
+  res.render("profile/index.ejs", {
+    user: currentUser,
+    showLineups: true,
+    showCollection: false,
+    showSocials: false,
+    lineups: userLineups,
+  });
 };
 ///////////////////////////
 // GET | get user profile | card collection
 ///////////////////////////
 const getUserProfileCardCollection = async (req, res) => {
   // const userId = req.session.user._id;
-  const {userId} = req.params;
-  let userLineups = await LineupModel.find({ owner: userId}).populate('owner')
+  const { userId } = req.params;
+  let userLineups = await LineupModel.find({ owner: userId }).populate("owner");
 
   const currentUser = await UserModel.findById(req.session.user._id);
 
-  res.render("profile/index.ejs", { user: currentUser, showLineups: false, showCollection: true, showSocials:false, lineups:userLineups});
+  res.render("profile/index.ejs", {
+    user: currentUser,
+    showLineups: false,
+    showCollection: true,
+    showSocials: false,
+    lineups: userLineups,
+  });
 };
 
 ///////////////////////////
 // GET | get user profile | social media
 ///////////////////////////
 const getUserProfileSocialMedia = async (req, res) => {
-  const {userId} = req.params;
+  const { userId } = req.params;
 
-  let userLineups = await LineupModel.find({ owner: userId}).populate('owner')
+  let userLineups = await LineupModel.find({ owner: userId }).populate("owner");
 
   const currentUser = await UserModel.findById(req.session.user._id);
 
-  res.render("profile/index.ejs", { user: currentUser, showLineups: false, showCollection: false, showSocials:true,  lineups:userLineups});
+  res.render("profile/index.ejs", {
+    user: currentUser,
+    showLineups: false,
+    showCollection: false,
+    showSocials: true,
+    lineups: userLineups,
+  });
 };
 
 ///////////////////////////
@@ -203,8 +222,7 @@ const addNewFieldsToUsers = async () => {
       {},
       {
         $set: {
-          newEmail: "",
-          emailConfirmationToken: "",
+          friends: [],
         },
       }
     );
@@ -221,7 +239,10 @@ module.exports = {
   addNewFieldsToUsers,
   updateEmailStepTwo,
   updateEmailStepOne,
-  updatePassowrd,getEditUserProfile,getUserProfileCardCollection,getUserProfileSocialMedia
+  updatePassowrd,
+  getEditUserProfile,
+  getUserProfileCardCollection,
+  getUserProfileSocialMedia,
 };
 //  generate email token
 const generateToken = () => {
@@ -248,22 +269,20 @@ const sendConfirmationEmail = (user, token) => {
   });
 };
 
-
-
-const handleUpdatePassword =  (
+const handleUpdatePassword = (
   newPassword,
   confirmNewPassword,
   oldPassword,
   currentPassword
 ) => {
   // Compare the current password with the stored old password
-  const validPassword =  bcrypt.compareSync(currentPassword, oldPassword);
+  const validPassword = bcrypt.compareSync(currentPassword, oldPassword);
 
   if (validPassword) {
     // Check if the new password matches the confirmation password
     if (newPassword === confirmNewPassword) {
       // Hash and return the new password
-      return  bcrypt.hashSync(newPassword, 10);
+      return bcrypt.hashSync(newPassword, 10);
     } else {
       // If new passwords don't match, return an error or old password (if intended)
       // This part should ideally handle the error appropriately
@@ -274,5 +293,3 @@ const handleUpdatePassword =  (
     throw new Error("Current password is incorrect.");
   }
 };
-
-

@@ -34,10 +34,7 @@
           <% } %>
           <p>14 cards</p>
         </div>
-        <div class="row row-3">
-          <p>friends with (up to 3 friends here w/ links)</p>
-
-        </div>
+      
         <% } else {%>
         <div class="row row-1">
 
@@ -69,9 +66,18 @@
           <p>14 cards</p>
         </div>
         <div class="row row-3">
-          <p>friends with (up to 3 friends here w/ links)</p>
-
+          <% if (lineups[0].owner.friends.length === 0) { %>
+            <p>no mutual friends</p>
+          <% } else if (lineups[0].owner.friends.length === 1) { %>
+            <%=  lineups[0].owner.friends%>
+            <p>friends with <%= lineups[0].owner.friends.map(friend => friend.username).join(", ") %></p>
+          <% } else if (lineups[0].owner.friends.length === 2) { %>
+            <p>friends with <%= lineups[0].owner.friends.map(friend => friend.username).join(", ") %></p>
+          <% } else { %>
+            <p>many mutual friends</p>
+          <% } %>
         </div>
+        
         <% } %>
 
       </div>

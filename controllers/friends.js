@@ -53,15 +53,6 @@ const postAddFriend = async (req, res) => {
     { upsert: true, new: true }
   );
 
-  const updateSenderOfFriendReq = await UserModel.findOneAndUpdate(
-    { _id: currentUserId },
-    { $push: { friends: sentFriendReqDoc._id } }
-  );
-
-  const updateRecipientOfFriendReq = await UserModel.findOneAndUpdate(
-    { _id: targetedUserId },
-    { $push: { friends: recievedFriendReqDoc._id } }
-  );
   res.send("friend request sent");
 };
 
@@ -89,6 +80,16 @@ const putAcceptFriendReq = async (req, res) => {
     requester: targetedUserId,
     status: "requested",
   });
+
+  const updateCurrentUserFriends = await UserModel.findOneAndUpdate(
+    { _id: currentUserId },
+    { $push: { friends: targetedUserId} }
+  );
+
+  const updateOtherUserFriends = await UserModel.findOneAndUpdate(
+    { _id: targetedUserId },
+    { $push: { friends: currentUserId } }
+  );
   res.send("friend req accepted");
 };
 
