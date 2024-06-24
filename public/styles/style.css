@@ -931,6 +931,10 @@ button,
   min-width: 40vw;
 }
 
+#search-friends .user-card {
+  justify-content: space-between;
+}
+
 /* ///////////////// */
 /* Selected Players Row */
 /* ///////////////// */

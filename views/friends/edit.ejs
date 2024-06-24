@@ -23,10 +23,12 @@ Friends
             <h2><%= friend.username %></h2> 
             </div>
          
-           
-           <a href="/profiles/<%= friend._id %>"><button type="button">view profile</button></a>
+           <div class="edit-friend-btn-container">
+             <a href="/profiles/<%= friend._id %>"><button type="button">view profile</button></a>
             <button data-current-user-id="<%= user._id %>" data-friend-username="<%= friend.username %>" data-friend-id="<%= friend._id %>" class="reject remove-friend" type="submit">Remove Friend<i style="margin-left: 1rem;"  class="fa-solid fa-ban"></i></button>
          
+           </div>
+          
           </div>
        
 
