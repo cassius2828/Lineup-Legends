@@ -8,88 +8,94 @@
   <%- include('../partials/_nav.ejs') %>
 
   <section id="profile">
-    <header class="banner">
+    <div class="banner-container">
+      <header class="banner">
 
-      <img id="profile-img" src="/images/misc/default-user.jpg" alt="">
-      <div class="profile-details">
-        <% if (user._id.toString()=== lineups[0].owner._id.toString()) { %>
-        <div class="row row-1">
-          <p id="username-p"><%= user.username %></p>
-          <div class="btn-container">
-            <a href="/profiles/<%= user._id %>/edit"> <button>edit profile</button></a>
-            <a href="/lineups/<%= user._id %>">
-              <button>view all lineups</button>
-            </a>
-            <i id="gear" class="fa-solid fa-gear"></i>
+        <img id="profile-img" src="/images/misc/default-user.jpg" alt="">
+        <div class="profile-details">
+          <% if (user._id.toString()=== lineups[0].owner._id.toString()) { %>
+          <div class="row row-1">
+            <p id="username-p"><%= user.username %></p>
+            <div class="btn-container">
+              <a href="/profiles/<%= user._id %>/edit"> <button>edit profile</button></a>
+              <a href="/lineups/<%= user._id %>">
+                <button>view all lineups</button>
+              </a>
+              <i id="gear" class="fa-solid fa-gear"></i>
+            </div>
+
           </div>
-
-        </div>
-        <div class="row row-2">
-          <p><%= lineups.length %> lineups</p>
-          <p>
-            <% if (user.friends.length === 1) { %>
-            <%= user.friends.length %> friend</p>
-          <% } else {%>
-          <%= user.friends.length %> friends</p>
-          <% } %>
-          <p>14 cards</p>
-        </div>
-      
-        <% } else {%>
-        <div class="row row-1">
-
-          <p id="username-p"><%= lineups[0].owner.username %></p>
-          <div class="btn-container">
-            <a href="/profiles/<%= lineups[0].owner._id %>/"> <button>add friend</button></a>
-            <a href="/lineups/<%= lineups[0].owner._id %>">
-              <button>view all lineups</button>
-            </a> <a href="/lineups/<%= lineups[0].owner._id %>">
-              <button>message</button>
-            </a>
-            <i id="gear" class="fa-solid fa-gear"></i>
-          </div>
-
-        </div>
-        <div class="row row-2">
-
-          <p> <% if (lineups.length === 1) { %>
-            <%= lineups.length %> lineup
+          <div class="row row-2">
+            <p><%= lineups.length %> lineups</p>
+            <p>
+              <% if (user.friends.length === 1) { %>
+              <%= user.friends.length %> friend</p>
             <% } else {%>
-            <%= lineups.length %> lineups
-            <% } %> </p>
-          <p>
-            <% if (lineups[0].owner.friends.length === 1) { %>
-            <%= lineups[0].owner.friends.length %> friend</p>
+            <%= user.friends.length %> friends</p>
+            <% } %>
+            <p>14 cards</p>
+          </div>
+
           <% } else {%>
-          <%= lineups[0].owner.friends.length %> friends</p>
-          <% } %>
-          <p>14 cards</p>
-        </div>
-        <div class="row row-3">
-          <!-- no mutual friends -->
-           <% const mutualFriends = user.friends.filter(friend => friends.some(f => f.username === friend.username)) %>
-          <% if (mutualFriends.length === 0) { %>
+          <div class="row row-1">
+
+            <p id="username-p"><%= lineups[0].owner.username %></p>
+            <div class="btn-container">
+              <a href="/profiles/<%= lineups[0].owner._id %>/"> <button>add friend</button></a>
+              <a href="/lineups/<%= lineups[0].owner._id %>">
+                <button>view all lineups</button>
+              </a> <a href="/lineups/<%= lineups[0].owner._id %>">
+                <button>message</button>
+              </a>
+              <i id="gear" class="fa-solid fa-gear"></i>
+            </div>
+
+          </div>
+          <div class="row row-2">
+
+            <p> <% if (lineups.length === 1) { %>
+              <%= lineups.length %> lineup
+              <% } else {%>
+              <%= lineups.length %> lineups
+              <% } %> </p>
+            <p>
+              <% if (lineups[0].owner.friends.length === 1) { %>
+              <%= lineups[0].owner.friends.length %> friend</p>
+            <% } else {%>
+            <%= lineups[0].owner.friends.length %> friends</p>
+            <% } %>
+            <p>14 cards</p>
+          </div>
+          <div class="row row-3">
+            <!-- no mutual friends -->
+            <% const mutualFriends = user.friends.filter(friend => friends.some(f => f.username === friend.username)) %>
+            <% if (mutualFriends.length === 0) { %>
             <p>no mutual friends</p>
-         <!-- 1 mutual friend -->
-          <% } else if (mutualFriends.length === 1) { %>
-            <p>friends with <%= mutualFriends[0].username %></p>
+            <!-- 1 mutual friend -->
+            <% } else if (mutualFriends.length === 1) { %>
+            <p>mutual friends with <span><%= mutualFriends[0].username %></span></p>
 
             <!--  2 mutual friends -->
-          <% } else if(mutualFriends.length === 2) { %>
-            <p>friends with <% mutualFriends.map(friend => friend.username)%></p>
-          <!-- 3+ mutual friends -->
-          <% }   else  { %>
-            <p>friends with <%= mutualFriends.map(friend => friend.username).slice(0,2).join(', ') %>, & more  <a href="/profiles/view-friends" id="view-all-friends">...view all friends</a></p>
-          
-          <% }  %>
+            <% } else if(mutualFriends.length === 2) { %>
+            <p>mutual friends with <span><% mutualFriends.map(friend => friend.username)%></span></p>
+            <!-- 3+ mutual friends -->
+            <% }   else  { %>
+            <p>mutual friends with <span><%= mutualFriends.map(friend => friend.username).slice(0,2).join(', ') %></span>, & more
+              <a href="/profiles/view-friends" id="view-all-friends">...view all friends</a>
+            </p>
+
+            <% }  %>
+          </div>
+
+          <% } %>
+
         </div>
-        
-        <% } %>
 
-      </div>
 
+      </header>
       <div class="bg"></div>
-    </header>
+    </div>
+
     <div>
       <p id="bio">Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima, iure ut dicta sequi corrupti asperiores impedit est quam eveniet esse laboriosam veniam eos voluptates modi, sit inventore voluptas perspiciatis repellat.</p>
     </div>
@@ -124,10 +130,10 @@
           <div class="lineup-card">
             <header class="lineup-header">
               <% if (user._id.toString()=== lineups[0].owner._id.toString()) { %>
-                <a href="/lineups/<%= lineup._id %>/edit"><span class="lineup-edit">...</span></a>
+              <a href="/lineups/<%= lineup._id %>/edit"><span class="lineup-edit">...</span></a>
               <% } else {%>
-                <a style="opacity: 0;pointer-events: none;" href=""><span class="lineup-edit">...</span></a>
-             <% } %>
+              <a style="opacity: 0;pointer-events: none;" href=""><span class="lineup-edit">...</span></a>
+              <% } %>
 
               <% if (lineup?.avgRating) { %>
               <h2 class="lineup-rating"><%= lineup?.avgRating.toFixed(2); %></h2>
@@ -254,6 +260,7 @@
       </div>
 
     </div>
+    <%- include('../partials/sidenav.ejs') %>
 
   </section>
 

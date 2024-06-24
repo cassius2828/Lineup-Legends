@@ -2244,15 +2244,19 @@ section.section-landing .right img {
   display: flex;
   justify-content: space-between;
   width: 100vw;
-  max-width: 80rem;
+  max-width: 120rem;
   margin: auto;
-  border: solid;
+  padding: 1rem;
+}
+#profile .banner-container {
+  position: relative;
+  width: 100vw;
+}
+#profile .banner-container .bg {
+  position: absolute;
 }
 #profile .banner > div {
   width: 100%;
-}
-#profile .banner .bg {
-  position: absolute;
 }
 #profile .lineup-container {
   width: 100vw;
@@ -2260,36 +2264,62 @@ section.section-landing .right img {
 
 #profile-img {
   border-radius: 50%;
+  width: 100px;
+  height: 100px;
 }
 
 #username-p {
-  margin: 0 2rem;
+  margin: 1rem 2rem;
   width: auto;
+  font-size: 1.5rem;
 }
 
 #gear {
   font-size: 2rem;
+  cursor: pointer;
   position: absolute;
   top: 2.5rem;
-  right: 0;
+  right: 1rem;
 }
 
 .row {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   padding: 2rem;
 }
 .row button {
-  margin: 0 1rem;
+  margin: 1rem;
+  width: 100px;
+  padding: 8px;
+}
+.row .btn-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.row-2, .row-3 {
+  flex-direction: row;
+  position: relative;
+  left: -4rem;
+  justify-content: space-around;
+  font-size: 1.5rem;
 }
 
 .row-1 {
   position: relative;
 }
 
+.row-3 span {
+  color: rgba(214, 214, 214, 0.5647058824);
+}
+
 #bio {
   margin: 4rem auto;
+  font-size: 1.25rem;
+  line-height: 3.25rem;
+  padding: 1.5rem;
 }
 
 .pf {
@@ -2312,6 +2342,7 @@ section.section-landing .right img {
 .pf-head div span {
   margin-left: 1rem;
   text-transform: capitalize;
+  font-size: 1.1rem;
 }
 .pf-body .social-media li {
   display: flex;
@@ -2323,13 +2354,45 @@ section.section-landing .right img {
   border-radius: 8px;
 }
 .pf-body .social-media li span {
-  font-size: 2rem;
+  font-size: 1.5rem;
 }
 .pf-body .social-media li button {
   margin: 0 0 0 2rem;
   min-width: 8rem;
 }
 
+@media (min-width: 1024px) {
+  #profile .banner {
+    flex-direction: row;
+  }
+  #profile-img {
+    width: 150px;
+    height: 150px;
+  }
+  #username-p {
+    margin: 0 2rem;
+  }
+  .row {
+    flex-direction: row;
+  }
+  .row button {
+    width: 15rem;
+    margin: 0 1rem;
+  }
+  .row-2 {
+    width: 50%;
+    margin: auto;
+  }
+  .pf-head div span {
+    font-size: 2rem;
+  }
+  .pf-body .social-media li {
+    min-width: 40rem;
+  }
+  .pf-body .social-media li span {
+    font-size: 2rem;
+  }
+}
 #edit-profile .form-container {
   padding: 1.5rem;
   border-radius: 8px;
