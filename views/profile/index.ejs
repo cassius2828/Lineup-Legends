@@ -66,17 +66,21 @@
           <p>14 cards</p>
         </div>
         <div class="row row-3">
-          <% if (user.friends.filter(friend => friends.some(f => f.username === friend.username)).length === 0) { %>
+          <!-- no mutual friends -->
+           <% const mutualFriends = user.friends.filter(friend => friends.some(f => f.username === friend.username)) %>
+          <% if (mutualFriends.length === 0) { %>
             <p>no mutual friends</p>
+         <!-- 1 mutual friend -->
+          <% } else if (mutualFriends.length === 1) { %>
+            <p>friends with <%= mutualFriends[0].username %></p>
 
-            
-         
-          <% } else if (user.friends.filter(friend => friends.some(f => f.username === friend.username)).length === 1) { %>
+            <!--  2 mutual friends -->
+          <% } else if(mutualFriends.length === 2) { %>
+            <p>friends with <% mutualFriends.map(friend => friend.username)%></p>
+          <!-- 3+ mutual friends -->
+          <% }   else  { %>
+            <p>friends with <%= mutualFriends.map(friend => friend.username).slice(0,2).join(', ') %>, & more  <a href="/profiles/view-friends" id="view-all-friends">...view all friends</a></p>
           
-            <p>friends with <%= friends.filter(friend => friend.username !== user.username).map(f => f.username) %></p>
-          <% } else  { %>
-            <p>friends with <%= friends.filter(friend => friend.username !== user.username).map(f => f.username).slice(0,2).join(', ') %></p>
-            <span id="view-all-friends">...view all friends</span>
           <% }  %>
         </div>
         
@@ -93,19 +97,19 @@
     <div class="pf">
       <div class="pf-head">
         <div id="pf-lineups-icon" class="pf-icon" <% if (showLineups) { %> style=" border-top: solid 1px #f2f2f2;" <% } %>>
-          <a href="/profiles/<%= user._id %>">
+          <a href="/profiles/<%= lineups[0].owner._id %>">
             <i class="fa-solid fa-list"></i><span>lineups</span>
         </div>
         </a>
 
         <div id="pf-card-collection-icon" class="pf-icon" <% if (showCollection) { %> style=" border-top: solid 1px #f2f2f2;" <% } %>>
-          <a href="/profiles/<%= user._id %>/card-collection">
+          <a href="/profiles/<%= lineups[0].owner._id %>/card-collection">
             <i class="fa-solid fa-database"></i><span>card collection</span>
           </a>
 
         </div>
         <div id="pf-social-media-icon" class="pf-icon" <% if (showSocials) { %> style=" border-top: solid 1px #f2f2f2;" <% } %>>
-          <a href="/profiles/<%= user._id %>/social-media">
+          <a href="/profiles/<%= lineups[0].owner._id %>/social-media">
             <i class="fa-solid fa-hashtag"></i><span>social media</span>
           </a>
 

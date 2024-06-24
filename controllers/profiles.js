@@ -42,6 +42,8 @@ const getUserProfile = async (req, res) => {
 const getUserProfileCardCollection = async (req, res) => {
   // const userId = req.session.user._id;
   const { userId } = req.params;
+  const signedInUserId = req.session.user._id;
+
   let userLineups = await LineupModel.find({ owner: userId }).populate("owner");
 
   const currentUser = await UserModel.findById(signedInUserId).populate('friends');
@@ -65,6 +67,7 @@ const getUserProfileCardCollection = async (req, res) => {
 ///////////////////////////
 const getUserProfileSocialMedia = async (req, res) => {
   const { userId } = req.params;
+  const signedInUserId = req.session.user._id;
 
   let userLineups = await LineupModel.find({ owner: userId }).populate("owner");
 
