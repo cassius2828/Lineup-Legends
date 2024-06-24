@@ -28,7 +28,7 @@
           <p><%= lineups.length %> lineups</p>
           <p>
             <% if (user.friends.length === 1) { %>
-            <%= user.friends.length %> friend</p>
+            <%= user.friends[0].username %> friend</p>
           <% } else {%>
           <%= user.friends.length %> friends</p>
           <% } %>
@@ -68,11 +68,11 @@
         <div class="row row-3">
           <% if (lineups[0].owner.friends.length === 0) { %>
             <p>no mutual friends</p>
-          <% } else if (lineups[0].owner.friends.length === 1) { %>
-            <%=  lineups[0].owner.friends%>
-            <p>friends with <%= lineups[0].owner.friends.map(friend => friend.username).join(", ") %></p>
-          <% } else if (lineups[0].owner.friends.length === 2) { %>
-            <p>friends with <%= lineups[0].owner.friends.map(friend => friend.username).join(", ") %></p>
+          <% } else if (lineups[0].owner.friends.length > 0) { %>
+           <p>friends with <%=  friends[0].username%> </p> 
+            <p>friends with <%= friends.map(friend => friend.username).join(", ") %></p>
+          <% } else if (lineups[0].owner.friends.length > 2) { %>
+            <p>friends with <%= friends.map(friend => friend.username).join(", ") %></p>
           <% } else { %>
             <p>many mutual friends</p>
           <% } %>

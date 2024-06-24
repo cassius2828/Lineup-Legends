@@ -15,3 +15,4 @@ router.get("/:userId/social-media", profileCtrl.getUserProfileSocialMedia);
 router.get("/:userId", profileCtrl.getUserProfile);
 
 module.exports = router;
+

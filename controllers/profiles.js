@@ -20,7 +20,12 @@ const getUserProfile = async (req, res) => {
     .populate("pf")
     .populate("c")
     .populate("owner");
-  const currentUser = await UserModel.findById(signedInUserId);
+  const currentUser = await UserModel.findById(signedInUserId).populate('friends');
+  const currentlyViewedUserProfile = await UserModel.findById(userId).populate('friends')
+  const friendsOfCurrentlyViewedUser = await UserModel.find({
+    _id: { $in: currentlyViewedUserProfile.friends }
+  });
+  console.log(friendsOfCurrentlyViewedUser, ' <-- friends of user')
   userLineups = await getRelativeTime(userLineups);
   res.render("profile/index.ejs", {
     user: currentUser,
@@ -28,6 +33,7 @@ const getUserProfile = async (req, res) => {
     showCollection: false,
     showSocials: false,
     lineups: userLineups,
+    friends: friendsOfCurrentlyViewedUser
   });
 };
 ///////////////////////////
@@ -38,14 +44,19 @@ const getUserProfileCardCollection = async (req, res) => {
   const { userId } = req.params;
   let userLineups = await LineupModel.find({ owner: userId }).populate("owner");
 
-  const currentUser = await UserModel.findById(req.session.user._id);
-
+  const currentUser = await UserModel.findById(signedInUserId).populate('friends');
+  const currentlyViewedUserProfile = await UserModel.findById(userId).populate('friends')
+  const friendsOfCurrentlyViewedUser = await UserModel.find({
+    _id: { $in: currentlyViewedUserProfile.friends }
+  });
   res.render("profile/index.ejs", {
     user: currentUser,
     showLineups: false,
     showCollection: true,
     showSocials: false,
     lineups: userLineups,
+    friends: friendsOfCurrentlyViewedUser
+
   });
 };
 
@@ -57,14 +68,19 @@ const getUserProfileSocialMedia = async (req, res) => {
 
   let userLineups = await LineupModel.find({ owner: userId }).populate("owner");
 
-  const currentUser = await UserModel.findById(req.session.user._id);
-
+  const currentUser = await UserModel.findById(signedInUserId).populate('friends');
+  const currentlyViewedUserProfile = await UserModel.findById(userId).populate('friends')
+  const friendsOfCurrentlyViewedUser = await UserModel.find({
+    _id: { $in: currentlyViewedUserProfile.friends }
+  });
   res.render("profile/index.ejs", {
     user: currentUser,
     showLineups: false,
     showCollection: false,
     showSocials: true,
     lineups: userLineups,
+    friends: friendsOfCurrentlyViewedUser
+
   });
 };
 
