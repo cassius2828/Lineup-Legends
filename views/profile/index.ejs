@@ -28,7 +28,7 @@
           <p><%= lineups.length %> lineups</p>
           <p>
             <% if (user.friends.length === 1) { %>
-            <%= user.friends[0].username %> friend</p>
+            <%= user.friends.length %> friend</p>
           <% } else {%>
           <%= user.friends.length %> friends</p>
           <% } %>
@@ -66,16 +66,18 @@
           <p>14 cards</p>
         </div>
         <div class="row row-3">
-          <% if (lineups[0].owner.friends.length === 0) { %>
+          <% if (user.friends.filter(friend => friends.some(f => f.username === friend.username)).length === 0) { %>
             <p>no mutual friends</p>
-          <% } else if (lineups[0].owner.friends.length > 0) { %>
-           <p>friends with <%=  friends[0].username%> </p> 
-            <p>friends with <%= friends.map(friend => friend.username).join(", ") %></p>
-          <% } else if (lineups[0].owner.friends.length > 2) { %>
-            <p>friends with <%= friends.map(friend => friend.username).join(", ") %></p>
-          <% } else { %>
-            <p>many mutual friends</p>
-          <% } %>
+
+            
+         
+          <% } else if (user.friends.filter(friend => friends.some(f => f.username === friend.username)).length === 1) { %>
+          
+            <p>friends with <%= friends.filter(friend => friend.username !== user.username).map(f => f.username) %></p>
+          <% } else  { %>
+            <p>friends with <%= friends.filter(friend => friend.username !== user.username).map(f => f.username).slice(0,2).join(', ') %></p>
+            <span id="view-all-friends">...view all friends</span>
+          <% }  %>
         </div>
         
         <% } %>
