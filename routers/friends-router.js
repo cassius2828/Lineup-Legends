@@ -33,14 +33,19 @@ router.get('/:ownerId/friend-requests', friendsCtrl.getFriendRequests)
 router.put('/:targetedUserId/accept-request', friendsCtrl.putAcceptFriendReq)
 
 // ///////////////////////////
+// ! DELETE -- friend reqs
+// ///////////////////////////
+router.delete('/:targetedUserId/reject-request', friendsCtrl.deleteRejectFriendReq)
+
+// ///////////////////////////
+// ! DELETE -- friend 
+// ///////////////////////////
+router.delete('/:targetedUserId', friendsCtrl.removeFriend)
+// ///////////////////////////
 // GET -- edit friends
 // ///////////////////////////
 router.get('/:userId', friendsCtrl.getEditFriends);
 
 
-// ///////////////////////////
-// ! DELETE -- friend reqs
-// ///////////////////////////
-router.delete('/:targetedUserId/reject-request', friendsCtrl.deleteRejectFriendReq)
 
 module.exports = router;

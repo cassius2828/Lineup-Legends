@@ -8,6 +8,9 @@
     <%- include('../partials/_nav.ejs') %>
     <section id="search-friends">
       <h1>Add Friends!</h1>
+      <% if (message) { %>
+       <h2><%= message %></h2>
+      <% } %>
       <input id="search-friends-input" type="text" placeholder="search for friends...">
       <div class="user-container">
         <% users.forEach(otherUser => { %>

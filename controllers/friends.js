@@ -19,7 +19,7 @@ const getSearchFriends = async (req, res) => {
     },
   });
   console.log(users);
-  res.render("friends/index.ejs", { users });
+  res.render("friends/index.ejs", { users,message:false });
 };
 
 //////////////////////////////
@@ -36,9 +36,15 @@ const getEditFriends = async (req, res) => {
 // ? POST add friend
 //////////////////////////////
 const postAddFriend = async (req, res) => {
+  const friends = await findFriends(req, res);
+
   const { targetedUserId } = req.params;
   const currentUserId = req.session.user._id;
-
+  const users = await UserModel.find({
+    _id: {
+      $nin: [...friends, currentUserId],
+    },
+  });
   //   send req by current user
   const sentFriendReqDoc = await FriendModel.findOneAndUpdate(
     { requester: currentUserId, recipient: targetedUserId },
@@ -51,9 +57,11 @@ const postAddFriend = async (req, res) => {
     { recipient: currentUserId, requester: targetedUserId },
     { $set: { status: "requested" } },
     { upsert: true, new: true }
+    
   );
 
-  res.send("friend request sent");
+  res.render("friends/index.ejs", { users, message: 'Friend request sent!' });
+
 };
 
 //////////////////////////////
@@ -83,14 +91,14 @@ const putAcceptFriendReq = async (req, res) => {
 
   const updateCurrentUserFriends = await UserModel.findOneAndUpdate(
     { _id: currentUserId },
-    { $push: { friends: targetedUserId} }
+    { $push: { friends: targetedUserId } }
   );
 
   const updateOtherUserFriends = await UserModel.findOneAndUpdate(
     { _id: targetedUserId },
     { $push: { friends: currentUserId } }
   );
-  res.send("friend req accepted");
+  res.redirect(`/friends/${currentUserId}`);
 };
 
 //////////////////////////////
@@ -116,6 +124,44 @@ const deleteRejectFriendReq = async (req, res) => {
     { $pull: { friends: recievedFriendReqDoc._id } }
   );
   res.send("friend req rejected");
+};
+
+//////////////////////////////
+// ! DELETE remove friend
+//////////////////////////////
+const removeFriend = async (req, res) => {
+  const userId = req.session.user._id;
+  const { targetedUserId } = req.params;
+
+  // remove friend from user friends list
+  await UserModel.findOneAndUpdate(
+    {
+      _id: userId,
+    },
+    { $pull: { friends: targetedUserId } }
+  );
+  // remove user from friends friend list
+  await UserModel.findOneAndUpdate(
+    {
+      _id: targetedUserId,
+    },
+    { $pull: { friends: userId } }
+  );
+
+  // delete the friendship confirmation out the friend collection
+  await FriendModel.findOneAndDelete({
+    recipient: userId,
+    requester: targetedUserId,
+    status: "accepted",
+  });
+  await FriendModel.findOneAndDelete({
+    recipient: userId,
+    requester: targetedUserId,
+    status: "accepted",
+  });
+
+  res.redirect(`/friends/${userId}`);
+
 };
 
 //////////////////////////////
@@ -164,19 +210,22 @@ module.exports = {
   deleteRejectFriendReq,
   getFriendRequests,
   getEditFriends,
+  removeFriend,
 };
 
 async function findFriends(req, res) {
   const currentUserId = req.session.user._id;
-  const friends = await FriendModel.find({
-    requester: currentUserId,
-    status: "accepted",
-  });
-  let friendsIds = friends.map((friend) => friend.recipient);
-  const users = await UserModel.aggregate([
-    {
-      $match: { _id: { $in: friendsIds } },
-    },
-  ]);
-  return users;
+  // const friends = await FriendModel.find({
+  //   requester: currentUserId,
+  //   status: "accepted",
+  // });
+  // let friendsIds = friends.map((friend) => friend.recipient);
+  // const users = await UserModel.aggregate([
+  //   {
+  //     $match: { _id: { $in: friendsIds } },
+  //   },
+  // ]);
+  let user = await UserModel.findById(currentUserId).populate('friends');
+  user = user.friends
+  return user;
 }

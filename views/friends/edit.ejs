@@ -39,7 +39,7 @@ Friends
     </section>
   <script src="/js/sidenav.js"></script>
 <script>
-    const removeFriendBtn = document.querySelector('.reject.remove-friend');
+    const removeFriendBtns = document.querySelectorAll('.reject.remove-friend');
 const deleteModal = document.createElement("div");
 const section = document.querySelector('section');
 
@@ -48,10 +48,11 @@ const section = document.querySelector('section');
 // Form HTML
 //////////////////////////////
 
-    removeFriendBtn.addEventListener('click',() => {
-        const friendUsername = removeFriendBtn.getAttribute('data-friend-username');
-        const friendId = removeFriendBtn.getAttribute('data-friend-id');
-        const currentUserId = removeFriendBtn.getAttribute('data-current-user-id');
+    removeFriendBtns.forEach(btn => btn.addEventListener('click',() => {
+      console.log('test')
+        const friendUsername = btn.getAttribute('data-friend-username');
+        const friendId = btn.getAttribute('data-friend-id');
+        const currentUserId = btn.getAttribute('data-current-user-id');
         const deleteForm = `
 <form action="/friends/${friendId}?_method=DELETE"  method="POST">
   <h2>Are you sure you want to remove ${friendUsername} as your friend?</h2>
@@ -64,7 +65,9 @@ const section = document.querySelector('section');
         showModal(deleteModal, deleteForm, "delete");
 
     })
-
+ )
+    
+    
 
 //////////////////////////////
 // Modal utility function
