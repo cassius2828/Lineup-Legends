@@ -42,14 +42,14 @@ const postAddFriend = async (req, res) => {
   //   send req by current user
   const sentFriendReqDoc = await FriendModel.findOneAndUpdate(
     { requester: currentUserId, recipient: targetedUserId },
-    { $set: { status: "requested" } },
+    { $set: { status: "pending" } },
     // updates if exists or inserts if it does not exist
     { upsert: true, new: true }
   );
   // receive the request from current user (to targeted user)
   const recievedFriendReqDoc = await FriendModel.findOneAndUpdate(
     { recipient: currentUserId, requester: targetedUserId },
-    { $set: { status: "pending" } },
+    { $set: { status: "requested" } },
     { upsert: true, new: true }
   );
 

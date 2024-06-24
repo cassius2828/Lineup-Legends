@@ -1768,6 +1768,10 @@ section.section-landing .right img {
 .title-info {
   margin: auto;
 }
+.title-info p {
+  margin: auto;
+  width: 100%;
+}
 
 .lineup-card {
   background-color: rgba(186, 186, 186, 0.1568627451);

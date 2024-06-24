@@ -22,6 +22,11 @@
 
 .title-info {
   margin: auto;
+  p {
+    margin: auto;
+
+    width: 100%;
+  }
 }
 
 .lineup-card {
@@ -271,7 +276,6 @@
 @media (min-width: 1024px) {
   .lineup-actions {
     span {
-  
     }
 
     button {
