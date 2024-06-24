@@ -14,10 +14,11 @@
   <%- include('./landing/featured.ejs') %>
   <%- include('./landing/footer.ejs') %>
   <div id="back-to-top">
-  <a href="#landing"><i class="fa-solid fa-angle-up"></i></a>  
+    <a href="#landing"><i class="fa-solid fa-angle-up"></i></a>
   </div>
-  <%- include('../partials/sidenav.ejs') %>
-
+  <% if (user) { %>
+  <%- include('./partials/sidenav.ejs') %>
+  <% } %>
+  <script src="/js/sidenav.js"></script>
 </body>
-
 </html>

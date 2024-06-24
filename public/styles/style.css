@@ -423,9 +423,6 @@ h2 {
 /* ///////////////// */
 /* Grid for Lineup Creation */
 /* ///////////////// */
-/* ///////////////// */
-/* Create Lineup */
-/* ///////////////// */
 #create-lineup {
   display: flex;
   flex-direction: column;
@@ -453,8 +450,6 @@ h2 {
 }
 #create-lineup header span {
   font-size: 3rem;
-  top: 2.5%;
-  right: 15%;
 }
 #create-lineup .row {
   display: flex;
@@ -564,12 +559,6 @@ h2 {
   .cell {
     width: 3rem;
     height: 3rem;
-    margin: 0 0.5rem;
-  }
-}
-@media (min-width: 425px) {
-  .cell {
-    margin: 0 0.5rem;
   }
 }
 @media (min-width: 500px) {
@@ -581,33 +570,16 @@ h2 {
   .cell {
     width: 8rem;
     height: 8rem;
-    margin: 0 0.5rem;
   }
   .selected-players {
-    display: flex;
-    justify-content: center;
-    margin: 2rem 0;
     gap: 5%;
   }
   .remove-player-btn {
-    border-radius: 50%;
-    padding: 3px;
-    cursor: pointer;
-    background-color: rgb(216, 38, 38);
-    color: #f2f2f2;
-    position: absolute;
     top: -25%;
     left: -15%;
-    z-index: 10;
     font-size: 2rem;
     width: 2.5rem;
     height: 2.5rem;
-  }
-  .remove-player-btn * {
-    position: absolute;
-    top: 47.5%;
-    left: 50%;
-    transform: translate(-50%, -50%);
   }
 }
 @media (min-width: 992px) {
@@ -615,112 +587,28 @@ h2 {
     flex-direction: row;
   }
   .cell {
-    width: 8rem;
-    height: 8rem;
-    margin: 0 0.5rem;
+    width: 7rem;
+    height: 7rem;
   }
 }
 @media (min-width: 1024px) {
-  .cell {
-    width: 8rem;
-    height: 8rem;
-    margin: 0 0.5rem;
-  }
-}
-@media (min-width: 1024px) {
-  #create-lineup {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  #create-lineup .left-container {
-    margin: 2rem auto;
-    width: 50%;
-    max-width: 80rem;
-  }
   #create-lineup .right-container {
     width: 30%;
     margin-right: auto;
   }
-  #create-lineup h2 {
-    margin-right: 3rem;
-  }
-  #create-lineup header {
-    position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
   #create-lineup header span {
-    font-size: 3rem;
     position: absolute;
     top: 2.5%;
     right: 15%;
   }
-  #create-lineup .row {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 1rem;
-  }
-  .grid {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 2rem;
-  }
-  .row-container {
-    display: flex;
-    align-items: center;
-  }
-  .cell {
-    width: 8rem;
-    height: 8rem;
-    margin: 0 0.5rem;
-    text-align: center;
-    overflow: hidden;
-    position: relative;
-    background-color: #f2f2f2;
-  }
-  .cell img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    position: absolute;
-    top: 0;
-    left: 0;
-    cursor: pointer;
-  }
-  .player-name {
-    text-align: center;
-    margin: 0.5rem;
-  }
   .player-name span {
-    display: block;
-    text-wrap: wrap;
     font-size: 1.2rem;
   }
-  .selected-players {
-    display: flex;
-    justify-content: center;
-    margin: 2rem 0;
-  }
-  .selected-cell {
-    position: relative;
-    width: 8rem;
-    height: 8rem;
-    border-radius: 0.5rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
 }
-@media (min-width: 2000px) {
+@media (min-width: 1440px) {
   .cell {
     width: 8rem;
     height: 8rem;
-    margin: 0 0.5rem;
   }
 }
 /* ///////////////// */
@@ -2261,68 +2149,60 @@ section.section-landing .right img {
 #profile .lineup-container {
   width: 100vw;
 }
-
-#profile-img {
+#profile #profile-img {
   border-radius: 50%;
   width: 100px;
   height: 100px;
 }
-
-#username-p {
+#profile #username-p {
   margin: 1rem 2rem;
   width: auto;
   font-size: 1.5rem;
 }
-
-#gear {
+#profile #gear {
   font-size: 2rem;
   cursor: pointer;
   position: absolute;
   top: 2.5rem;
   right: 1rem;
 }
-
-.row {
+#profile .row {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   padding: 2rem;
 }
-.row button {
+#profile .row button {
   margin: 1rem;
   width: 100px;
   padding: 8px;
 }
-.row .btn-container {
+#profile .row .btn-container {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
 }
-.row-2, .row-3 {
+#profile .row-2, #profile .row-3 {
   flex-direction: row;
   position: relative;
   left: -4rem;
   justify-content: space-around;
   font-size: 1.5rem;
 }
-
-.row-1 {
+#profile .row-1 {
   position: relative;
 }
-
-.row-3 span {
+#profile .row-3 span {
   color: rgba(214, 214, 214, 0.5647058824);
 }
-
-#bio {
+#profile #bio {
   margin: 4rem auto;
   font-size: 1.25rem;
   line-height: 3.25rem;
   padding: 1.5rem;
 }
-
-.pf {
+#profile .pf {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -2330,21 +2210,21 @@ section.section-landing .right img {
   width: 90%;
   margin: 1rem auto;
 }
-.pf-head {
+#profile .pf-head {
   display: flex;
   justify-content: center;
   font-size: 2rem;
 }
-.pf-head div {
+#profile .pf-head div {
   padding: 1.5rem 2rem;
   cursor: pointer;
 }
-.pf-head div span {
+#profile .pf-head div span {
   margin-left: 1rem;
   text-transform: capitalize;
   font-size: 1.1rem;
 }
-.pf-body .social-media li {
+#profile .pf-body .social-media li {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -2353,10 +2233,10 @@ section.section-landing .right img {
   margin: 1.5rem 0;
   border-radius: 8px;
 }
-.pf-body .social-media li span {
+#profile .pf-body .social-media li span {
   font-size: 1.5rem;
 }
-.pf-body .social-media li button {
+#profile .pf-body .social-media li button {
   margin: 0 0 0 2rem;
   min-width: 8rem;
 }
