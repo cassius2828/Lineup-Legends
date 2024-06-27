@@ -14,7 +14,7 @@ const path = require("path");
 const UserModel = require('./models/user.js')
 const pathname = path.join(__dirname, "public");
 app.use(express.static(pathname));
-
+const bodyParser = require('body-parser');
 ///////////////////////////
 // Set Up Port
 ///////////////////////////
@@ -32,6 +32,9 @@ mongoose.connection.on("connected", () => {
 ///////////////////////////
 // Middleware
 ///////////////////////////
+app.use(bodyParser.json()); // Add this line to parse JSON bodies
+app.use(bodyParser.urlencoded({ extended: true }));
+
 app.use(express.urlencoded({ extended: false }));
 app.use(methodOverride("_method"));
 app.use(morgan("dev"));

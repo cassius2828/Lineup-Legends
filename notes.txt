@@ -1,0 +1,23 @@
+///////////////////////////
+Goals
+///////////////////////////
+
+1. Profile Pictures
+
+2. Lineup backgrounds
+
+3. Store + Earning System 
+
+4. Notifications
+
+5. DMs 
+
+6. Search Players 
+
+7. Share socials 
+
+8. Friends lineups screen 
+
+9. Better way to display explore lineups 
+
+10. Player details (how often they have been picked)

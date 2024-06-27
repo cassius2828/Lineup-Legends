@@ -19,7 +19,7 @@ const getSearchFriends = async (req, res) => {
     },
   });
   console.log(users);
-  res.render("friends/index.ejs", { users,message:false });
+  res.render("friends/index.ejs", { users, message: false });
 };
 
 //////////////////////////////
@@ -57,11 +57,9 @@ const postAddFriend = async (req, res) => {
     { recipient: currentUserId, requester: targetedUserId },
     { $set: { status: "requested" } },
     { upsert: true, new: true }
-    
   );
 
-  res.render("friends/index.ejs", { users, message: 'Friend request sent!' });
-
+  res.render("friends/index.ejs", { users, message: "Friend request sent!" });
 };
 
 //////////////////////////////
@@ -161,7 +159,6 @@ const removeFriend = async (req, res) => {
   });
 
   res.redirect(`/friends/${userId}`);
-
 };
 
 //////////////////////////////
@@ -182,12 +179,6 @@ const getFriendLineups = async (req, res) => {
 
 const getFriendRequests = async (req, res) => {
   try {
-    //          const friendRequestDocs = await FriendModel.aggregate([
-    //     {
-    //       $match: { recipient: req.session.user._id, status: "pending" },
-    //     },
-    //   ]);
-
     const friendRequestDocs = await FriendModel.find({
       recipient: req.session.user._id,
       status: "pending",
@@ -202,6 +193,31 @@ const getFriendRequests = async (req, res) => {
   }
 };
 
+//////////////////////////////
+// GET search friends
+//////////////////////////////
+const getSearchCurrentFriends = async (req, res) => {
+  const { query } = req.body;
+  const currentUserId = req.session.user._id;
+console.log(query)
+  try {
+    let user = await UserModel.findById(currentUserId).populate("friends");
+    user = user.friends;
+    if (user) {
+      const filteredFriends = user.filter((friend) =>
+        friend.username.toLowerCase().includes(query.toLowerCase())
+      );
+      return res.json(filteredFriends);
+    } else {
+      return res.status(404).send("Friends list not found");
+    }
+  } catch (err) {
+    console.error(err);
+    return res.status(500).send("Unable to display search results");
+  }
+res.json(query)
+};
+
 module.exports = {
   getSearchFriends,
   postAddFriend,
@@ -211,21 +227,17 @@ module.exports = {
   getFriendRequests,
   getEditFriends,
   removeFriend,
+  getSearchCurrentFriends,
 };
 
 async function findFriends(req, res) {
-  const currentUserId = req.session.user._id;
-  // const friends = await FriendModel.find({
-  //   requester: currentUserId,
-  //   status: "accepted",
-  // });
-  // let friendsIds = friends.map((friend) => friend.recipient);
-  // const users = await UserModel.aggregate([
-  //   {
-  //     $match: { _id: { $in: friendsIds } },
-  //   },
-  // ]);
-  let user = await UserModel.findById(currentUserId).populate('friends');
-  user = user.friends
-  return user;
+  try {
+    const currentUserId = req.session.user._id;
+    let user = await UserModel.findById(currentUserId).populate("friends");
+    user = user.friends;
+    return user;
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("unable to find friends");
+  }
 }
