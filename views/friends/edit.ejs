@@ -7,7 +7,7 @@
     <!-- Include navigation partial -->
     <%- include('../partials/_nav.ejs') %>
     <section id="search-friends">
-      <h1 id="friends-num-title" data-current-user-id="<%= user._id %>">
+      <h1 id="friends-num-title" >
         You Have <%= friends.length %> <% if (friends.length === 1) { %> Friend
         <% } else {%> Friends <% } %>
       </h1>
@@ -16,7 +16,7 @@
         type="text"
         placeholder="search friends..."
       />
-      <div id="user-container" class="user-container">
+      <div data-current-user-id="<%= user._id %>" id="user-container" class="user-container">
         <% friends.forEach(friend => { %>
         <!-- this removes the current user from the list -->
 

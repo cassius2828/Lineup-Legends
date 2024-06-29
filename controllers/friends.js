@@ -199,7 +199,7 @@ const getFriendRequests = async (req, res) => {
 const getSearchCurrentFriends = async (req, res) => {
   const { query } = req.body;
   const currentUserId = req.session.user._id;
-console.log(query)
+  console.log(query);
   try {
     let user = await UserModel.findById(currentUserId).populate("friends");
     user = user.friends;
@@ -215,7 +215,56 @@ console.log(query)
     console.error(err);
     return res.status(500).send("Unable to display search results");
   }
-res.json(query)
+};
+
+//////////////////////////////
+// GET all users search for friends
+//////////////////////////////
+const getAllUsersSearchForFriends = async (req, res) => {
+  const { query } = req.body;
+  const currentUserId = req.session.user._id;
+
+  try {
+    // Retrieve the current user's friends list
+    const currentUser = await UserModel.findById(currentUserId).select(
+      "friends"
+    );
+    const friendsIds = currentUser.friends;
+
+    // Find all users who are not friends with the current user and match the query
+    let users = await UserModel.aggregate([
+      // step 1
+      {
+        $match: {
+          _id: { $nin: friendsIds, $ne: currentUserId }, // Exclude friends and the current user
+        },
+      },
+      // step 2
+      {
+        $match: {
+          username: { $regex: query, $options: "i" }, // Case-insensitive search for the username
+        },
+      },
+      // step 3
+      {
+        $project: {
+          _id: 1,
+          username: 1,
+          // Add any other fields you want to return
+        },
+      },
+    ]);
+
+    if (users) {
+      return res.status(200).json(users);
+    } else {
+      return res.status(404).json({message:"users not found"});
+    }
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({message:"Unable to display search results"});
+  }
+
 };
 
 module.exports = {
@@ -228,12 +277,13 @@ module.exports = {
   getEditFriends,
   removeFriend,
   getSearchCurrentFriends,
+  getAllUsersSearchForFriends,
 };
 
 async function findFriends(req, res) {
   try {
     const currentUserId = req.session.user._id;
-    let user = await UserModel.findById(currentUserId).populate("friends");
+    let user = await UserModel.findById(currentUserId).select('friends').populate("friends");
     user = user.friends;
     return user;
   } catch (err) {

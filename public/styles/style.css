@@ -1167,10 +1167,6 @@ button,
 .user-card h2 {
   margin: 0;
 }
-.user-card form {
-  position: absolute;
-  right: 4rem;
-}
 .user-card form button {
   margin: 0;
 }

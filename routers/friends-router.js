@@ -8,6 +8,11 @@ const friendsCtrl = require("../controllers/friends");
 router.get("/", friendsCtrl.getSearchFriends);
 
 // ///////////////////////////
+// ? POST -- search all users for friends
+// ///////////////////////////
+router.post("/", friendsCtrl.getAllUsersSearchForFriends);
+
+// ///////////////////////////
 // GET -- friend lineups
 // ///////////////////////////
 router.get("/lineups/:friendId", friendsCtrl.getFriendLineups);
@@ -44,6 +49,9 @@ router.delete("/:targetedUserId", friendsCtrl.removeFriend);
 // ? POST -- search current friends
 // ///////////////////////////
 router.post("/:userId/search-friends", friendsCtrl.getSearchCurrentFriends);
+
+
+
 
 // ///////////////////////////
 // GET -- edit friends
