@@ -15,13 +15,7 @@ const getUserProfile = async (req, res) => {
   const { userId } = req.params;
   const signedInUserId = req.session.user._id;
   let userLineups = await LineupModel.find({ owner: userId })
-    .sort({ createdAt: -1 })
-    .populate("pg")
-    .populate("sg")
-    .populate("sf")
-    .populate("pf")
-    .populate("c")
-    .populate("owner");
+  
   let featuredLineups = await LineupModel.aggregate([
     {
       $match: { owner: new mongoose.Types.ObjectId(userId), featured: true },
@@ -30,8 +24,7 @@ const getUserProfile = async (req, res) => {
       $sort: { createdAt: -1 },
     },
   ]);
-
-  userLineups = await LineupModel.populate(userLineups, [
+  featuredLineups = await LineupModel.populate(featuredLineups, [
     { path: "pg" },
     { path: "sg" },
     { path: "sf" },
@@ -39,6 +32,8 @@ const getUserProfile = async (req, res) => {
     { path: "c" },
     { path: "owner" },
   ]);
+ 
+
 
   const currentUser = await UserModel.findById(signedInUserId).populate(
     "friends"

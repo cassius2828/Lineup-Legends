@@ -7,10 +7,12 @@
     <%- include('../partials/_nav.ejs') %>
 
     <section id="edit-lineup">
-      <h1>Roll the Dice</h1>
+      <%   const isUser = user._id.toString() === lineups?.owner._id.toString() %>
+<% if (isUser) { %>
+  <h1>Roll the Dice</h1>
 
-      <!-- Lineup Container -->
-      <div class="lineup-container">
+  <!-- Lineup Container -->
+       <div class="lineup-container">
         <!-- Single Lineup Card -->
         <div class="lineup-card">
           <!-- Players Display for Gamble -->
@@ -143,5 +145,12 @@
         }, 1750);
       });
     </script>
+<% } else {%>
+ <h1>You are not the owner of this lineup, please try a new page</h1>
+ <a href="/lineups/explore">
+   <button>View Explore Lineups</button>
+ </a>
+
+<% } %>
   </body>
 </html>

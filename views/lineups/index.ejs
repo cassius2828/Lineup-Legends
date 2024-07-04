@@ -2,12 +2,16 @@
 <html lang="en">
 <%- include('../partials/head.ejs') %>
 
+
+
 <body>
   <%- include('../partials/_nav.ejs') %>
 
   <section id="user-lineups">
+<!-- determines if the signed in user is the owner of the lineup -->
+  <%   const isUser = user._id.toString() === lineups[0]?.owner._id.toString() %>
     <div class="title-info ">
-      <h1><% if (user._id.toString() === lineups[0]?.owner._id.toString()) { %>
+      <h1><% if (isUser) { %>
        My
       <% } else { %>
        <%= lineups[0]?.owner.username %> 's
@@ -28,9 +32,14 @@
 
     <div class="lineup-container ">
       <% lineups.forEach(lineup => { %>
+  <%   const isUserLineupOwner = user._id.toString() === lineup?.owner._id.toString() %>
+
       <div class="lineup-card">
         <header class="lineup-header">
-          <a href="/lineups/<%= lineup._id %>/edit"><span class="lineup-edit">...</span></a>
+          <% if (isUserLineupOwner) { %>
+            <a href="/lineups/<%= lineup._id %>/edit"><span class="lineup-edit">...</span></a>
+          <% } %>
+         
 
           <% if (lineup?.avgRating) { %>
           <h2 class="lineup-rating"><%= lineup?.avgRating.toFixed(2); %></h2>
@@ -38,7 +47,7 @@
           <h2 class="lineup-rating">Rating: N/A</h2>
           <% } %>
           <% if (lineup?.relativeTime) { %>
-          <span class="lineup-relativeTime">est. <%= lineup?.relativeTime %></span>
+          <span style="margin-left: auto;" class="lineup-relativeTime">est. <%= lineup?.relativeTime %></span>
           <% } else { %>
           <span class="lineup-relativeTime">4 hr ago</span>
           <% } %>
@@ -60,11 +69,11 @@
           <div class="lineup-actions">
             
             <div class="vote-btn-container ">
-              <form class="vote-form <% if (user._id.toString() === lineup.owner._id.toString()) { %>
+              <form class="vote-form <% if (isUser) { %>
                     disabled-btn
                    <% } %> " action="/lineups/<%= lineup._id %>/vote" method="POST">
                 <input type="hidden" id="up-vote" name="up-vote" value="" onclick="setVoteValue('up')">
-                <button <% if (user._id.toString() === lineup.owner._id.toString()) { %> disabled <% } %> type="submit" class="lineup-btn up-vote <% if (user._id.toString() === lineup.owner._id.toString()) { %>
+                <button <% if (isUser) { %> disabled <% } %> type="submit" class="lineup-btn up-vote <% if (isUser) { %>
                         disabled-btn
                        <% } %> ">
                   <i class="fa-solid fa-circle-arrow-up"></i>
@@ -76,7 +85,7 @@
                   4
                   <% } %></span>
 
-                <button <% if (user._id.toString() === lineup.owner._id.toString()) { %> disabled <% } %> type="submit" class="lineup-btn down-vote <% if (user._id.toString() === lineup.owner._id.toString()) { %>
+                <button <% if (isUser) { %> disabled <% } %> type="submit" class="lineup-btn down-vote <% if (isUser) { %>
                     disabled-btn
                    <% } %> ">
                   <input type="hidden" id="down-vote" name="down-vote" value="" onclick="setVoteValue('down')">
@@ -98,16 +107,22 @@
                 </button>
               </form>
             </div>
-            <div class="award-btn-container">
-              <form action="/lineups/<%= lineup._id %>/edit/featured?_method=PUT" method="POST">
-                <button type="submit" class="award-btn <% if (lineup.featured) { %>
-                     featured
-                    <% } %>">
-                  <i class="fa-solid fa-award"></i>
-                </button>
-              </form>
-
-            </div>
+                <!-- Feature or Rate button based on ownership -->
+                <% if (user._id.toString() === lineup.owner._id.toString()) { %>
+                  <div class="award-btn-container">
+                    <form action="/lineups/<%= lineup._id %>/edit/featured?_method=PUT" method="POST">
+                      <button class="award-btn <% if (lineup.featured) { %> featured <% } %>">
+                        <i class="fa-solid fa-award"></i>
+                      </button>
+                    </form>
+                  </div>
+                  <% } else { %>
+                  <div class="rate-btn-container">
+                    <a href="/lineups/<%= lineup._id %>/rate">
+                      <button class="rate-btn">Rate <i class="fa-solid fa-gavel"></i></button>
+                    </a>
+                  </div>
+                  <% } %>
             <div class="share-btn-container">
               <form action="/lineups/<%= lineup._id %>/share" method="GET">
                 <button type="submit" class="lineup-btn">
