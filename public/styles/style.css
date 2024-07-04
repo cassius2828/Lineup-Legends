@@ -2203,6 +2203,9 @@ section.section-landing .right img {
 #profile .row-3 span {
   color: rgba(214, 214, 214, 0.5647058824);
 }
+#profile .lineup-container span {
+  color: #ffc107;
+}
 #profile #bio {
   margin: 4rem auto;
   font-size: 1.25rem;

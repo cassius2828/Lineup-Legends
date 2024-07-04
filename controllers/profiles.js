@@ -14,15 +14,15 @@ dotenv.config();
 const getUserProfile = async (req, res) => {
   const { userId } = req.params;
   const signedInUserId = req.session.user._id;
-  // let userLineups = await LineupModel.find({ owner: userId })
-  //   .sort({ createdAt: -1 })
-  //   .populate("pg")
-  //   .populate("sg")
-  //   .populate("sf")
-  //   .populate("pf")
-  //   .populate("c")
-  //   .populate("owner");
-  let userLineups = await LineupModel.aggregate([
+  let userLineups = await LineupModel.find({ owner: userId })
+    .sort({ createdAt: -1 })
+    .populate("pg")
+    .populate("sg")
+    .populate("sf")
+    .populate("pf")
+    .populate("c")
+    .populate("owner");
+  let featuredLineups = await LineupModel.aggregate([
     {
       $match: { owner: new mongoose.Types.ObjectId(userId), featured: true },
     },
@@ -57,6 +57,7 @@ const getUserProfile = async (req, res) => {
     showCollection: false,
     showSocials: false,
     lineups: userLineups,
+    featuredLineups,
     friends: friendsOfCurrentlyViewedUser,
   });
 };

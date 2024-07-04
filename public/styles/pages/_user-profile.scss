@@ -1,3 +1,5 @@
+@use '../abstracts/' as *;
+
 #profile {
   .banner {
     &-container {
@@ -69,8 +71,11 @@
   position: relative;
 }
 
-.row-3 span {
+.row-3 span{
   color: #d6d6d690;
+}
+.lineup-container span {
+  color: $highlight-gold;
 }
 #bio {
   margin: 4rem auto;
