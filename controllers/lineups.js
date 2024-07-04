@@ -579,16 +579,33 @@ const postDownvoteThread = async (req, res) => {
 // * PUT feature lineup
 //////////////////////////////
 const putFeatureLineup = async (req, res) => {
-  const { lineupId } = req.params;
-  const userId = req.session.user._id;
-  const lineupToFeature = await LineupModel.findById(lineupId);
+  try {
+    const { lineupId } = req.params;
+    const userId = req.session.user._id;
 
-  // toggle featured key value
-  lineupToFeature.featured = !lineupToFeature.featured;
-  // save the lineup
-  await lineupToFeature.save();
+    const featuredUserLineups = await LineupModel.find({
+      owner: userId,
+      featured: true,
+    });
 
-  res.redirect(`/lineups/${userId}`);
+    const lineupToFeature = await LineupModel.findById(lineupId);
+    if (featuredUserLineups.length > 2 && lineupToFeature.featured === false) {
+      return res
+        .status(500)
+        .send(
+          "You are already at max capacity for featured lineups. Please remove some in order to add others."
+        );
+    }
+    // toggle featured key value
+    lineupToFeature.featured = !lineupToFeature.featured;
+    // save the lineup
+    await lineupToFeature.save();
+
+    res.status(200).redirect(`/lineups/${userId}`);
+  } catch (err) {
+    console.error(`Error: ${err}`);
+    return res.status(500).send(`Unable to toggle featured status of lineup`);
+  }
 };
 
 //////////////////////////////
