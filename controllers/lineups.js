@@ -585,10 +585,7 @@ const putFeatureLineup = async (req, res) => {
   lineupToFeature.featured = !lineupToFeature.featured;
   // save the lineup
   await lineupToFeature.save();
-  //   console.log(
-  //     "This lineup now has a featured value of",
-  //     lineupToFeature.featured
-  //   );
+
   res.redirect(`/lineups/${userId}`);
 };
 

@@ -196,7 +196,9 @@
                 <% if (user._id.toString() === lineup.owner._id.toString()) { %>
                 <div class="award-btn-container">
                   <form action="">
-                    <button class="award-btn"><i class="fa-solid fa-award"></i></button>
+                    <button class="award-btn <% if (lineup.featured) { %>
+                     featured
+                    <% } %>"><i class="fa-solid fa-award"></i></button>
                   </form>
                 </div>
                 <% } else { %>

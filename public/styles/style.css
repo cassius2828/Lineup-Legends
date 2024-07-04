@@ -249,6 +249,9 @@ h2 {
 }
 .lineup-actions .award-btn-container .award-btn.featured {
   background-color: #ffc107;
+  -webkit-box-shadow: 0px 0px 12px -1px #ffc107;
+  -moz-box-shadow: 0px 0px 12px -1px #ffc107;
+  box-shadow: 0px 0px 12px -1px #ffc107;
 }
 .lineup-actions .comment-btn {
   background-color: #756b34;
