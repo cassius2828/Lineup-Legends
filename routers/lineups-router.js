@@ -18,10 +18,16 @@ router.post("/new", lineupCtrl.postNewLineup);
 router.post("/new/reorder", lineupCtrl.postNewLineupRedirectToReorderLineup);
 
 // router.get('/addplayers', lineupCtrl.addPlayers)
+
 //////////////////////////////
 // GET /explore - Explore Lineup Page
 //////////////////////////////
 router.get("/explore", lineupCtrl.getExploreLineups);
+
+//////////////////////////////
+// GET /friends - Friends Lineup Page
+//////////////////////////////
+router.get("/friends", lineupCtrl.getFriendsLineups);
 
 //////////////////////////////
 // GET /:lineupId/rate - Rate Lineup
@@ -36,12 +42,12 @@ router.post("/:lineupId/rate", lineupCtrl.postRateLineup);
 //////////////////////////////
 // ? POST /vote - upvote Lineup
 //////////////////////////////
-router.post("/:lineupId/upvote", lineupCtrl.postUpvoteLineup);
+router.post("/:lineupId/upvote/:pathExt", lineupCtrl.postUpvoteLineup);
 
 //////////////////////////////
 // ? POST /vote - downvote Lineup
 //////////////////////////////
-router.post("/:lineupId/downvote", lineupCtrl.postDownvoteLineup);
+router.post("/:lineupId/downvote/:pathExt", lineupCtrl.postDownvoteLineup);
 
 //////////////////////////////
 // ? POST /vote - upvote comment
@@ -100,12 +106,12 @@ router.put("/:lineupId/gamble/:playerId", lineupCtrl.putGamblePlayer);
 router.get("/:lineupId/comment", lineupCtrl.getLineupComment);
 
 //////////////////////////////
-// POST /:lineupId/comment
+// ? POST /:lineupId/comment
 //////////////////////////////
 router.post("/:lineupId/comment/new", lineupCtrl.postLineupComment);
 
 //////////////////////////////
-// POST /:lineupId/comment/:commentId/thread/new
+// ? POST /:lineupId/comment/:commentId/thread/new
 //////////////////////////////
 router.post("/:lineupId/comment/:commentId/thread/new", lineupCtrl.postNewThread);
 

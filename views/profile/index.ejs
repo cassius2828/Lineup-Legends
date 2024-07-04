@@ -162,27 +162,18 @@
             <footer class="lineup-footer">
               <div class="lineup-actions">
 
-                <div class="vote-btn-container ">
-                  <form class="vote-form <% if (user._id.toString() === lineup.owner._id.toString()) { %>
-                        disabled-btn
-                       <% } %> " action="/lineups/<%= lineup._id %>/vote" method="POST">
-                    <input type="hidden" id="up-vote" name="up-vote" value="" onclick="setVoteValue('up')">
-                    <button <% if (user._id.toString() === lineup.owner._id.toString()) { %> disabled <% } %> type="submit" class="lineup-btn up-vote <% if (user._id.toString() === lineup.owner._id.toString()) { %>
-                            disabled-btn
-                           <% } %> ">
-                      <i class="fa-solid fa-circle-arrow-up"></i>
-                    </button>
-
-                    <span class="num-of-votes"> <% if (lineup?.comments) { %>
-                      <%= lineup?.comments.length %>
-                      <% } else { %>
-                      4
-                      <% } %></span>
-
-                    <button <% if (user._id.toString() === lineup.owner._id.toString()) { %> disabled <% } %> type="submit" class="lineup-btn down-vote <% if (user._id.toString() === lineup.owner._id.toString()) { %>
-                        disabled-btn
-                       <% } %> ">
-                      <input type="hidden" id="down-vote" name="down-vote" value="" onclick="setVoteValue('down')">
+                <div class="vote-btn-container">
+                  <!-- upvote -->
+                  <form class="vote-form <% if (user._id.toString() === lineup.owner._id.toString()) { %> disabled-btn <% } %>" action="/lineups/<%= lineup._id %>/upvote/profile" method="POST">
+                    <input type="hidden" id="upvote" name="upvote" value="upvote">
+                    <button data-lineup-id="<%= lineup._id %>" <% if (user._id.toString() === lineup.owner._id.toString()) { %> disabled <% } %> type="submit" class="lineup-btn up-vote <% if (user._id.toString() === lineup.owner._id.toString()) { %> disabled-btn <% } %>"><i class="fa-solid fa-circle-arrow-up"></i></button>
+                  </form>
+                  <!-- display votes -->
+                  <span class="num-of-votes"><% if (lineup?.totalVotes) { %> <%= lineup?.totalVotes %> <% } else { %> 0 <% } %></span>
+                  <!-- down votes -->
+                  <form class="vote-form <% if (user._id.toString() === lineup.owner._id.toString()) { %> disabled-btn <% } %>" action="/lineups/<%= lineup._id %>/downvote/profile" method="POST">
+                    <button <% if (user._id.toString() === lineup.owner._id.toString()) { %> disabled <% } %> type="submit" class="lineup-btn down-vote <% if (user._id.toString() === lineup.owner._id.toString()) { %> disabled-btn <% } %>">
+                      <input type="hidden" id="downvote" name="downvote" value="downvote">
                       <i class="fa-solid fa-circle-arrow-down"></i>
                     </button>
                   </form>

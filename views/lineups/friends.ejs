@@ -8,13 +8,12 @@
   <%- include('../partials/_nav.ejs') %>
 
   <section id="user-lineups">
-    <h1>Explore Lineups</h1>
+    <h1>Friend's Lineups</h1>
     <span id="sort-lineup-activator">sort lineups<i style="margin-left: 5px;" class="fa-solid fa-sort"></i></span>
     <% if (lineups.length === 0) { %>
     <!-- Message and button to create a new lineup if none exist -->
-    <p>
-      You don't have any lineups yet... let's fix that and create your first
-      lineup now!
+    <p style="text-align: center; width: 100%;">
+      None of your friends have created a lineup yet... maybe they need some inspiration from you 🤔
     </p>
     <button class="create-btn">
       <a href="/lineups/new">Create a lineup</a>
@@ -67,14 +66,14 @@
             <!-- Vote buttons and form -->
             <div class="vote-btn-container">
               <!-- upvote -->
-              <form class="vote-form <% if (user._id.toString() === lineup.owner._id.toString()) { %> disabled-btn <% } %>" action="/lineups/<%= lineup._id %>/upvote/explore" method="POST">
+              <form class="vote-form <% if (user._id.toString() === lineup.owner._id.toString()) { %> disabled-btn <% } %>" action="/lineups/<%= lineup._id %>/upvote/friends" method="POST">
                 <input type="hidden" id="upvote" name="upvote" value="upvote">
-                <button <% if (user._id.toString() === lineup.owner._id.toString()) { %> disabled <% } %> type="submit" class="lineup-btn up-vote <% if (user._id.toString() === lineup.owner._id.toString()) { %> disabled-btn <% } %>"><i class="fa-solid fa-circle-arrow-up"></i></button>
+                <button data-lineup-id="<%= lineup._id %>" <% if (user._id.toString() === lineup.owner._id.toString()) { %> disabled <% } %> type="submit" class="lineup-btn up-vote <% if (user._id.toString() === lineup.owner._id.toString()) { %> disabled-btn <% } %>"><i class="fa-solid fa-circle-arrow-up"></i></button>
               </form>
               <!-- display votes -->
               <span class="num-of-votes"><% if (lineup?.totalVotes) { %> <%= lineup?.totalVotes %> <% } else { %> 0 <% } %></span>
               <!-- down votes -->
-              <form class="vote-form <% if (user._id.toString() === lineup.owner._id.toString()) { %> disabled-btn <% } %>" action="/lineups/<%= lineup._id %>/downvote/explore" method="POST">
+              <form class="vote-form <% if (user._id.toString() === lineup.owner._id.toString()) { %> disabled-btn <% } %>" action="/lineups/<%= lineup._id %>/downvote/friends" method="POST">
                 <button <% if (user._id.toString() === lineup.owner._id.toString()) { %> disabled <% } %> type="submit" class="lineup-btn down-vote <% if (user._id.toString() === lineup.owner._id.toString()) { %> disabled-btn <% } %>">
                   <input type="hidden" id="downvote" name="downvote" value="downvote">
                   <i class="fa-solid fa-circle-arrow-down"></i>
@@ -129,6 +128,47 @@
   <script src="/js/sort-lineups.js"></script>
 
   <script src="/js/rating-color.js"></script>
+  <script>
+    ///////////////////////////
+    // upvote refresh
+    ///////////////////////////
+    document.querySelectorAll(".lineup-btn.up-vote").addEventListener("click", async (e) => {
+  e.preventDefault();
+  const lineupId = e.target.dataset.lineupId; // Assuming the button has a data attribute with the lineup ID
+ location.reload();
+
+});
+    ///////////////////////////
+    // Downvote refresh
+    ///////////////////////////
+    document.querySelectorAll(".lineup-btn.down-vote").addEventListener("click", async (e) => {
+  e.preventDefault();
+  const lineupId = e.target.dataset.lineupId; // Assuming the button has a data attribute with the lineup ID
+
+  try {
+    const response = await fetch(`/lineups/downvote/${lineupId}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "same-origin",
+    });
+
+    if (response.ok) {
+      // Refresh the page on successful upvote
+      location.reload();
+    } else {
+      // Handle error response
+      const errorText = await response.text();
+      alert(errorText);
+    }
+  } catch (err) {
+    console.error("Error downvoting lineup:", err);
+    alert("An error occurred while downvoting the lineup.");
+  }
+});
+
+  </script>
 </body>
 
 </html>

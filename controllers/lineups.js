@@ -306,10 +306,54 @@ const getExploreLineups = async (req, res) => {
 
   // for each lineup, I will iterate over it and add my timestamp to the res.locals
   allLineups = getRelativeTime(allLineups);
-// if(!allLineups[0].owner.username) {
+  // if(!allLineups[0].owner.username) {
 
-// }
+  // }
   res.render("lineups/explore.ejs", { lineups: allLineups });
+};
+//////////////////////////////
+// GET friends lineups
+//////////////////////////////
+const getFriendsLineups = async (req, res) => {
+  try {
+    // Step 1: Retrieve the current user and their friends
+    const userId = req.session.user._id;
+    const currentUser = await User.findById(userId).select("friends").lean();
+
+    if (!currentUser) {
+      return res.status(404).send("User not found");
+    }
+    // Step 2: Use aggregation to find all lineups from the user's friends
+    let friendsLineups = await LineupModel.aggregate([
+      {
+        $match: {
+          owner: {
+            $in: currentUser.friends,
+          },
+        },
+      },
+      {
+        $sort: { createdAt: -1 },
+      },
+    ]);
+
+    // Step 3: Populate the necessary fields
+    friendsLineups = await LineupModel.populate(friendsLineups, [
+      { path: "pg" },
+      { path: "sg" },
+      { path: "sf" },
+      { path: "pf" },
+      { path: "c" },
+      { path: "owner" },
+    ]);
+    // Step 4: Add relative timestamps
+    friendsLineups = getRelativeTime(friendsLineups);
+    // Step 5: Render the result
+    res.render("lineups/friends.ejs", { lineups: friendsLineups });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Cannot get friends lineup" });
+  }
 };
 
 //////////////////////////////
@@ -381,7 +425,8 @@ const postRateLineup = async (req, res) => {
 // ? POST upvote lineup
 //////////////////////////////
 const postUpvoteLineup = async (req, res) => {
-  const { lineupId } = req.params;
+  const { lineupId, pathExt } = req.params;
+
   const userId = req.session.user._id;
   const lineup = await LineupModel.findById(lineupId).populate("owner");
 
@@ -395,14 +440,23 @@ const postUpvoteLineup = async (req, res) => {
     res.status(500).send(`Unable to add upvote to the lineup`);
   }
 
-  res.redirect("/lineups/explore");
+  // ensures we redirect to the same page by looking at the end url
+  // if it is not one of the two named paths, then it will default to the lineup
+  // owner's prfile, this may change in the future
+  if (pathExt === "friends") {
+    res.redirect("/lineups/friends");
+  } else if (pathExt === "explore") {
+    res.redirect("/lineups/explore");
+  } else {
+    res.redirect(`/profiles/${lineup.owner._id}`);
+  }
 };
 
 //////////////////////////////
 // ? POST downvote lineup
 //////////////////////////////
 const postDownvoteLineup = async (req, res) => {
-  const { lineupId } = req.params;
+  const { lineupId, pathExt } = req.params;
   const userId = req.session.user._id;
   const lineup = await LineupModel.findById(lineupId).populate("owner");
   if (lineup.owner._id === userId) {
@@ -415,8 +469,18 @@ const postDownvoteLineup = async (req, res) => {
     console.error(`Error: ${err}`);
     res.status(500).send(`Unable to add downvote to the lineup`);
   }
+  // ensures we redirect to the same page by looking at the end url
+  // if it is not one of the two named paths, then it will default to the lineup
+  // owner's prfile, this may change in the future
+  if (pathExt === "friends") {
+    res.redirect("/lineups/friends");
+  } else if (pathExt === "explore") {
+    res.redirect("/lineups/explore");
+  } else {
+    res.redirect(`/profiles/${lineup.owner._id}`);
+  }
 
-  res.redirect("/lineups/explore");
+  res.status(200);
 };
 
 //////////////////////////////
@@ -654,6 +718,7 @@ module.exports = {
   postNewLineupRedirectToReorderLineup,
   reorderLineup,
   getExploreLineups,
+  getFriendsLineups,
   getRateLineup,
   postRateLineup,
   putFeatureLineup,
@@ -972,14 +1037,16 @@ async function sortExploreLineups(sort) {
       .populate("sg")
       .populate("sf")
       .populate("pf")
-      .populate("c").populate('owner');
+      .populate("c")
+      .populate("owner");
   } else if (sort === "oldest") {
     return await LineupModel.find({})
       .populate("pg")
       .populate("sg")
       .populate("sf")
       .populate("pf")
-      .populate("c").populate('owner');
+      .populate("c")
+      .populate("owner");
   } else if (sort === "highest-rated") {
     return await LineupModel.find({})
       .sort({ avgRating: -1 })
@@ -987,7 +1054,8 @@ async function sortExploreLineups(sort) {
       .populate("sg")
       .populate("sf")
       .populate("pf")
-      .populate("c").populate('owner');
+      .populate("c")
+      .populate("owner");
   } else if (sort === "lowest-rated") {
     return await LineupModel.find({})
       .sort({ avgRating: 1 })
@@ -995,7 +1063,8 @@ async function sortExploreLineups(sort) {
       .populate("sg")
       .populate("sf")
       .populate("pf")
-      .populate("c").populate('owner');
+      .populate("c")
+      .populate("owner");
   } else if (sort === "most-votes") {
     return await LineupModel.find({})
       .sort({ totalVotes: -1 })
@@ -1003,7 +1072,8 @@ async function sortExploreLineups(sort) {
       .populate("sg")
       .populate("sf")
       .populate("pf")
-      .populate("c").populate('owner');
+      .populate("c")
+      .populate("owner");
   } else if (sort === "least-votes") {
     return await LineupModel.find({})
       .sort({ totalVotes: 1 })
@@ -1011,7 +1081,8 @@ async function sortExploreLineups(sort) {
       .populate("sg")
       .populate("sf")
       .populate("pf")
-      .populate("c").populate('owner');
+      .populate("c")
+      .populate("owner");
   }
 }
 
