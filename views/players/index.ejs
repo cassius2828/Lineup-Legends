@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+  <!-- Include head partial -->
+  <%- include('../partials/head.ejs') %>
+
+  <body>
+    <!-- Include navigation partial -->
+    <%- include('../partials/_nav.ejs') %>
+    <section id="search-players">
+      <h1>Find Your Favorite Players</h1>
+      <% if (message) { %>
+      <h2><%= message %></h2>
+      <% } %>
+      <input
+        id="search-players-input"
+        type="text"
+        placeholder="search for players..."
+      />
+      <div id="player-container" class="player-container">
+        <% players.forEach(player => { %>
+
+        <div class="player">
+          <img
+            data-value="<%= player.value %>"
+            src="<%= player.imgUrl %>"
+            alt="<%= player.firstName %> <%= player.lastName %>"
+          />
+          <span class="player-name">
+            <%= player.firstName %> <%= player.lastName %>
+          </span>
+        </div>
+
+        <% }) %>
+      </div>
+      <%- include('../partials/sidenav.ejs') %>
+    </section>
+    <script src="/js/sidenav.js"></script>
+
+    <!-- /////////////////////////// -->
+    <!-- INLINE SCRIPT -->
+    <!-- /////////////////////////// -->
+    <script>
+      const searchInput = document.getElementById("search-players-input");
+
+      // Cache the original HTML of the player container on page load
+      document.addEventListener("DOMContentLoaded", (event) => {
+        const originalContainer = document.getElementById("player-container");
+        if (originalContainer) {
+          window.originalContainerHTML = originalContainer.innerHTML;
+        } else {
+          console.error(
+            'Element with ID "player-container" not found on page load.'
+          );
+        }
+      });
+
+      searchInput.addEventListener("input", async (e) => {
+        const query = e.target.value;
+        const url = "/players/search";
+        const options = {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ query }),
+        };
+        if (query.length > 2) {
+          try {
+            const response = await fetch(url, options);
+            const data = await response.json();
+            if (!data.ok) {
+              throw new Error("Cannot fetch data for player search");
+            }
+            displayResults(data.players); // Assuming your server responds with a JSON object containing a 'players' array
+          } catch (err) {
+            console.error(err);
+            console.log("cannot make request to server");
+          }
+        } else {
+          clearResults();
+        }
+      });
+
+      // Display the results
+      function displayResults(players) {
+        const resultsContainer = document.getElementById("player-container");
+        resultsContainer.innerHTML = ``;
+
+        players.forEach((player) => {
+          const playerDiv = document.createElement("div");
+          playerDiv.classList.add("player");
+          playerDiv.innerHTML = `
+            <img
+              data-value="${player.value}"
+              src="${player.imgUrl}"
+              alt="${player.firstName} ${player.lastName}"
+            />
+            <span class="player-name">
+              ${player.firstName} ${player.lastName}
+            </span>
+          `;
+          resultsContainer.appendChild(playerDiv);
+        });
+      }
+
+      function clearResults() {
+        const resultsContainer = document.getElementById("player-container");
+        if (!resultsContainer) {
+          return console.error("window.originalContainerHTML is undefined");
+        }
+
+        resultsContainer.innerHTML = window.originalContainerHTML;
+      }
+    </script>
+  </body>
+</html>

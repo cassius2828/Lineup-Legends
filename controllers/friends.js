@@ -176,7 +176,9 @@ const getFriendLineups = async (req, res) => {
   lineups = await getRelativeTime(lineups);
   res.render("friends/lineups.ejs", { lineups });
 };
-
+//////////////////////////////
+// GET friend requests
+//////////////////////////////
 const getFriendRequests = async (req, res) => {
   try {
     const friendRequestDocs = await FriendModel.find({

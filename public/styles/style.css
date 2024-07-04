@@ -938,6 +938,16 @@ button,
   justify-content: space-between;
 }
 
+#player-container {
+  width: 80%;
+  max-width: 90rem;
+  display: flex;
+  margin: 5rem auto;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 8rem;
+}
+
 /* ///////////////// */
 /* Selected Players Row */
 /* ///////////////// */
