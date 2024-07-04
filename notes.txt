@@ -21,3 +21,5 @@ Goals
 9. Better way to display explore lineups 
 
 10. Player details (how often they have been picked)
+
+11. Optimize search queries (lean(), inverse index, etc)

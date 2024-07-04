@@ -3,6 +3,8 @@
 
 <!-- Include head partial -->
 <%- include('../partials/head.ejs') %>
+<link rel="stylesheet" href="https://unpkg.com/@popperjs/core@2.11.6/dist/umd/popper.min.css">
+<link rel="stylesheet" href="https://unpkg.com/tippy.js@6.3.1/dist/tippy.css" />
 
 <body>
 
@@ -14,7 +16,8 @@
       <header class="banner">
         <img id="profile-img" src="/images/misc/default-user.jpg" alt="">
         <div class="profile-details">
-          <% if (user._id.toString()=== lineups[0]?.owner._id.toString()) { %>
+          <!-- if this is the user profile then -->
+          <% if (user._id.toString() === lineups[0]?.owner._id.toString()) { %>
           <div class="row row-1">
             <p id="username-p"><%= user.username %></p>
             <div class="btn-container">
@@ -28,16 +31,29 @@
             </div>
           </div>
           <div class="row row-2">
-            <p><%= lineups.length %> lineups</p>
-            <p>
-              <% if (user.friends.length === 1) { %>
+            <!-- lineups -->
+            <% if (lineups.length === 1) { %>
+        
+            <a id="num-of-lineups" href="/lineups/<%= lineups[0]?.owner._id %>" data-tippy-content="View lineup">    <%= lineups.length %> lineup</a>
+            <% } else { %>
+         
+            <a id="num-of-lineups" href="/lineups/<%= lineups[0]?.owner._id %>" data-tippy-content="View all lineups">   <%= lineups.length %> lineups</a>
+            <% } %>
+
+            <!-- friends -->
+            <% if (user.friends.length === 1) { %>
+            <a href="" data-tippy-content="View your friend" id="num-of-friends">
               <%= user.friends.length %> friend
-              <% } else { %>
+            </a>
+            <% } else { %>
+            <a href="" data-tippy-content="View all friends" id="num-of-friends">
               <%= user.friends.length %> friends
-              <% } %>
-            </p>
-            <p>14 cards</p>
+            </a>
+            <% } %>
+            <!-- cards -->
+            <a href="/profile/<%= lineups[0]?.owner._id  %>/card-collection" data-tippy-content="View all cards" id="num-of-cards">14 cards</a>
           </div>
+          <!-- if is is another user profile then -->
           <% } else { %>
           <div class="row row-1">
             <p id="username-p"><%= lineups[0]?.owner.username %></p>
@@ -55,21 +71,27 @@
             </div>
           </div>
           <div class="row row-2">
-            <p>
-              <% if (lineups.length === 1) { %>
-              <%= lineups.length %> lineup
-              <% } else { %>
-              <%= lineups.length %> lineups
-              <% } %>
-            </p>
-            <p>
-              <% if (lineups[0]?.owner.friends.length === 1) { %>
-              <%= lineups[0]?.owner.friends.length %> friend
-              <% } else { %>
-              <%= lineups[0]?.owner.friends.length %> friends
-              <% } %>
-            </p>
-            <p>14 cards</p>
+            <!-- lineups -->
+            <% if (lineups.length === 1) { %>
+        
+            <a id="num-of-lineups" href="/lineups/<%= lineups[0]?.owner._id %>" data-tippy-content="View lineup">    <%= lineups.length %> lineup</a>
+            <% } else { %>
+         
+            <a id="num-of-lineups" href="/lineups/<%= lineups[0]?.owner._id %>" data-tippy-content="View all lineups">   <%= lineups.length %> lineups</a>
+            <% } %>
+
+            <!-- friends -->
+            <% if (user.friends.length === 1) { %>
+            <a href="" data-tippy-content="View their friend" id="num-of-friends">
+              <%= user.friends.length %> friend
+            </a>
+            <% } else { %>
+            <a href="" data-tippy-content="View all friends" id="num-of-friends">
+              <%= user.friends.length %> friends
+            </a>
+            <% } %>
+            <!-- cards -->
+            <a href="/profiles/<%= lineups[0]?.owner._id  %>/card-collection" data-tippy-content="View all cards" id="num-of-cards">14 cards</a>
           </div>
           <div class="row row-3">
             <% const mutualFriends = user.friends.filter(friend => friends.some(f => f.username === friend.username)) %>
@@ -123,7 +145,7 @@
           <% featuredLineups?.forEach(lineup => { %>
           <div class="lineup-card">
             <header class="lineup-header">
-              <% if (user._id.toString()=== featuredLineups[0]?.owner._id.toString()) { %>
+              <% if (user._id.toString() === featuredLineups[0]?.owner._id.toString()) { %>
               <a href="/lineups/<%= lineup._id %>/edit">
                 <span class="lineup-edit">...</span>
               </a>
@@ -230,12 +252,12 @@
             </footer>
           </div>
           <% }); %>
-          <% } else if(user._id.toString()=== featuredLineups[0]?.owner._id.toString()){ %>
+          <% } else if (user._id.toString() === featuredLineups[0]?.owner._id.toString()) { %>
           <p>You do not have any featured lineups, view all your lineups and select up to three to display on your profile!</p>
           <% } else { %>
           <div>
             <p><span><%= lineups[0]?.owner.username %> </span> does not have any featured lineups. They must be scared that their lineups are not as good as yours... send them a message talking trash! </p>
-            <button>Message <%= lineups[0]?.owner.username %> </button>
+            <button id="test">Message <%= lineups[0]?.owner.username %> </button>
           </div>
           <% } %>
         </div>
@@ -280,7 +302,26 @@
   <script src="/js/sidenav.js"></script>
   <script src="/js/sort-lineups.js"></script>
   <script src="/js/rating-color.js"></script>
-
+  <!-- Include Tippy.js JavaScript -->
+  <script src="https://unpkg.com/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+  <script src="https://unpkg.com/tippy.js@6.3.1/dist/tippy-bundle.umd.min.js"></script>
+  <!-- Initialize Tippy -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      tippy('#num-of-lineups', {
+        content: 'Tooltip content for lineups',
+        placement: 'top',
+      });
+      tippy('#num-of-friends', {
+        content: 'Tooltip content for friends',
+        placement: 'top',
+      });
+      tippy('#num-of-cards', {
+        content: 'Tooltip content for cards',
+        placement: 'top',
+      });
+    });
+  </script>
 </body>
 
 </html>

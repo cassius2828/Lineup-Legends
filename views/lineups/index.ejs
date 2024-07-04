@@ -7,7 +7,12 @@
 
   <section id="user-lineups">
     <div class="title-info ">
-      <h1>My Lineups</h1>
+      <h1><% if (user._id.toString() === lineups[0]?.owner._id.toString()) { %>
+       My
+      <% } else { %>
+       <%= lineups[0]?.owner.username %> 's
+      <% } %>
+        Lineups</h1>
     <span id="sort-lineup-activator">sort lineups<i style="margin-left: 5px;" class="fa-solid fa-sort"></i></span>
 
       <% if (lineups.length === 0) { %>

@@ -197,13 +197,15 @@ const deleteLineup = async (req, res) => {
 //  Get User Lineups
 //////////////////////////////
 const getUserLineups = async (req, res) => {
-  let userLineups = await LineupModel.find({ owner: req.session.user._id })
+  const { ownerId } = req.params;
+  let userLineups = await LineupModel.find({ owner: ownerId })
     .sort({ createdAt: -1 })
     .populate("pg")
     .populate("sg")
     .populate("sf")
     .populate("pf")
-    .populate("c");
+    .populate("c")
+    .populate("owner");
 
   // for each lineup, I will iterate over it and add my timestamp to the res.locals
   userLineups = await getRelativeTime(userLineups);

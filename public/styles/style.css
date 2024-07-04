@@ -2200,6 +2200,10 @@ section.section-landing .right img {
 #profile .row-1 {
   position: relative;
 }
+#profile .row-2 a {
+  color: #f2f2f2;
+  width: 100%;
+}
 #profile .row-3 span {
   color: rgba(214, 214, 214, 0.5647058824);
 }
