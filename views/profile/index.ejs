@@ -16,10 +16,10 @@
       <header class="banner">
         <img style=" border-radius: 50%;
         width: 100px;
-        height: 100px; object-fit: cover;" id="profile-img" src="<%= user.profileImg ||"/images/misc/default-user.jpg" %>" alt="User's Avatar" />
+        height: 100px; object-fit: cover;" id="profile-img" src="<%= viewedUser.profileImg ||"/images/misc/default-user.jpg" %>" alt="User's Avatar" />
         <div class="profile-details">
           <!-- if this is the user profile then -->
-          <% if (user._id.toString() === lineups[0]?.owner._id.toString()) { %>
+          <% if (user._id.toString() === viewedUser.toString()) { %>
           <div class="row row-1">
             <p id="username-p"><%= user.username %></p>
             <div class="btn-container">
@@ -29,17 +29,17 @@
               <a href="/lineups/<%= user._id %>">
                 <button>view all lineups</button>
               </a>
-              <i id="gear" class="fa-solid fa-gear"></i>
+
             </div>
           </div>
           <div class="row row-2">
             <!-- lineups -->
             <% if (lineups.length === 1) { %>
-        
-            <a id="num-of-lineups" href="/lineups/<%= lineups[0]?.owner._id %>" data-tippy-content="View lineup">    <%= lineups.length %> lineup</a>
+
+            <a id="num-of-lineups" href="/lineups/<%= lineups[0]?.owner._id %>" data-tippy-content="View lineup"> <%= lineups.length %> lineup</a>
             <% } else { %>
-         
-            <a id="num-of-lineups" href="/lineups/<%= lineups[0]?.owner._id %>" data-tippy-content="View all lineups">   <%= lineups.length %> lineups</a>
+
+            <a id="num-of-lineups" href="/lineups/<%= lineups[0]?.owner._id %>" data-tippy-content="View all lineups"> <%= lineups.length %> lineups</a>
             <% } %>
 
             <!-- friends -->
@@ -52,34 +52,34 @@
               <%= user.friends.length %> friends
             </a>
             <% } %>
-            <!-- cards -->
+            <!-- cards | define viewedUser in cards ctrl-->
             <a href="/profile/<%= lineups[0]?.owner._id  %>/card-collection" data-tippy-content="View all cards" id="num-of-cards">14 cards</a>
           </div>
           <!-- if is is another user profile then -->
           <% } else { %>
           <div class="row row-1">
-            <p id="username-p"><%= lineups[0]?.owner.username %></p>
+            <p id="username-p"><%= viewedUser.username %></p>
             <div class="btn-container">
-              <a href="/profiles/<%= lineups[0]?.owner._id %>">
+              <a href="/profiles/<%= viewedUser._id %>">
                 <button>add friend</button>
               </a>
-              <a href="/lineups/<%= lineups[0]?.owner._id %>">
+              <a href="/lineups/<%= viewedUser._id %>">
                 <button>view all lineups</button>
               </a>
-              <a href="/lineups/<%= lineups[0]?.owner._id %>">
+              <a href="/lineups/<%= viewedUser._id %>">
                 <button>message</button>
               </a>
-              <i id="gear" class="fa-solid fa-gear"></i>
+
             </div>
           </div>
           <div class="row row-2">
             <!-- lineups -->
             <% if (lineups.length === 1) { %>
-        
-            <a id="num-of-lineups" href="/lineups/<%= lineups[0]?.owner._id %>" data-tippy-content="View lineup">    <%= lineups.length %> lineup</a>
+
+            <a id="num-of-lineups" href="/lineups/<%= viewedUser._id %>" data-tippy-content="View lineup"> <%= lineups.length %> lineup</a>
             <% } else { %>
-         
-            <a id="num-of-lineups" href="/lineups/<%= lineups[0]?.owner._id %>" data-tippy-content="View all lineups">   <%= lineups.length %> lineups</a>
+
+            <a id="num-of-lineups" href="/lineups/<%= viewedUser._id %>" data-tippy-content="View all lineups"> <%= lineups.length %> lineups</a>
             <% } %>
 
             <!-- friends -->
@@ -93,7 +93,7 @@
             </a>
             <% } %>
             <!-- cards -->
-            <a href="/profiles/<%= lineups[0]?.owner._id  %>/card-collection" data-tippy-content="View all cards" id="num-of-cards">14 cards</a>
+            <a href="/profiles/<%= viewedUser._id  %>/card-collection" data-tippy-content="View all cards" id="num-of-cards">14 cards</a>
           </div>
           <div class="row row-3">
             <% const mutualFriends = user.friends.filter(friend => friends.some(f => f.username === friend.username)) %>
@@ -114,26 +114,26 @@
     </div>
 
     <div>
-      <p id="bio">Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima, iure ut dicta sequi corrupti asperiores impedit est quam eveniet esse laboriosam veniam eos voluptates modi, sit inventore voluptas perspiciatis repellat.</p>
+      <p id="bio"><%= viewedUser.bio || "Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima, iure ut dicta sequi corrupti asperiores impedit est quam eveniet esse laboriosam veniam eos voluptates modi, sit inventore voluptas perspiciatis repellat." %></p>
     </div>
 
     <!-- profile features -->
     <div class="pf">
       <div class="pf-head">
         <div id="pf-lineups-icon" class="pf-icon" <% if (showLineups) { %> style=" border-top: solid 1px #f2f2f2;" <% } %>>
-          <a href="/profiles/<%= lineups[0]?.owner._id %>">
+          <a href="/profiles/<%= viewedUser._id %>">
             <i class="fa-solid fa-list"></i><span>lineups</span>
           </a>
         </div>
 
         <div id="pf-card-collection-icon" class="pf-icon" <% if (showCollection) { %> style=" border-top: solid 1px #f2f2f2;" <% } %>>
-          <a href="/profiles/<%= lineups[0]?.owner._id %>/card-collection">
+          <a href="/profiles/<%= viewedUser._id %>/card-collection">
             <i class="fa-solid fa-database"></i><span>card collection</span>
           </a>
         </div>
 
         <div id="pf-social-media-icon" class="pf-icon" <% if (showSocials) { %> style=" border-top: solid 1px #f2f2f2;" <% } %>>
-          <a href="/profiles/<%= lineups[0]?.owner._id %>/social-media">
+          <a href="/profiles/<%= viewedUser._id %>/social-media">
             <i class="fa-solid fa-hashtag"></i><span>social media</span>
           </a>
         </div>
@@ -258,8 +258,8 @@
           <p>You do not have any featured lineups, view all your lineups and select up to three to display on your profile!</p>
           <% } else { %>
           <div>
-            <p><span><%= lineups[0]?.owner.username %> </span> does not have any featured lineups. They must be scared that their lineups are not as good as yours... send them a message talking trash! </p>
-            <button id="test">Message <%= lineups[0]?.owner.username %> </button>
+            <p><span><%= viewedUser.username %> </span> does not have any featured lineups. They must be scared that their lineups are not as good as yours... send them a message talking trash! </p>
+            <button id="test">Message <%= viewedUser.username %> </button>
           </div>
           <% } %>
         </div>

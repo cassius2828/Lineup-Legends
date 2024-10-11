@@ -18,12 +18,13 @@
 
       <div class="user-card">
         <div class="user-info">
-          <div class="user-profile"><img src="<%= user.profileImg || '/images/misc/default-user.jpg' %>" alt=""></div>
+          <div class="user-profile"><img src="<%= otherUser.profileImg || '/images/misc/default-user.jpg' %>" alt="A user's profile avatar"></div>
           <h2><%= otherUser.username %></h2>
         </div>
 
         <form class="search-friends-form" action="/friends/<%= otherUser._id %>/add-friend" method="POST">
           <a href="/profiles/<%= otherUser._id %>"><button type="button">view profile</button></a>
+          <!-- check if you are friends with this user or not -->
           <button type="submit">send friend request</button>
         </form>
       </div>

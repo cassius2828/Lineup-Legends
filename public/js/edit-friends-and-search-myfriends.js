@@ -72,7 +72,7 @@ function displayResults(results) {
     friendCard.innerHTML = `
             <div class="user-info">
                 <div class="user-profile">
-                    <img src="<%= user.profileImg || '/images/misc/default-user.jpg' %>" alt="">
+                    <img src="${friend.profileImg || '/images/misc/default-user.jpg'}" alt="">
                 </div>
                 <h2>${friend.username}</h2>
             </div>

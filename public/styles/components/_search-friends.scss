@@ -11,7 +11,11 @@
     color: #333;
     border-radius: 8px;
   }
-
+.edit-friend-btn-container {
+  button {
+    min-width: 13rem;
+  }
+}
   .user-card {
     margin: 3rem 0;
     background-color: #444;
@@ -28,5 +32,15 @@
 #search-friends {
   .user-card {
     justify-content: space-between;
+  }
+  form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    button {
+      min-width: 13rem;
+    }
   }
 }

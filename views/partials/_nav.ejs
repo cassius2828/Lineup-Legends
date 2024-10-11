@@ -4,7 +4,7 @@
   </a>
   <ul>
     <% if (user) { %>
-     
+
     <li style="display: flex; align-items:center;">quick menu <i id="sidenav" class="fa-solid fa-bolt"></i></li>
     <li><a href="/lineups/new">create a lineup</a></li>
     <li><a href="/lineups/<%= user._id %>">my lineups</a></li>
@@ -16,17 +16,17 @@
     </li>
     <li>
       <div class="profile-img-container">
-        <img id="profile-img" src="<%= user.profileImg ||"/images/misc/default-user.jpg" %>" alt="User's Avatar" />
+        <img src="<%= user.profileImg || '/images/misc/default-user.jpg' %>" alt="User's Avatar" />
       </div>
     </li>
     <% } else { %>
     <li><a href="/lineups/new">create a lineup</a></li>
     <li><a href="/auth/sign-up"> Sign up </a></li>
     <li>
-  
-      <button >
+
+      <button>
         <a href="/auth/sign-in"> Sign in </a>
-       
+
       </button>
     </li>
     <% } %>
@@ -51,11 +51,11 @@
   <% } %>
 </nav>
 <i id="sidenav" class="fa-solid fa-bolt mobile"></i>
- <div id="nav-hamburger" class="hamburger-container">
+<div id="nav-hamburger" class="hamburger-container">
   <div class="bar "></div>
 </div>
 
- 
+
 <nav id="mobile-nav">
   <ul class="mobile-nav-list">
     <% if (user) { %>
@@ -63,23 +63,38 @@
     <li><a href="/lineups/<%= user._id %>">your lineups</a></li>
     <li><a href="/lineups/friends">friends' lineups</a></li>
     <li><a href="/lineups/explore">explore lineups</a></li>
-    <li id="coins-container">
-      <img id="coins" src="/images/misc/coins.svg" alt="" />
-      <a id="coin-count" href="/lineups/explore">277</a>
+    <li>
+      <a href="/profiles/<%= user._id %>">view profile</a>
     </li>
     <li>
-      <div class="profile-img-container">
-        <img id="profile-img" src="<%= user.profileImg ||"/images/misc/default-user.jpg" %>" alt="User's Avatar" />
-      </div>
+      <a href="/profiles/<%= user._id %>/edit">edit profile</a>
     </li>
+    <li>
+      <a href="/friends">add friends</a>
+    </li>
+    <li>
+      <a href="/auth/sign-out">sign out</a>
+    </li>
+    <div id="coin_profile_container">
+      <li id="coins-container">
+        <img id="coins" src="/images/misc/coins.svg" alt="" />
+        <a id="coin-count" href="/lineups/explore">277</a>
+      </li>
+      <li>
+        <div class="profile-img-container">
+          <img src="<%= user.profileImg || '/images/misc/default-user.jpg' %>" alt="User's Avatar" />
+        </div>
+      </li>
+
+    </div>
     <% } else { %>
     <li><a href="/lineups/new">create a lineup</a></li>
     <li><a href="/auth/sign-up"> Sign up </a></li>
     <li>
-  
-      <button >
+
+      <button>
         <a href="/auth/sign-in"> Sign in </a>
-       
+
       </button>
     </li>
     <% } %>
