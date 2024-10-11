@@ -757,9 +757,11 @@ module.exports = {
 // FUNCTIONS
 ///////////////////////////
 
+// create new lineup
 async function createNewLineup(req, res, decideRedirectPath) {
   let redirectPath;
-  const playerIds = req.body["playerIds[]"] || [];
+  console.log(req.body)
+  const playerIds = req.body["playerIds"] || [];
   const [pg, sg, sf, pf, c] = playerIds;
 
   const lineupData = {
@@ -771,7 +773,7 @@ async function createNewLineup(req, res, decideRedirectPath) {
     featured: false,
     owner: req.session.user?._id,
   };
-
+console.log(lineupData, ' <-- lineup data')
   try {
     // Checks to ensure lineup is within the $15 value range
     const selectedPlayers = await PlayerModel.find({ _id: { $in: playerIds } });
@@ -788,7 +790,7 @@ async function createNewLineup(req, res, decideRedirectPath) {
     }
 
     const newLineup = await LineupModel.create(lineupData);
-    // console.log("Lineup created successfully");
+    console.log("Lineup created successfully");
     const newLineupId = newLineup._id;
 
     // conditionally redirect based on which btn was chosen for confirm lineup

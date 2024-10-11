@@ -938,6 +938,23 @@ button,
   justify-content: space-between;
 }
 
+#search-players .content {
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+#search-players .content form {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  position: absolute;
+  right: 10rem;
+}
+#search-players .content form select {
+  padding: 1rem;
+  border-radius: 8px;
+}
+
 #player-container {
   width: 80%;
   max-width: 90rem;
@@ -1410,7 +1427,6 @@ nav #nav-hamburger {
 
 @media (min-width: 425px) {
   nav ul a {
-    color: yellow;
     font-size: 1.25rem;
   }
 }
@@ -1421,37 +1437,13 @@ nav #nav-hamburger {
   nav ul {
     display: flex;
   }
-  nav ul a {
-    color: blue;
-  }
   #logo {
     margin-left: 8rem;
-  }
-}
-@media (min-width: 992px) {
-  nav ul a, nav ul li {
-    color: orange;
   }
 }
 @media (min-width: 1024px) {
   nav ul a, nav ul li {
     font-size: 1.5rem;
-    color: red;
-  }
-}
-@media (min-width: 2000px) {
-  nav ul a {
-    color: pink;
-  }
-}
-@media (min-width: 2500px) {
-  nav ul a {
-    color: teal;
-  }
-}
-@media (min-width: 3000px) {
-  nav ul a {
-    color: silver;
   }
 }
 #add-friends-landing {

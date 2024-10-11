@@ -159,7 +159,7 @@ nav {
   nav {
     ul {
       a {
-        color: yellow;
+        // color: yellow;
         font-size: 1.25rem;
       }
     }
@@ -175,7 +175,7 @@ nav {
       display: flex;
 
       a {
-        color: blue;
+        // color: blue;
       }
     }
   }
@@ -185,54 +185,54 @@ nav {
   }
 }
 
-@media (min-width: 992px) {
-  nav {
-    ul {
-      a,li {
-        color: orange;
+// @media (min-width: 992px) {
+//   nav {
+//     ul {
+//       a,li {
+//         color: orange;
       
-      }
-    }
-  }
-}
+//       }
+//     }
+//   }
+// }
 
 @media (min-width: 1024px) {
   nav {
     ul {
       a,li {
         font-size: 1.5rem;
-        color: red;
+        // color: red;
       }
     }
   }
 }
 
-@media (min-width: 2000px) {
-  nav {
-    ul {
-      a {
-        color: pink;
-      }
-    }
-  }
-}
+// @media (min-width: 2000px) {
+//   nav {
+//     ul {
+//       a {
+//         color: pink;
+//       }
+//     }
+//   }
+// }
 
-@media (min-width: 2500px) {
-  nav {
-    ul {
-      a {
-        color: teal;
-      }
-    }
-  }
-}
+// @media (min-width: 2500px) {
+//   nav {
+//     ul {
+//       a {
+//         color: teal;
+//       }
+//     }
+//   }
+// }
 
-@media (min-width: 3000px) {
-  nav {
-    ul {
-      a {
-        color: silver;
-      }
-    }
-  }
-}
+// @media (min-width: 3000px) {
+//   nav {
+//     ul {
+//       a {
+//         color: silver;
+//       }
+//     }
+//   }
+// }
