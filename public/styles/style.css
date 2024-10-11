@@ -697,6 +697,9 @@ button,
   gap: 5rem;
   margin-top: 3rem;
 }
+#edit-lineup .content-container {
+  display: flex;
+}
 #edit-lineup #reorder-lineup-form {
   display: flex;
   flex-direction: column;
@@ -809,6 +812,20 @@ button,
   margin-right: 1rem;
 }
 
+@media (max-width: 768px) {
+  #edit-lineup .lineup-card {
+    width: 80vw;
+    padding: 35px 55px 15px 55px;
+    /* width: 100%; */
+  }
+  #edit-lineup .content-container {
+    flex-direction: column;
+  }
+  #edit-lineup #reorder-lineup-form {
+    width: 80%;
+    margin: 1rem auto;
+  }
+}
 .player-text.gamble {
   display: flex;
   flex-direction: column;
@@ -920,6 +937,10 @@ button,
   color: #333;
   border-radius: 8px;
 }
+#search-friends .edit-friend-btn-container button,
+#handle-requests .edit-friend-btn-container button {
+  min-width: 13rem;
+}
 #search-friends .user-card,
 #handle-requests .user-card {
   margin: 3rem 0;
@@ -936,6 +957,16 @@ button,
 
 #search-friends .user-card {
   justify-content: space-between;
+}
+#search-friends form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+#search-friends form button {
+  min-width: 13rem;
 }
 
 #search-players .content {
@@ -1351,7 +1382,7 @@ nav #nav-hamburger {
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
-  height: 50%;
+  height: 80%;
 }
 
 #mobile-nav.nav.move {
@@ -1369,6 +1400,13 @@ nav #nav-hamburger {
 #logo {
   width: 8rem;
   margin-left: 2rem;
+}
+
+#coin_profile_container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
 }
 
 #coins-container {
@@ -2163,13 +2201,6 @@ section.section-landing .right img {
   width: auto;
   font-size: 1.5rem;
 }
-#profile #gear {
-  font-size: 2rem;
-  cursor: pointer;
-  position: absolute;
-  top: 2.5rem;
-  right: 1rem;
-}
 #profile .row {
   display: flex;
   flex-direction: column;
@@ -2293,7 +2324,7 @@ section.section-landing .right img {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin: 4rem auto;
+  margin: auto;
 }
 #edit-profile input {
   margin: 1rem 0;
@@ -2336,6 +2367,17 @@ section.section-landing .right img {
   margin: 2rem 0;
 }
 
+@media (max-width: 768px) {
+  .profile-img-edit-container .profile-img-btns {
+    margin: 0 3px;
+  }
+  .profile-img-edit-container .profile-img-btns button {
+    margin: 3px 0;
+  }
+  .profile-img-edit-container .profile-img-btns p {
+    margin: 3px 0;
+  }
+}
 /* welcome */
 #welcome {
   display: flex;

@@ -71,7 +71,7 @@ nav {
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
-    height: 50%;
+    height: 80%;
   }
 } #mobile-nav.nav.move {
   transition: .4s all ease;
@@ -89,7 +89,12 @@ nav {
   width: 8rem;
   margin-left: 2rem;
 }
-
+#coin_profile_container {
+  display: flex;;
+  align-items: center;
+  justify-content: center;
+  gap:10px
+}
 #coins-container {
   display: flex;
   align-items: center;

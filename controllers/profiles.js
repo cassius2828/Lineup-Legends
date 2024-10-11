@@ -47,6 +47,7 @@ const getUserProfile = async (req, res) => {
   userLineups = await getRelativeTime(userLineups);
   res.render("profile/index.ejs", {
     user: currentUser,
+    viewedUser:currentlyViewedUserProfile,
     showLineups: true,
     showCollection: false,
     showSocials: false,
@@ -76,6 +77,7 @@ const getUserProfileCardCollection = async (req, res) => {
   });
   res.render("profile/index.ejs", {
     user: currentUser,
+    viewedUser:currentlyViewedUserProfile,
     showLineups: false,
     showCollection: true,
     showSocials: false,
@@ -104,6 +106,7 @@ const getUserProfileSocialMedia = async (req, res) => {
   });
   res.render("profile/index.ejs", {
     user: currentUser,
+    viewedUser:currentlyViewedUserProfile,
     showLineups: false,
     showCollection: false,
     showSocials: true,
