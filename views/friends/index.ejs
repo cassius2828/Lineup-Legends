@@ -1,41 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
-  <!-- Include head partial -->
-  <%- include('../partials/head.ejs') %>
+<!-- Include head partial -->
+<%- include('../partials/head.ejs') %>
 
-  <body>
-    <!-- Include navigation partial -->
-    <%- include('../partials/_nav.ejs') %>
-    <section id="search-friends">
-      <h1>Add Friends!</h1>
-      <% if (message) { %>
-       <h2><%= message %></h2>
-      <% } %>
-      <input  id="search-friends-input" type="text" placeholder="search for friends...">
-      <div data-current-user-id="<%= user._id %>" id="user-container" class="user-container">
-        <% users.forEach(otherUser => { %>
-            <!-- this removes the current user from the list -->
+<body>
+  <!-- Include navigation partial -->
+  <%- include('../partials/_nav.ejs') %>
+  <section id="search-friends">
+    <h1>Add Friends!</h1>
+    <% if (message) { %>
+    <h2><%= message %></h2>
+    <% } %>
+    <input id="search-friends-input" type="text" placeholder="search for friends...">
+    <div data-current-user-id="<%= user._id %>" id="user-container" class="user-container">
+      <% users.forEach(otherUser => { %>
+      <!-- this removes the current user from the list -->
 
-                       <div class="user-card">
-            <div class="user-info">
-                  <div class="user-profile"><img src="/images/misc/default-user.jpg" alt=""></div>
-            <h2><%= otherUser.username %></h2> 
-            </div>
-         
-            <form class="search-friends-form" action="/friends/<%= otherUser._id %>/add-friend" method="POST">
-              <a href="/profiles/<%= otherUser._id %>"><button type="button">view profile</button></a>
-              <button type="submit">send friend request</button>
-            </form>
-          </div>
-       
+      <div class="user-card">
+        <div class="user-info">
+          <div class="user-profile"><img src="<%= user.profileImg || '/images/misc/default-user.jpg' %>" alt=""></div>
+          <h2><%= otherUser.username %></h2>
+        </div>
 
-        <% }) %>
+        <form class="search-friends-form" action="/friends/<%= otherUser._id %>/add-friend" method="POST">
+          <a href="/profiles/<%= otherUser._id %>"><button type="button">view profile</button></a>
+          <button type="submit">send friend request</button>
+        </form>
       </div>
+
+
+      <% }) %>
+    </div>
     <%- include('../partials/sidenav.ejs') %>
 
-    </section>
+  </section>
   <script src="/js/sidenav.js"></script>
   <script src="/js/search-friends.js"></script>
 
-  </body>
+</body>
+
 </html>

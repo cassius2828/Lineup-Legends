@@ -1,5 +1,3 @@
-
-
 // Get the current user ID from the data attribute
 const currentUserId = document
   .querySelector(".user-container")
@@ -23,23 +21,19 @@ document
 
     if (query.length > 0) {
       try {
-        const response = await fetch(
-          `/friends`,
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              query,
-            }),
-          }
-        );
+        const response = await fetch(`/friends`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            query,
+          }),
+        });
         const results = await response.json();
         console.log(results, " <-- results");
         displayResults(results);
       } catch (err) {
-     
         console.error(err.message);
       }
     } else {
@@ -63,7 +57,8 @@ function displayResults(results) {
     friendCard.innerHTML = `
             <div class="user-info">
                 <div class="user-profile">
-                    <img src="/images/misc/default-user.jpg" alt="">
+                    <img src="<%= user.profileImg || '/images/misc/default-user.jpg' %>"
+ alt="">
                 </div>
                 <h2>${friend.username}</h2>
             </div>
