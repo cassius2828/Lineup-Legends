@@ -1,57 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
-  <!-- Include head partial -->
-  <%- include('../partials/head.ejs') %>
+<!-- Include head partial -->
+<%- include('../partials/head.ejs') %>
 
-  <body>
-    <!-- Include navigation partial -->
-    <%- include('../partials/_nav.ejs') %>
-    <section id="search-friends">
-      <h1 id="friends-num-title" >
-        You Have <%= friends.length %> <% if (friends.length === 1) { %> Friend
-        <% } else {%> Friends <% } %>
-      </h1>
-      <input
-        id="search-friends-input"
-        type="text"
-        placeholder="search friends..."
-      />
-      <div data-current-user-id="<%= user._id %>" id="user-container" class="user-container">
-        <% friends.forEach(friend => { %>
-        <!-- this removes the current user from the list -->
+<body>
+  <!-- Include navigation partial -->
+  <%- include('../partials/_nav.ejs') %>
+  <section id="search-friends">
+    <h1 id="friends-num-title">
+      You Have <%= friends.length %> <% if (friends.length === 1) { %> Friend
+      <% } else {%> Friends <% } %>
+    </h1>
+    <input id="search-friends-input" type="text" placeholder="search friends..." />
+    <div data-current-user-id="<%= user._id %>" id="user-container" class="user-container">
+      <% friends.forEach(friend => { %>
+      <!-- this removes the current user from the list -->
 
-        <div class="user-card">
-          <div class="user-info">
-            <div class="user-profile">
-              <img src="/images/misc/default-user.jpg" alt="" />
-            </div>
-            <h2><%= friend.username %></h2>
+      <div class="user-card">
+        <div class="user-info">
+          <div class="user-profile">
+            <img src="<%= user.profileImg || '/images/misc/default-user.jpg' %>" alt="User's avatar" />
           </div>
-
-          <div class="edit-friend-btn-container">
-            <a href="/profiles/<%= friend._id %>"
-              ><button type="button">view profile</button></a
-            >
-            <button
-              data-current-user-id="<%= user._id %>"
-              data-friend-username="<%= friend.username %>"
-              data-friend-id="<%= friend._id %>"
-              class="reject remove-friend"
-              type="submit"
-            >
-              Remove Friend<i
-                style="margin-left: 1rem"
-                class="fa-solid fa-ban"
-              ></i>
-            </button>
-          </div>
+          <h2><%= friend.username %></h2>
         </div>
 
-        <% }) %>
+        <div class="edit-friend-btn-container">
+          <a href="/profiles/<%= friend._id %>"><button type="button">view profile</button></a>
+          <button data-current-user-id="<%= user._id %>" data-friend-username="<%= friend.username %>" data-friend-id="<%= friend._id %>" class="reject remove-friend" type="submit">
+            Remove Friend<i style="margin-left: 1rem" class="fa-solid fa-ban"></i>
+          </button>
+        </div>
       </div>
-      <%- include('../partials/sidenav.ejs') %>
-    </section>
-    <script src="/js/sidenav.js"></script>
-    <script src="/js/edit-friends-and-search-myfriends.js"></script>
-  </body>
+
+      <% }) %>
+    </div>
+    <%- include('../partials/sidenav.ejs') %>
+  </section>
+  <script src="/js/sidenav.js"></script>
+  <script src="/js/edit-friends-and-search-myfriends.js"></script>
+</body>
+
 </html>

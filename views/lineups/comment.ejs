@@ -112,9 +112,9 @@
           <input name="comment-search" id="comment-search" type="text" value="" placeholder="Search Comments">
           <i class="fa-solid fa-magnifying-glass"></i>
         </div>
-     <!-- general comments container -->
-        <div class="comments-container"> 
-            <!-- all comments -->
+        <!-- general comments container -->
+        <div class="comments-container">
+          <!-- all comments -->
           <div class="view-all">
             <h3> <% if (lineup.comments.length === 0) { %>
               Be the first to comment!
@@ -135,11 +135,11 @@
             <div data-comment-id="<%= comment._id %>" class="comment">
               <header>
                 <div class="img-container">
-                  <img src="/images/misc/default-user.jpg" alt="user-profile">
+                  <img src="<%= user.profileImg || '/images/misc/default-user.jpg' %>" alt="user-profile">
                 </div>
                 <span class="comment-username"><%= comment.user.username %></span>
                 <% if (lineup.owner._id.toString()=== comment.user._id.toString()) { %>
-                 <span class="original-poster">OP</span>
+                <span class="original-poster">OP</span>
                 <% } %>
                 <span class="comment-timestamp"><%= comment.relativeTime %></span>
               </header>
@@ -190,7 +190,7 @@
             </div>
             <!-- toggle thread btn -->
             <% if (comment.thread.length > 0) { %>
-              <span class="show-replies">show replies</span>
+            <span class="show-replies">show replies</span>
             <% } %>
             <!-- thread comments || some names have been left as comment for styles-->
             <div class="thread-container hide">
@@ -198,12 +198,12 @@
               <div class="thread-comment">
                 <header class="thread-header">
                   <div class="img-container">
-                    <img src="/images/misc/default-user.jpg" alt="user-profile">
+                    <img src="<%= user.profileImg || '/images/misc/default-user.jpg' %>" alt="user-profile">
                   </div>
                   <span class="comment-username"><%= threadComment.user.username %></span>
                   <% if (lineup.owner._id.toString()=== threadComment.user._id.toString()) { %>
-                    <span class="original-poster">OP</span>
-                   <% } %>
+                  <span class="original-poster">OP</span>
+                  <% } %>
                   <span class="comment-timestamp"><%= threadComment.relativeTime %></span>
                 </header>
                 <div class="thread-text">
@@ -256,12 +256,12 @@
             <div class="comment">
               <header>
                 <div class="img-container">
-                  <img src="/images/misc/default-user.jpg" alt="user-profile">
+                  <img src="<%= user.profileImg || '/images/misc/default-user.jpg' %>" alt="user-profile">
                 </div>
                 <span class="comment-username"><%= comment.user.username %></span>
                 <% if (lineup.owner._id.toString()=== comment.user._id.toString()) { %>
-                  <span class="original-poster">OP</span>
-                 <% } %>
+                <span class="original-poster">OP</span>
+                <% } %>
                 <span class="comment-timestamp"> <%=  comment.relativeTime %>
                 </span>
               </header>

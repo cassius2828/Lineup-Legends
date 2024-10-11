@@ -2158,11 +2158,6 @@ section.section-landing .right img {
 #profile .lineup-container {
   width: 100vw;
 }
-#profile #profile-img {
-  border-radius: 50%;
-  width: 100px;
-  height: 100px;
-}
 #profile #username-p {
   margin: 1rem 2rem;
   width: auto;
@@ -2261,10 +2256,6 @@ section.section-landing .right img {
   #profile .banner {
     flex-direction: row;
   }
-  #profile-img {
-    width: 150px;
-    height: 150px;
-  }
   #username-p {
     margin: 0 2rem;
   }
@@ -2330,6 +2321,7 @@ section.section-landing .right img {
   border-radius: 50%;
   width: 150px;
   height: 150px;
+  object-fit: cover;
 }
 .profile-img-edit-container .profile-img-btns {
   display: flex;

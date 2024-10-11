@@ -6,7 +6,8 @@ const crypto = require("crypto");
 const nodemailer = require("nodemailer");
 const dotenv = require("dotenv");
 const { getRelativeTime } = require("./lineups");
-const { $where } = require("../models/player");
+const { S3Client, PutObjectCommand } = require("@aws-sdk/client-s3");
+const { v4: uuidv4 } = require("uuid");
 dotenv.config();
 ///////////////////////////
 // GET | get user profile | lineups default
@@ -14,8 +15,8 @@ dotenv.config();
 const getUserProfile = async (req, res) => {
   const { userId } = req.params;
   const signedInUserId = req.session.user._id;
-  let userLineups = await LineupModel.find({ owner: userId })
-  
+  let userLineups = await LineupModel.find({ owner: userId });
+
   let featuredLineups = await LineupModel.aggregate([
     {
       $match: { owner: new mongoose.Types.ObjectId(userId), featured: true },
@@ -32,8 +33,6 @@ const getUserProfile = async (req, res) => {
     { path: "c" },
     { path: "owner" },
   ]);
- 
-
 
   const currentUser = await UserModel.findById(signedInUserId).populate(
     "friends"
@@ -122,6 +121,76 @@ const getEditUserProfile = async (req, res) => {
   const currentUser = await UserModel.findById(userId);
 
   res.render("profile/edit.ejs", { user: currentUser });
+};
+
+///////////////////////////
+// * PUT | add profile img
+///////////////////////////
+// initalize the s3 client
+const s3 = new S3Client({
+  region: process.env.AWS_REGION,
+});
+
+const addProfileImg = async (req, res) => {
+  const profileImgFile = req.file; // Multer stores single file as req.file
+  console.log(req.file, " <-- req.file"); // Debugging to check if file is correctly received
+
+  try {
+    const user = await UserModel.findById(req.session.user._id);
+    if (!user) {
+      return res.status(400).json({ error: "No user was found" });
+    }
+
+    const uploadToS3 = async (file, folder) => {
+      const filePath = `${folder}/${uuidv4()}-${file.originalname}`;
+      const params = {
+        Bucket: process.env.BUCKET_NAME,
+        Key: filePath,
+        Body: file.buffer,
+      };
+      const command = new PutObjectCommand(params);
+      await s3.send(command);
+      return `https://${params.Bucket}.s3.${process.env.AWS_REGION}.amazonaws.com/${filePath}`;
+    };
+
+    if (profileImgFile) {
+      user.profileImg = await uploadToS3(
+        profileImgFile,
+        "lineup-legends/profile-imgs"
+      );
+      await user.save();
+      if (user.profileImg.length === 0) {
+        return res
+          .status(500)
+          .json({ error: "No user profile was able to be saved" });
+      }
+    }
+
+    res.redirect(`/profiles/${req.session.user._id}`);
+  } catch (err) {
+    res.status(500).json({ error: "Unable to update user profile image" });
+  }
+};
+
+///////////////////////////
+// ! DELETE | remove profile img
+///////////////////////////
+
+const removeProfileImg = async (req, res) => {
+  try {
+    const user = await UserModel.findById(req.session.user._id);
+    if (!user) {
+      return res.status(404).json({ error: "Cannot find user" });
+    }
+
+    user.profileImg = "";
+    await user.save();
+    res.redirect(`/profiles/${req.session.user._id}`);
+  } catch (err) {
+    res
+      .status(500)
+      .json({ error: "Unable to remove profile picture for user" });
+  }
 };
 ///////////////////////////
 // * PUT | update bio
@@ -288,6 +357,7 @@ module.exports = {
   getEditUserProfile,
   getUserProfileCardCollection,
   getUserProfileSocialMedia,
+  addProfileImg,removeProfileImg
 };
 //  generate email token
 const generateToken = () => {

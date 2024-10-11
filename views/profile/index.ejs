@@ -14,7 +14,9 @@
   <section id="profile">
     <div class="banner-container">
       <header class="banner">
-        <img id="profile-img" src="/images/misc/default-user.jpg" alt="">
+        <img style=" border-radius: 50%;
+        width: 100px;
+        height: 100px; object-fit: cover;" id="profile-img" src="<%= user.profileImg ||"/images/misc/default-user.jpg" %>" alt="User's Avatar" />
         <div class="profile-details">
           <!-- if this is the user profile then -->
           <% if (user._id.toString() === lineups[0]?.owner._id.toString()) { %>
