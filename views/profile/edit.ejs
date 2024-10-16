@@ -38,8 +38,6 @@
         <button>update username</button>
       </form>
       <form action="/profiles/<%= user._id %>/send-confirm-email?_method=PUT" method="POST">
-        <% if (message) { %> <span><%= message %></span>
-        <% } %>
         <label for="email">update email</label>
         <input type="email" name="email" id="email" />
         <button>update email</button>
