@@ -8,6 +8,9 @@
 
    <h1>Create a new account!</h1>
   <form id="sign-up-form" action="/auth/sign-up" method="POST">
+    <% if (error) { %>
+     <span style="color:red;margin:2rem;"><%= error %></span>
+    <% } %>
     <label for="username">Username:</label>
     <input type="text" name="username" id="username" required />
     <label for="email">Email:</label>

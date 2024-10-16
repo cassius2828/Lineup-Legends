@@ -70,14 +70,14 @@ app.get("/", (req, res) => {
   });
 });
 
-// VIP Lounge
-app.get("/vip-lounge", isSignedIn, (req, res) => {
-  if (req.session.user) {
-    res.send(`Welcome to the party ${req.session.user.username}.`);
-  } else {
-    res.send("Sorry, no guests allowed.");
-  }
-});
+// // VIP Lounge
+// app.get("/vip-lounge", isSignedIn, (req, res) => {
+//   if (req.session.user) {
+//     res.send(`Welcome to the party ${req.session.user.username}.`);
+//   } else {
+//     res.send("Sorry, no guests allowed.");
+//   }
+// });
 
 // Auth Routes
 

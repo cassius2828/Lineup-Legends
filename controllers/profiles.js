@@ -47,7 +47,7 @@ const getUserProfile = async (req, res) => {
   userLineups = await getRelativeTime(userLineups);
   res.render("profile/index.ejs", {
     user: currentUser,
-    viewedUser:currentlyViewedUserProfile,
+    viewedUser: currentlyViewedUserProfile,
     showLineups: true,
     showCollection: false,
     showSocials: false,
@@ -77,7 +77,7 @@ const getUserProfileCardCollection = async (req, res) => {
   });
   res.render("profile/index.ejs", {
     user: currentUser,
-    viewedUser:currentlyViewedUserProfile,
+    viewedUser: currentlyViewedUserProfile,
     showLineups: false,
     showCollection: true,
     showSocials: false,
@@ -106,7 +106,7 @@ const getUserProfileSocialMedia = async (req, res) => {
   });
   res.render("profile/index.ejs", {
     user: currentUser,
-    viewedUser:currentlyViewedUserProfile,
+    viewedUser: currentlyViewedUserProfile,
     showLineups: false,
     showCollection: false,
     showSocials: true,
@@ -263,7 +263,9 @@ const updateEmailStepOne = async (req, res) => {
   currentUser.emailConfirmationToken = token;
   currentUser.save();
   sendConfirmationEmail(currentUser, token);
-  res.send(`confirmation email sent to ${email}`);
+  res.render("profiles/edit.ejs", {
+    message: `confirmation email sent to ${email}`,
+  });
 };
 ///////////////////////////
 // * PUT | update email step 2
@@ -360,7 +362,8 @@ module.exports = {
   getEditUserProfile,
   getUserProfileCardCollection,
   getUserProfileSocialMedia,
-  addProfileImg,removeProfileImg
+  addProfileImg,
+  removeProfileImg,
 };
 //  generate email token
 const generateToken = () => {

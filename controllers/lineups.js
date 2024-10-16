@@ -555,9 +555,6 @@ const postDownvoteThread = async (req, res) => {
   const { lineupId } = req.params;
   const userId = req.session.user._id;
   const { threadId, commentId } = req.body;
-  console.log(req.body, " <-- req.body");
-  console.log(commentId, " <-- COMMENT id");
-  console.log(threadId, " <-- THREAD id");
 
   try {
     await handleThreadVotes(
@@ -896,7 +893,6 @@ async function handleCommentVotes(
     return res.status(404).send("Could not find lineup to vote on");
   }
   const targetedComment = lineup.comments.id(commentId);
-  console.log(targetedComment, " <-- targeted comment");
   if (targetedComment.user.toString() === userId.toString()) {
     return res.status(403).send("User cannot vote for their own comment");
   }
@@ -908,7 +904,6 @@ async function handleCommentVotes(
     (vote) => vote.user.toString() === userId.toString()
   );
 
-  console.log(existingVote, " <-- existing vote");
   if (existingVote) {
     if (existingVote[targetVoteType]) {
       // if there is already an existing vote with [targetVoteType] then delete it
@@ -1103,15 +1098,3 @@ async function sortExploreLineups(sort) {
       .populate("owner");
   }
 }
-
-// const players = require('../public/js/add-players.js')
-// async function addPlayers() {
-
-//   console.log('starting to add players')
-//   try {
-//     await PlayerModel.insertMany(players.players4);
-//     console.log("Players added successfully");
-//   } catch (error) {
-//     console.error("Error adding players:", error);
-//   }
-// }

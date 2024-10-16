@@ -121,7 +121,7 @@ const deleteRejectFriendReq = async (req, res) => {
     { _id: targetedUserId },
     { $pull: { friends: recievedFriendReqDoc._id } }
   );
-  res.send("friend req rejected");
+  res.render('friends/index.ejs',{message:"friend req rejected"});
 };
 
 //////////////////////////////

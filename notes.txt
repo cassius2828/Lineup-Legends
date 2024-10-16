@@ -2,7 +2,6 @@
 Goals
 ///////////////////////////
 
-1. Profile Pictures
 
 2. Lineup backgrounds
 
@@ -12,7 +11,6 @@ Goals
 
 5. DMs 
 
-6. Search Players 
 
 7. Share socials 
 
@@ -21,5 +19,3 @@ Goals
 9. Better way to display explore lineups 
 
 10. Player details (how often they have been picked)
-
-11. Optimize search queries (lean(), inverse index, etc)
