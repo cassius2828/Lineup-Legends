@@ -5,14 +5,14 @@ const User = require("../models/user.js");
 // Get Sign Up Page
 ///////////////////////////
 const getSignUp = (req, res) => {
-  res.render("auth/sign-up.ejs");
+  res.render("auth/sign-up.ejs", { error: null });
 };
 
 ///////////////////////////
 // Get Sign In Page
 ///////////////////////////
 const getSignIn = (req, res) => {
-  res.render("auth/sign-in.ejs");
+  res.render("auth/sign-in.ejs", { error: null });
 };
 
 ///////////////////////////
@@ -30,17 +30,24 @@ const postSignUp = async (req, res) => {
   try {
     // Check if the username is already taken
     const userInDatabase = await User.findOne({ username: req.body.username });
-    const emailInDatabase = await User.findOne({ username: req.body.email });
+    const emailInDatabase = await User.findOne({ email: req.body.email });
     if (userInDatabase) {
-      return res.send("Username already taken.");
+      return res.render("auth/sign-up.ejs", {
+        error: "Username already taken.",
+      });
     }
     if (emailInDatabase) {
-      return res.send("This email is already associated with another account. Please enter a new email");
+      return res.render("auth/sign-up.ejs", {
+        error:
+          "This email is already associated with another account. Please enter a new email",
+      });
     }
     // Username is not taken already!
     // Check if the password and confirm password match
     if (req.body.password !== req.body.confirmPassword) {
-      return res.send("Password and Confirm Password must match");
+      return res.render("auth/sign-up.ejs", {
+        error: "Password and Confirm Password must match",
+      });
     }
 
     // Must hash the password before sending to the database
@@ -65,7 +72,9 @@ const postSignIn = async (req, res) => {
     // First, get the user from the database
     const userInDatabase = await User.findOne({ username: req.body.username });
     if (!userInDatabase) {
-      return res.send("Login failed. Please try again.");
+      return res.render("auth/sign-in.ejs", {
+        error: "Login failed. Please try again.",
+      });
     }
 
     // There is a user! Time to test their password with bcrypt
@@ -74,7 +83,9 @@ const postSignIn = async (req, res) => {
       userInDatabase.password
     );
     if (!validPassword) {
-      return res.send("Login failed. Please try again.");
+      return res.render("auth/sign-in.ejs", {
+        error: "Login failed. Please try again.",
+      });
     }
 
     // There is a user AND they had the correct password. Time to make a session!
@@ -83,7 +94,7 @@ const postSignIn = async (req, res) => {
     req.session.user = {
       username: userInDatabase.username,
       _id: userInDatabase._id,
-      profileImg:userInDatabase.profileImg
+      profileImg: userInDatabase.profileImg,
     };
 
     res.redirect("/");

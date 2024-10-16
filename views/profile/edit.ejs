@@ -1,96 +1,69 @@
 <!DOCTYPE html>
 <html lang="en">
-  <!-- Include head partial -->
-  <%- include('../partials/head.ejs') %>
+<!-- Include head partial -->
+<%- include('../partials/head.ejs') %>
 
-  <body>
-    <!-- Include navigation partial -->
-    <%- include('../partials/_nav.ejs') %>
+<body>
+  <!-- Include navigation partial -->
+  <%- include('../partials/_nav.ejs') %>
 
-    <section id="edit-profile">
-      <h1>Edit Profile</h1>
-      <div class="form-container">
-        <!-- img section -->
-        <div class="profile-img-edit-container">
-          <img
-            src="<%= user.profileImg || '/images/misc/default-user.jpg' %>"
-            alt="User's Avatar"
-          />
-          <div class="profile-img-btns">
-            <form
-              action="/profiles/<%= user._id %>/profile-img?_method=PUT"
-              method="POST"
-              enctype="multipart/form-data"
-            >
-              <input type="file" name="profileImg" id="profileImg" required />
-              <button type="submit">upload photo</button>
-            </form>
-            <form
-              action="/profiles/<%= user._id %>/profile-img?_method=DELETE"
-              method="POST"
-            >
-              <button type="submit">remove photo</button>
-            </form>
+  <section id="edit-profile">
+    <h1>Edit Profile</h1>
+    <div class="form-container">
+      <!-- img section -->
+      <div class="profile-img-edit-container">
+        <img src="<%= user.profileImg || '/images/misc/default-user.jpg' %>" alt="User's Avatar" />
+        <div class="profile-img-btns">
+          <form action="/profiles/<%= user._id %>/profile-img?_method=PUT" method="POST" enctype="multipart/form-data">
+            <input type="file" name="profileImg" id="profileImg" required />
+            <button type="submit">upload photo</button>
+          </form>
+          <form action="/profiles/<%= user._id %>/profile-img?_method=DELETE" method="POST">
+            <button type="submit">remove photo</button>
+          </form>
 
-            <p>recommended img size is 250px by 250px</p>
-          </div>
+          <p>recommended img size is 250px by 250px</p>
         </div>
-        <form action="/profiles/<%= user._id %>/bio?_method=PUT" method="POST">
-          <label for="bio">update bio</label>
-          <input
-            type="textarea"
-            maxlength="250"
-            rows="4"
-            cols="50"
-            name="bio"
-            id="bio"
-          />
-          <button>update bio</button>
-        </form>
-        <!-- form -->
-        <!-- Name + email -->
-        <form
-          action="/profiles/<%= user._id %>/username?_method=PUT"
-          method="POST"
-        >
-          <label for="username">update username</label>
-          <input name="username" id="username" type="text" />
-          <button>update username</button>
-        </form>
-        <form
-          action="/profiles/<%= user._id %>/send-confirm-email?_method=PUT"
-          method="POST"
-        >
-          <label for="email">update email</label>
-          <input type="email" name="email" id="email" />
-          <button>update email</button>
-        </form>
-        <!-- password  -->
-        <form
-          action="/profiles/<%= user._id %>/password?_method=PUT"
-          method="POST"
-        >
-          <legend>update Password</legend>
-          <label for="currentPassword">Current Password</label>
-          <input type="password" name="currentPassword" id="currentPassword" />
-          <label for="newPassword">New Password</label>
-          <input type="password" name="newPassword" id="newPassword" />
-          <label for="confirmNewPassword">Confirm New Password</label>
-          <input
-            type="password"
-            name="confirmNewPassword"
-            id="confirmNewPassword"
-          />
-          <button>update password</button>
-        </form>
       </div>
-      <%- include('../partials/sidenav.ejs') %>
-    </section>
+      <form action="/profiles/<%= user._id %>/bio?_method=PUT" method="POST">
+        <label for="bio">update bio</label>
+        <input type="textarea" maxlength="250" rows="4" cols="50" name="bio" id="bio" />
+        <button>update bio</button>
+      </form>
+      <!-- form -->
+      <!-- Name + email -->
+      <form action="/profiles/<%= user._id %>/username?_method=PUT" method="POST">
+        <label for="username">update username</label>
+        <input name="username" id="username" type="text" />
+        <button>update username</button>
+      </form>
+      <form action="/profiles/<%= user._id %>/send-confirm-email?_method=PUT" method="POST">
+        <% if (message) { %> <span><%= message %></span>
+        <% } %>
+        <label for="email">update email</label>
+        <input type="email" name="email" id="email" />
+        <button>update email</button>
+      </form>
+      <!-- password  -->
+      <form action="/profiles/<%= user._id %>/password?_method=PUT" method="POST">
+        <legend>update Password</legend>
+        <label for="currentPassword">Current Password</label>
+        <input type="password" name="currentPassword" id="currentPassword" />
+        <label for="newPassword">New Password</label>
+        <input type="password" name="newPassword" id="newPassword" />
+        <label for="confirmNewPassword">Confirm New Password</label>
+        <input type="password" name="confirmNewPassword" id="confirmNewPassword" />
+        <button>update password</button>
+      </form>
+    </div>
+    <%- include('../partials/sidenav.ejs') %>
+  </section>
 
-    <!-- External JavaScript for rating color -->
-    <script src="/js/sidenav.js"></script>
-    <script src="/js/sort-lineups.js"></script>
+  <!-- External JavaScript for rating color -->
+  <script src="/js/sidenav.js"></script>
+  <script src="/js/sort-lineups.js"></script>
 
-    <script src="/js/rating-color.js"></script>
-  </body>
+  <script src="/js/rating-color.js"></script>
+</body>
+
 </html>
