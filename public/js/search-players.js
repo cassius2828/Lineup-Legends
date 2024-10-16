@@ -28,7 +28,7 @@ searchInput.addEventListener("input", async (e) => {
       if (!data.ok) {
         throw new Error("Cannot fetch data for player search");
       }
-    //   must work on this logic
+      //   must work on this logic
       if (data.players.length === 0) {
         displayRequestToAddPlayerForm();
       }
@@ -109,3 +109,13 @@ function clearResults() {
 
   resultsContainer.innerHTML = window.originalContainerHTML;
 }
+// toggles visibility of filter by value form
+const filterByValBtn = document.getElementById("filter-by-value");
+const sortPlayersForm = document.getElementById("sort-players-container");
+filterByValBtn.addEventListener("click", (e) => {
+  if (sortPlayersForm.style.display === "flex") {
+    sortPlayersForm.style.display = "none";
+  } else {
+    sortPlayersForm.style.display = "flex";
+  }
+});
