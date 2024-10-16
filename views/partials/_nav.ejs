@@ -16,7 +16,7 @@
     </li>
     <li>
       <div class="profile-img-container">
-        <img src="<%= user.profileImg || '/images/misc/default-user.jpg' %>" alt="User's Avatar" />
+        <img id="profile-img" src="<%= user.profileImg || '/images/misc/default-user.jpg' %>" alt="User's Avatar" />
       </div>
     </li>
     <% } else { %>
@@ -82,7 +82,7 @@
       </li>
       <li>
         <div class="profile-img-container">
-          <img src="<%= user.profileImg || '/images/misc/default-user.jpg' %>" alt="User's Avatar" />
+          <img id="profile-img" src="<%= user.profileImg || '/images/misc/default-user.jpg' %>" alt="User's Avatar" />
         </div>
       </li>
 
