@@ -997,6 +997,36 @@ button,
   gap: 8rem;
 }
 
+#filter-by-value {
+  display: none;
+  margin: 0;
+}
+
+#sort-players-container {
+  display: block;
+}
+
+.input-group {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+}
+
+@media (max-width: 768px) {
+  #sort-players-container {
+    display: none;
+  }
+  #filter-by-value {
+    display: flex;
+  }
+  #search-players .content form {
+    background-color: rgb(46, 46, 46);
+    padding: 2rem;
+    border-radius: 4px;
+    margin-top: 2rem;
+  }
+}
 /* ///////////////// */
 /* Selected Players Row */
 /* ///////////////// */
@@ -2235,9 +2265,6 @@ section.section-landing .right img {
 }
 #profile .row-3 span {
   color: rgba(214, 214, 214, 0.5647058824);
-}
-#profile .lineup-container span {
-  color: #ffc107;
 }
 #profile #bio {
   margin: 4rem auto;

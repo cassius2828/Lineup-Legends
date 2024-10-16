@@ -10,7 +10,10 @@
     
     <h1>Find Your Favorite Players</h1>
 
-    <input id="search-players-input" type="text" placeholder="search for players..." />
+    <div class="input-group">
+      <input id="search-players-input" type="text" placeholder="search for players..." />
+      <button id="filter-by-value">filter by value</button>
+    </div>
     <div class="content">
           <div id="player-container" class="player-container">
       <% players?.forEach(player => { %>
