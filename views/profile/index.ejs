@@ -60,9 +60,16 @@
           <div class="row row-1">
             <p id="username-p"><%= viewedUser.username %></p>
             <div class="btn-container">
+              <% if (user._id.toString()!== viewedUser._id.toString()) { %>
+
               <a href="/profiles/<%= viewedUser._id %>">
                 <button>add friend</button>
               </a>
+              <% } else { %>
+              <a href="/friends">
+                <button>add friends</button>
+              </a>
+              <% } %>
               <a href="/lineups/<%= viewedUser._id %>">
                 <button>view all lineups</button>
               </a>

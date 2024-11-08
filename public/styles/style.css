@@ -2258,6 +2258,7 @@ section.section-landing .right img {
 }
 #profile .row-1 {
   position: relative;
+  left: 0;
 }
 #profile .row-2 a {
   color: #f2f2f2;
@@ -2314,6 +2315,9 @@ section.section-landing .right img {
 @media (min-width: 1024px) {
   #profile .banner {
     flex-direction: row;
+  }
+  #profile .row-1 {
+    left: -5rem;
   }
   #username-p {
     margin: 0 2rem;
